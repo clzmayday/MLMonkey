@@ -118,12 +118,15 @@ def crop(did, pad):
     global Label_
     img = I.open(os.path.join(Image_Dir, Label_[did]['filename']))
     boundary = cal_boundary(Label_[did]['polygon'])
-    boundaryF = boundary
-    boundaryF[0] = boundary[0] - pad
-    boundaryF[1] = boundary[1] - pad
-    boundaryF[2] = boundary[2] + pad
-    boundaryF[3] = boundary[3] + pad
-    offset = [boundary[0] + pad, boundary[1] + pad]
+
+    padX = int((boundary[2] - boundary[0]) * pad)
+    padY = int((boundary[3] - boundary[1]) * pad)
+    boundaryF = [0,0,0,0]
+    boundaryF[0] = boundary[0] - padX
+    boundaryF[1] = boundary[1] - padY
+    boundaryF[2] = boundary[2] + padX
+    boundaryF[3] = boundary[3] + padY
+    offset = [boundary[0] - padX, boundary[1] - padY]
     if boundaryF[0] < 0:
         offset[0] = 0
         boundaryF[0] = 0
@@ -135,7 +138,7 @@ def crop(did, pad):
     if boundaryF[3] >= img.size[1]:
         boundaryF[3] = img.size[1] - 1
     cropped_img = img.crop(boundaryF)
-    cropped_img.save(os.path.join(Image_Dir, "temp", str(did)) + ".jpg")
+    cropped_img.save(os.path.join("./.images_temp", str(did)) + ".jpg")
     Label_[did]["crop_poly"] = np.array([(i[0] - offset[0], i[1] - offset[1]) for i in Label_[did]['polygon']])
 
 
@@ -241,7 +244,8 @@ def cal_shape(poly):
 
 
 # Convert the Labels to ID based Data
-# Input:    Label Dictionary (Optional)
+# Input:    Colour Mode - Default: HSV/HSB
+#           crop_pad (Optional) - Default: 0 - crop extra outside area with percentage
 #           save (Optional) - If you want to save the loaded data, please overwrite the saving directory
 #           reload (Optional) - Loading the stored data
 # Output:   Label_reID Dictionary - Result is stored in Label_reID
@@ -263,7 +267,7 @@ def loadData(color_mode="HSV", crop_pad=0, save=None, reload=None):
             did = count + count2
             Label_[did] = {'filename': i, 'iid': int(count), 'did': int(10 * count2), 'polygon': j}
             crop(did, crop_pad)
-            img_array = loadImage(os.path.join(Image_Dir, "temp", str(did) + ".jpg"))
+            img_array = loadImage(os.path.join("./.images_temp", str(did) + ".jpg"))
             Label_[did]["img_arr"] = img_array
             Label_[did]["map"] = cal_map(Label_[did]["img_arr"].shape, Label_[did]["crop_poly"])
             Label_[did]["img_arr_mode"] = RGBConvert(Label_[did]["img_arr"], mode=color_mode)
