@@ -1,4 +1,5 @@
 import csv, os
+from MLMonkey import FeatureExtraction
 
 # Read CSV files containing the all defect information
 csv_head = []
@@ -8,6 +9,7 @@ with open ("./Calculator.csv", "r") as csvFile:
     csv_head = csvReader[0]
     csv_data = csvReader[1:]
     csvFile.close()
+
 
 
 print()
