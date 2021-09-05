@@ -122,6 +122,10 @@ def crop(did, pad):
 
     padX = int((boundary[2] - boundary[0]) * pad)
     padY = int((boundary[3] - boundary[1]) * pad)
+    if padX <= 2:
+        padX = 5
+    if padY <= 2:
+        padY = 5
     boundaryF = [0,0,0,0]
     boundaryF[0] = boundary[0] - padX
     boundaryF[1] = boundary[1] - padY
