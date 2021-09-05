@@ -10,6 +10,7 @@ import pickle
 import math
 from scipy import stats
 from tqdm import tqdm
+import matplotlib.path as mpltPath
 
 # ====================Read Images and Labels====================
 
@@ -155,20 +156,29 @@ def loadImage(path):
 #        Polygon coordinates list
 # Output: Map array
 def cal_map(shape, poly):
-    poly = Polygon(poly)
+    p = np.array([[i[1], i[0]] for i in poly])
 
     # Method 1: 4-5s/img
+    # poly = Polygon(p)
     # poly_map = np.array([[poly.contains(Point((w, h))) for w in range(shape[1])] for h in range(shape[0])]).astype(bool)
 
     # Method 2 : 3-4s/img
+    # poly = Polygon(p)
     # w, h = np.meshgrid(range(shape[1]), range(shape[0]))
     # coor_l = list(np.dstack((h, w)).reshape((shape[0] * shape[1], 2)))
     # poly_map = np.array(list(map(lambda x: poly.contains(Point(x)), coor_l))).reshape((shape[0], shape[1]))
 
     # Method 3: 2.5-3.5s/img
+    # poly = Polygon(p)
+    # w, h = np.meshgrid(range(shape[1]), range(shape[0]))
+    # coor = np.dstack((h, w)).reshape((shape[0] * shape[1], 2))
+    # poly_map = np.array(list(map(poly.contains, list(map(Point, coor))))).reshape((shape[0], shape[1]))
+
+    # Method 4: 0.18-0.2s/img
+    poly = mpltPath.Path(p)
     w, h = np.meshgrid(range(shape[1]), range(shape[0]))
     coor = np.dstack((h, w)).reshape((shape[0] * shape[1], 2))
-    poly_map = np.array(list(map(poly.contains, list(map(Point, coor))))).reshape((shape[0], shape[1]))
+    poly_map = poly.contains_points(coor).reshape((shape[0], shape[1]))
 
     return poly_map
 

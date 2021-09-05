@@ -14,4 +14,3 @@ FeatureExtraction.readImages("./data/")
 FeatureExtraction.readVIALabel("./label_2.json")
 
 FeatureExtraction.loadData(save="./loaded_data.pkl", crop_pad=0.25)
-print()
