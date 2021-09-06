@@ -87,6 +87,7 @@ def readVIALabel(file, init=False):
                                                            j['shape_attributes']['all_points_y']))
     return Label
 
+
 # Check data is correctly loaded
 # Process: Logging the error
 def check_data():
@@ -126,7 +127,7 @@ def crop(did, pad):
         padX = 5
     if padY <= 2:
         padY = 5
-    boundaryF = [0,0,0,0]
+    boundaryF = [0, 0, 0, 0]
     boundaryF[0] = boundary[0] - padX
     boundaryF[1] = boundary[1] - padY
     boundaryF[2] = boundary[2] + padX
@@ -363,6 +364,7 @@ def cal_edge(edge):
     ratio = np.array(ratio)
     return round(np.average(ratio)), int(stats.mode(ratio, axis=None)[0])
 
+
 # Group the Angles
 # Input: Angle_List
 # Output: Average angle:Integer
@@ -376,6 +378,7 @@ def cal_deg(deg):
 
     return avg_d, int(stats.mode(d, axis=None)[0])
 
+
 # Calculate and group coverage of polygon in bounding box
 # Input: Polygon coordinate list
 #        Bounding
@@ -385,6 +388,7 @@ def cal_coverage(poly, bb):
     if cvg > 5:
         cvg = 5
     return cvg
+
 
 # Calculate and group aspect ratio of bounding box
 # Input: Polygon
@@ -507,16 +511,15 @@ def featureExtract(outside=None, distance_threshold=100,
         Label_[did]["brt_avg"], Label_[did]["brt_mode"], Label_[did]["brt_range"], Label_[did]["brt_uni"] = \
             cal_sat_brt(Label_[did]["value"], False, Label_[did]["map"])
 
-        if outside is not None:
-            Label_[did]["out_hue_avg"], Label_[did]["out_hue_mode"], Label_[did]["out_hue_range"], Label_[did][
-                "out_hue_uni"] = \
-                cal_hue(Label_[did]["hue"], True, Label_[did]["map"])
-            Label_[did]["out_sat_avg"], Label_[did]["out_sat_mode"], Label_[did]["out_sat_range"], Label_[did][
-                "out_sat_uni"] = \
-                cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
-            Label_[did]["out_brt_avg"], Label_[did]["out_brt_mode"], Label_[did]["out_brt_range"], Label_[did][
-                "out_brt_uni"] = \
-                cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
+        Label_[did]["out_hue_avg"], Label_[did]["out_hue_mode"], Label_[did]["out_hue_range"], Label_[did][
+            "out_hue_uni"] = \
+            cal_hue(Label_[did]["hue"], True, Label_[did]["map"])
+        Label_[did]["out_sat_avg"], Label_[did]["out_sat_mode"], Label_[did]["out_sat_range"], Label_[did][
+            "out_sat_uni"] = \
+            cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
+        Label_[did]["out_brt_avg"], Label_[did]["out_brt_mode"], Label_[did]["out_brt_range"], Label_[did][
+            "out_brt_uni"] = \
+            cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
 
     if save is not None:
         with open(os.path.abspath(save), 'wb') as f:
