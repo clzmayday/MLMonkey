@@ -253,7 +253,34 @@ def cal_shape(poly):
         length.append((a, b))
         angle = math.degrees(math.acos(round((a ** 2 + b ** 2 - c ** 2) / (2 * a * b), 5)))
         degree.append(round(angle))
+        goin_yd = polygon[i][-1] - polygon[i - 1][-1]
+        goin_xd = polygon[i][0] - polygon[i - 1][0]
 
+        if goin_xd == 0:
+            if goin_yd >= 0:
+                if polygon[i+1][0] >= polygon[i][0]:
+                    turning.append(180 - angle)
+                else:
+                    turning.append(-180 + angle)
+            else:
+                if polygon[i + 1][0] >= polygon[i][0]:
+                    turning.append(-180 + angle)
+                else:
+                    turning.append(180 - angle)
+        else:
+            goin_a = goin_yd / goin_xd
+            goin_b = polygon[i][-1] - goin_a * polygon[i][0]
+            inter_y = goin_a * polygon[i + 1][0] + goin_b
+            if goin_yd >= 0:
+                if polygon[i + 1][-1] <= inter_y:
+                    turning.append(180 - angle)
+                else:
+                    turning.append(-180 + angle)
+            else:
+                if polygon[i + 1][-1] <= inter_y:
+                    turning.append(-180 + angle)
+                else:
+                    turning.append(180 - angle)
         if angle < 170:
             edge += 1
 
@@ -345,7 +372,6 @@ def group(arr, gap=0.30):
     s = sorted(arr)
     l = [int(len(s) * i / 5) for i in range(1, 5)]
     group = []
-
     for i in l:
         index = (i, 0)
         for j in range(i - round(gap * l[0] / 2), i + round(gap * l[0] / 2)):
@@ -384,6 +410,7 @@ def cal_deg(deg):
 
 def cal_shape_comp(poly, deg, edge):
     pass
+
 
 # Calculate and group coverage of polygon in bounding box
 # Input: Polygon coordinate list
