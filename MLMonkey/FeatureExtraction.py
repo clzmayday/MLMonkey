@@ -243,6 +243,7 @@ def cal_shape(poly):
     edge = 0
     degree = []
     length = []
+    turning = []
     for i in range(1, len(polygon) - 1):
         c = math.dist(polygon[i - 1], polygon[i + 1])
         a = math.dist(polygon[i - 1], polygon[i])
@@ -252,10 +253,11 @@ def cal_shape(poly):
         length.append((a, b))
         angle = math.degrees(math.acos(round((a ** 2 + b ** 2 - c ** 2) / (2 * a * b), 5)))
         degree.append(round(angle))
+
         if angle < 170:
             edge += 1
 
-    return np.array(degree), edge, np.array(length)
+    return np.array(degree), edge, np.array(length), np.array(turning)
 
 
 # Convert the Labels to ID based Data
@@ -293,7 +295,8 @@ def loadData(color_mode="HSV", crop_pad=0, save=None, reload=None):
             Label_[did]["value"] = Label_[did]["img_arr_mode"][:, :, 2]
             Label_[did]["neighbour_dist"] = [cal_distance(Label_[did]["polygon"], Label_[i]["polygon"]) for i in
                                              find_neighbour(did)]
-            Label_[did]["degree"], Label_[did]["edge"], Label_[did]["edge_len"] = cal_shape(Label_[did]["polygon"])
+            Label_[did]["degree"], Label_[did]["edge"], Label_[did]["edge_len"], Label_[did]["turning"] = \
+                cal_shape(Label_[did]["polygon"])
 
             count2 += 0.1
 
@@ -379,6 +382,9 @@ def cal_deg(deg):
     return avg_d, int(stats.mode(d, axis=None)[0])
 
 
+def cal_shape_comp(poly, deg, edge):
+    pass
+
 # Calculate and group coverage of polygon in bounding box
 # Input: Polygon coordinate list
 #        Bounding
@@ -426,7 +432,13 @@ def cal_dist(dist, threshold):
 #         Unique Hue:Integer - unique number of Hue
 def cal_hue(hue, out, hmap):
     def hue_range(hu):
-        return min([max(hu) - min(hu), min(hu) + 12 - max(hu)])
+        hue_r = 0
+        hue_set = list(set(hu))
+        for i in hue_set:
+            max_r = max(list(map(lambda x: min([abs(i - x), abs(i + 12 - x), abs(x + 12 - i)]), hue_set)))
+            if max_r > hue_r:
+                hue_r = max_r
+        return hue_r
 
     if out:
         h = hue[np.logical_not(hmap)]
@@ -437,10 +449,14 @@ def cal_hue(hue, out, hmap):
         avg_h = 1
     else:
         avg_h = int((avg_h + 45) / 30)
+    h = h.astype(float)
     h = (h + 45) / 30
     h[h >= 13] = 1
     h = h.astype(int)
-    return avg_h, int(stats.mode(h, axis=None)[0]), int(hue_range(h)), len(np.unique(h))
+    distribution = {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+    for v, c in list(zip(stats.find_repeats(h).values, stats.find_repeats(h).counts)):
+        distribution[int(v)] = round(c / len(h), 1)
+    return avg_h, int(stats.mode(h, axis=None)[0]), int(hue_range(h)), len(np.unique(h)), distribution
 
 
 # Group saturation or brightness values
@@ -462,18 +478,21 @@ def cal_sat_brt(sat_brt, out, hmap):
         avg_sb = 5
     else:
         avg_sb = int(((avg_sb / 255) + 0.2) * 5)
-
+    sb = sb.astype(float)
     sb = ((sb / 255) + 0.2) * 5
     sb[sb >= 6] = 5
     sb = sb.astype(int)
+    distribution = {1:0,2:0,3:0,4:0,5:0}
+    for v, c in list(zip(stats.find_repeats(sb).values, stats.find_repeats(sb).counts)):
+        distribution[int(v)] = round(c / len(sb), 1)
 
-    return avg_sb, int(stats.mode(sb, axis=None)[0]), int(max(sb) - min(sb)), len(np.unique(sb))
+    return avg_sb, int(stats.mode(sb, axis=None)[0]), int(max(sb) - min(sb)), len(np.unique(sb)), distribution
 
 
 # Extract feature Function
 # Input:    Label_reID
 # Output:   List - Store all features
-def featureExtract(outside=None, distance_threshold=100,
+def featureExtract(outside=None, distance_threshold=100, shape_detail=True, colour_detail=True,
                    save=None, reload=None):
     global Label_, feature_list
 
@@ -504,22 +523,19 @@ def featureExtract(outside=None, distance_threshold=100,
         Label_[did]["grouped_edge"] = cal_group(Label_[did]["edge"], edge_group)
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
         Label_[did]["distance"] = cal_dist(Label_[did]["neighbour_dist"], distance_threshold)
-        Label_[did]["hue_avg"], Label_[did]["hue_mode"], Label_[did]["hue_range"], Label_[did]["hue_uni"] = \
-            cal_hue(Label_[did]["hue"], False, Label_[did]["map"])
-        Label_[did]["sat_avg"], Label_[did]["sat_mode"], Label_[did]["sat_range"], Label_[did]["sat_uni"] = \
-            cal_sat_brt(Label_[did]["sat"], False, Label_[did]["map"])
-        Label_[did]["brt_avg"], Label_[did]["brt_mode"], Label_[did]["brt_range"], Label_[did]["brt_uni"] = \
-            cal_sat_brt(Label_[did]["value"], False, Label_[did]["map"])
+        Label_[did]["hue_avg"], Label_[did]["hue_mode"], Label_[did]["hue_range"], Label_[did]["hue_uni"], \
+        Label_[did]["hue_dist"] = cal_hue(Label_[did]["hue"], False, Label_[did]["map"])
+        Label_[did]["sat_avg"], Label_[did]["sat_mode"], Label_[did]["sat_range"], Label_[did]["sat_uni"], \
+        Label_[did]["sat_dist"] = cal_sat_brt(Label_[did]["sat"], False, Label_[did]["map"])
+        Label_[did]["brt_avg"], Label_[did]["brt_mode"], Label_[did]["brt_range"], Label_[did]["brt_uni"], \
+        Label_[did]["brt_dist"] = cal_sat_brt(Label_[did]["value"], False, Label_[did]["map"])
 
         Label_[did]["out_hue_avg"], Label_[did]["out_hue_mode"], Label_[did]["out_hue_range"], Label_[did][
-            "out_hue_uni"] = \
-            cal_hue(Label_[did]["hue"], True, Label_[did]["map"])
+            "out_hue_uni"], Label_[did]["out_hue_dist"] = cal_hue(Label_[did]["hue"], True, Label_[did]["map"])
         Label_[did]["out_sat_avg"], Label_[did]["out_sat_mode"], Label_[did]["out_sat_range"], Label_[did][
-            "out_sat_uni"] = \
-            cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
+            "out_sat_uni"], Label_[did]["out_sat_dist"] = cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
         Label_[did]["out_brt_avg"], Label_[did]["out_brt_mode"], Label_[did]["out_brt_range"], Label_[did][
-            "out_brt_uni"] = \
-            cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
+            "out_brt_uni"], Label_[did]["out_brt_dist"] = cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
 
     if save is not None:
         with open(os.path.abspath(save), 'wb') as f:
