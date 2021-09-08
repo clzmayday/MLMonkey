@@ -255,35 +255,48 @@ def cal_shape(poly):
         degree.append(round(angle))
         goin_yd = polygon[i][-1] - polygon[i - 1][-1]
         goin_xd = polygon[i][0] - polygon[i - 1][0]
-
         if goin_xd == 0:
+            # vertical direction
             if goin_yd >= 0:
-                if polygon[i+1][0] >= polygon[i][0]:
+                # going down
+                if polygon[i+1][0] <= polygon[i][0]:
+                    # turn right
                     turning.append(180 - angle)
                 else:
+                    # turn left
                     turning.append(-180 + angle)
             else:
-                if polygon[i + 1][0] >= polygon[i][0]:
+                # going up
+                if polygon[i + 1][0] < polygon[i][0]:
+                    # turn left
                     turning.append(-180 + angle)
                 else:
+                    # turn right
                     turning.append(180 - angle)
         else:
+            # non vertical direction
             goin_a = goin_yd / goin_xd
             goin_b = polygon[i][-1] - goin_a * polygon[i][0]
             inter_y = goin_a * polygon[i + 1][0] + goin_b
-            if goin_yd >= 0:
-                if polygon[i + 1][-1] <= inter_y:
+            if goin_xd >= 0:
+                # going right
+                if polygon[i + 1][-1] >= inter_y:
+                    # turn right
                     turning.append(180 - angle)
                 else:
+                    # turn left
                     turning.append(-180 + angle)
             else:
-                if polygon[i + 1][-1] <= inter_y:
+                # going left
+                if polygon[i + 1][-1] > inter_y:
+                    # turn left
                     turning.append(-180 + angle)
                 else:
+                    # turn right
                     turning.append(180 - angle)
         if angle < 170:
             edge += 1
-
+    turning = np.array(turning).astype(int)
     return np.array(degree), edge, np.array(length), np.array(turning)
 
 
@@ -408,8 +421,17 @@ def cal_deg(deg):
     return avg_d, int(stats.mode(d, axis=None)[0])
 
 
-def cal_shape_comp(poly, deg, edge):
-    pass
+def cal_shape_comp(turning, deg, edge):
+    t = np.append(turning[-2:], turning, axis=0)
+    complexity = 0
+    total_len = sum(edge[:, 0])
+    edge_per = edge/total_len
+    turn_pattern_1step = 0
+
+    for i in range(2, len(t)):
+        turn_pattern_1step += abs(t[i] - t[i-1]) / len(turning)
+
+    return []
 
 
 # Calculate and group coverage of polygon in bounding box
@@ -549,6 +571,8 @@ def featureExtract(outside=None, distance_threshold=100, shape_detail=True, colo
         Label_[did]["deg_avg"], Label_[did]["deg_mode"] = cal_deg(Label_[did]["degree"])
         Label_[did]["grouped_edge"] = cal_group(Label_[did]["edge"], edge_group)
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
+        Label_[did]["shape_complexity"] = cal_shape_comp(Label_[did]["turning"], Label_[did]["degree"],
+                                                         Label_[did]["edge_len"])
         Label_[did]["distance"] = cal_dist(Label_[did]["neighbour_dist"], distance_threshold)
         Label_[did]["hue_avg"], Label_[did]["hue_mode"], Label_[did]["hue_range"], Label_[did]["hue_uni"], \
         Label_[did]["hue_dist"] = cal_hue(Label_[did]["hue"], False, Label_[did]["map"])
