@@ -422,15 +422,31 @@ def cal_deg(deg):
 
 
 def cal_shape_comp(turning, deg, edge):
-    t = np.append(turning[-2:], turning, axis=0)
+    t = np.append([turning[-1]], turning, axis=0)
     complexity = 0
     total_len = sum(edge[:, 0])
     edge_per = edge/total_len
-    turn_pattern_1step = 0
+    follow_turn = 0
+    reverse_turn = 0
+    small_turn = 0
+    for i in range(1, len(t)):
 
-    for i in range(2, len(t)):
-        turn_pattern_1step += abs(t[i] - t[i-1]) / len(turning)
+        turn_v = abs(t[i] - t[i - 1]) / 180
 
+        if (t[i] > 0 and t[i-1] < 0) or (t[i] < 0 and t[i-1] > 0):
+            reverse_turn += 1
+            follow_turn -= 1 - turn_v
+
+        else:
+            follow_turn += 1 - turn_v
+        if abs(t[i]) >= 90:
+            small_turn += 1
+
+    follow_turn /= len(turning)
+    if follow_turn > 1:
+        follow_turn = 1
+    reverse_turn /= len(turning)
+    small_turn /= len(turning)
     return []
 
 
