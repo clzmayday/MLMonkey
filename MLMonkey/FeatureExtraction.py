@@ -423,12 +423,13 @@ def cal_deg(deg):
 
 def cal_shape_comp(turning, deg, edge):
     t = np.append([turning[-1]], turning, axis=0)
-    complexity = 0
     total_len = sum(edge[:, 0])
     edge_per = edge/total_len
+    edge_per = np.append([edge_per[-1]], edge_per, axis=0)
     follow_turn = 0
     reverse_turn = 0
     small_turn = 0
+    edge_ratio = 0
     for i in range(1, len(t)):
 
         turn_v = abs(t[i] - t[i - 1]) / 180
@@ -441,13 +442,16 @@ def cal_shape_comp(turning, deg, edge):
             follow_turn += 1 - turn_v
         if abs(t[i]) >= 90:
             small_turn += 1
+        edge_ratio += 1 / (max(edge_per[i]) / min(edge_per[i]))
 
     follow_turn /= len(turning)
+    edge_ratio /= len(turning)
     if follow_turn > 1:
         follow_turn = 1
     reverse_turn /= len(turning)
     small_turn /= len(turning)
-    return []
+
+    return None
 
 
 # Calculate and group coverage of polygon in bounding box
