@@ -451,7 +451,7 @@ def cal_shape_comp(turning, deg, edge):
     reverse_turn /= len(turning)
     small_turn /= len(turning)
 
-    return None
+    return round(edge_ratio*10), round(follow_turn*10), round(reverse_turn*10), round(small_turn*10)
 
 
 # Calculate and group coverage of polygon in bounding box
@@ -558,6 +558,11 @@ def cal_sat_brt(sat_brt, out, hmap):
     return avg_sb, int(stats.mode(sb, axis=None)[0]), int(max(sb) - min(sb)), len(np.unique(sb)), distribution
 
 
+def cal_comp_colour(hue_dist, sat_dist, brt_dist):
+    col_diff = 0
+
+    pass
+
 # Extract feature Function
 # Input:    Label_reID
 # Output:   List - Store all features
@@ -591,7 +596,8 @@ def featureExtract(outside=None, distance_threshold=100, shape_detail=True, colo
         Label_[did]["deg_avg"], Label_[did]["deg_mode"] = cal_deg(Label_[did]["degree"])
         Label_[did]["grouped_edge"] = cal_group(Label_[did]["edge"], edge_group)
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
-        Label_[did]["shape_complexity"] = cal_shape_comp(Label_[did]["turning"], Label_[did]["degree"],
+        Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_rev_turn"],\
+            Label_[did]["sc_small_turn"] = cal_shape_comp(Label_[did]["turning"], Label_[did]["degree"],
                                                          Label_[did]["edge_len"])
         Label_[did]["distance"] = cal_dist(Label_[did]["neighbour_dist"], distance_threshold)
         Label_[did]["hue_avg"], Label_[did]["hue_mode"], Label_[did]["hue_range"], Label_[did]["hue_uni"], \
