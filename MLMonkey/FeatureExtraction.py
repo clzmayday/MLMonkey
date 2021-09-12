@@ -29,7 +29,7 @@ def readImages(path):
     for file in os.listdir(Image_Dir):
         i = os.path.join(Image_Dir, file)
         if os.path.isdir(i):
-            if not i.endswith("temp"):
+            if not i.endswith(".images_temp"):
                 logging.warning("Found a directory ({0}). MLMonkey has ignored it.".format(i))
             continue
         try:
@@ -353,11 +353,7 @@ def loadData(color_mode="HSV", crop_pad=0, save=None, reload=None):
 # ====================Feature Extraction====================
 
 
-feature_list = ["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode",
-                "grouped_edge", "edgelen_avg", "edgelen_mode", "distance",
-                "hue_avg", "hue_mode", "hue_range", "hue_uni",
-                "sat_avg", "sat_mode", "sat_range", "sat_uni",
-                "brt_avg", "brt_mode", "brt_range", "brt_uni"]
+feature_list = []
 
 
 # Split values into group
@@ -481,6 +477,11 @@ def cal_asp_ratio(poly):
 #        Threshold - short distance threshold
 # Output: Grouped Distance - 1: short, 2: long, 3: No neighbour
 def cal_dist(dist, threshold):
+    if threshold == 0:
+        if len(dist) == 0:
+            return -1
+        else:
+            return min(dist)
     if len(dist) == 0:
         return 3
     else:
@@ -557,16 +558,17 @@ def cal_sat_brt(sat_brt, out, hmap):
 
     return avg_sb, int(stats.mode(sb, axis=None)[0]), int(max(sb) - min(sb)), len(np.unique(sb)), distribution
 
-
+# TODO: Colour Complexity
 def cal_comp_colour(hue_dist, sat_dist, brt_dist):
     col_diff = 0
 
     pass
 
+
 # Extract feature Function
 # Input:    Label_reID
 # Output:   List - Store all features
-def featureExtract(outside=None, distance_threshold=100, shape_detail=True, colour_detail=True,
+def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", colour_detail="full",
                    save=None, reload=None):
     global Label_, feature_list
 
@@ -575,13 +577,39 @@ def featureExtract(outside=None, distance_threshold=100, shape_detail=True, colo
             feature_list.extend(["out_hue_avg", "out_sat_avg", "out_brt_avg"])
         elif outside == "mode":
             feature_list.extend(["out_hue_mode", "out_sat_mode", "out_brt_mode"])
+        elif colour_detail == "unique":
+            feature_list.extend(["out_hue_uni", "out_sat_uni", "out_brt_uni"])
         elif outside == "full":
             feature_list.extend(["out_hue_avg", "out_hue_mode", "out_hue_range", "out_hue_uni",
                                  "out_sat_avg", "out_sat_mode", "out_sat_range", "out_sat_uni",
                                  "out_brt_avg", "out_brt_mode", "out_brt_range", "out_brt_uni"])
         else:
             raise AttributeError('Cannot recognise outside attribute. Expect ("mode", "average", "full", None')
-
+    if shape_detail is not None:
+        if shape_detail == "basic":
+            feature_list.extend(["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "grouped_edge",
+                                 "edgelen_avg", "edgelen_mode", "distance"])
+        elif shape_detail == "complex":
+            feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
+        elif shape_detail == "full":
+            feature_list.extend(["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "grouped_edge",
+                                 "edgelen_avg", "edgelen_mode", "distance"])
+            feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
+        else:
+            raise AttributeError('Cannot recognise shape detail attribute. Expect ("basic", "complex", "full")')
+    if colour_detail is not None:
+        if colour_detail == "average":
+            feature_list.extend(["hue_avg", "sat_avg", "brt_avg"])
+        elif colour_detail == "mode":
+            feature_list.extend(["hue_mode", "sat_mode", "brt_mode"])
+        elif colour_detail == "unique":
+            feature_list.extend(["hue_uni", "sat_uni", "brt_uni"])
+        elif colour_detail == "full":
+            feature_list.extend(["hue_avg", "hue_mode", "hue_range", "hue_uni",
+                                 "sat_avg", "sat_mode", "sat_range", "sat_uni",
+                                 "brt_avg", "brt_mode", "brt_range", "brt_uni"])
+        else:
+            raise AttributeError('Cannot recognise outside attribute. Expect ("mode", "average", "full")')
     if reload is not None:
         with open(os.path.abspath(reload), 'rb') as f:
             Label_ = pickle.load(f)
