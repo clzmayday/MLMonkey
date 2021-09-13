@@ -514,6 +514,7 @@ def cal_hue(hue, out, hmap):
         h = hue[np.logical_not(hmap)]
     else:
         h = hue[hmap]
+
     avg_h = np.average(h)
     if avg_h >= 345:
         avg_h = 1
@@ -523,9 +524,10 @@ def cal_hue(hue, out, hmap):
     h = (h + 45) / 30
     h[h >= 13] = 1
     h = h.astype(int)
-    distribution = {1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0,10:0,11:0,12:0}
+    distribution = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 0}
     for v, c in list(zip(stats.find_repeats(h).values, stats.find_repeats(h).counts)):
-        distribution[int(v)] = round(c / len(h), 1)
+        distribution[int(v)] = round(c / len(h), 2)
+
     return avg_h, int(stats.mode(h, axis=None)[0]), int(hue_range(h)), len(np.unique(h)), distribution
 
 
@@ -538,10 +540,12 @@ def cal_hue(hue, out, hmap):
 #         Saturation or brightness Range:Integer - range of min and max Saturation or brightness values
 #         Unique Saturation or brightness:Integer - unique number of Saturation or brightness
 def cal_sat_brt(sat_brt, out, hmap):
+
     if out:
         sb = sat_brt[np.logical_not(hmap)]
     else:
         sb = sat_brt[hmap]
+
     avg_sb = np.average(sb)
 
     if avg_sb >= 255:
@@ -552,16 +556,24 @@ def cal_sat_brt(sat_brt, out, hmap):
     sb = ((sb / 255) + 0.2) * 5
     sb[sb >= 6] = 5
     sb = sb.astype(int)
-    distribution = {1:0,2:0,3:0,4:0,5:0}
+    distribution = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
     for v, c in list(zip(stats.find_repeats(sb).values, stats.find_repeats(sb).counts)):
-        distribution[int(v)] = round(c / len(sb), 1)
+        distribution[int(v)] = round(c / len(sb), 2)
 
     return avg_sb, int(stats.mode(sb, axis=None)[0]), int(max(sb) - min(sb)), len(np.unique(sb)), distribution
 
-# TODO: Colour Complexity
-def cal_comp_colour(hue_dist, sat_dist, brt_dist):
-    col_diff = 0
 
+# Colour Complexity (Further work)
+def cal_comp_colour(hue_dist, sat_dist, brt_dist, out_hue_dist, out_sat_dist, out_brt_dist):
+    hue_gap = 0
+    sat_gap = 0
+    brt_gap = 0
+    out_hue_gap = 0
+    out_sat_gap = 0
+    out_brt_gap = 0
+    hue_outin = 0
+    sat_outin = 0
+    brt_outin = 0
     pass
 
 
@@ -710,6 +722,10 @@ def get_FeatureRange(own_range=None):
         "edgelen_avg": [1, 2, 3, 4, 5],
         "edgelen_mode": [1, 2, 3, 4, 5],
         "distance": [1, 2, 3],
+        "sc_edge_ratio": [0,1,2,3,4,5,6,7,8,9,10],
+        "sc_follow_turn": [0,1,2,3,4,5,6,7,8,9,10],
+        "sc_reverse_turn": [0,1,2,3,4,5,6,7,8,9,10],
+        "sc_small_turn": [0,1,2,3,4,5,6,7,8,9,10],
         "hue_avg": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_mode": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_range": [1, 2, 3, 4, 5, 6],
