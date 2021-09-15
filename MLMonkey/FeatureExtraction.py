@@ -120,7 +120,8 @@ def crop(did, pad):
     global Label_
     img = I.open(os.path.join(Image_Dir, Label_[did]['filename']))
     boundary = cal_boundary(Label_[did]['polygon'])
-
+    Label_[did]["width"] = (boundary[3] - boundary[1])
+    Label_[did]["height"] = (boundary[2] - boundary[0])
     padX = int((boundary[2] - boundary[0]) * pad)
     padY = int((boundary[3] - boundary[1]) * pad)
     if padX <= 2:
@@ -574,7 +575,18 @@ def cal_comp_colour(hue_dist, sat_dist, brt_dist, out_hue_dist, out_sat_dist, ou
     hue_outin = 0
     sat_outin = 0
     brt_outin = 0
-    pass
+    for i in hue_dist:
+        hue_outin += abs(hue_dist[i] - out_hue_dist[i]) / len(hue_dist)
+
+    for i in sat_dist:
+        sat_outin += abs(sat_dist[i] - out_sat_dist[i]) / len(sat_dist)
+
+    for i in brt_dist:
+        brt_outin += abs(brt_dist[i] - out_brt_dist[i]) / len(brt_dist)
+    hue_outin = int(hue_outin*100)
+    sat_outin = int(sat_outin * 100)
+    brt_outin = int(brt_outin * 100)
+    return []
 
 
 # Extract feature Function
@@ -653,7 +665,9 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
             "out_sat_uni"], Label_[did]["out_sat_dist"] = cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
         Label_[did]["out_brt_avg"], Label_[did]["out_brt_mode"], Label_[did]["out_brt_range"], Label_[did][
             "out_brt_uni"], Label_[did]["out_brt_dist"] = cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
-
+        Label_[did]["cc"] = cal_comp_colour(Label_[did]["hue_dist"], Label_[did]["sat_dist"], Label_[did]["brt_dist"],
+                                            Label_[did]["out_hue_dist"], Label_[did]["out_sat_dist"],
+                                            Label_[did]["out_brt_dist"])
     if save is not None:
         with open(os.path.abspath(save), 'wb') as f:
             pickle.dump(Label_, f)
