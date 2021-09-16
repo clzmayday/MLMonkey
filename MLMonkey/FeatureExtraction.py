@@ -120,6 +120,7 @@ def crop(did, pad):
     global Label_
     img = I.open(os.path.join(Image_Dir, Label_[did]['filename']))
     boundary = cal_boundary(Label_[did]['polygon'])
+    Label_[did]["boundary"] = (boundary, [img.width, img.height])
     Label_[did]["width"] = (boundary[3] - boundary[1])
     Label_[did]["height"] = (boundary[2] - boundary[0])
     padX = int((boundary[2] - boundary[0]) * pad)
@@ -566,12 +567,6 @@ def cal_sat_brt(sat_brt, out, hmap):
 
 # Colour Complexity (Further work)
 def cal_comp_colour(hue_dist, sat_dist, brt_dist, out_hue_dist, out_sat_dist, out_brt_dist):
-    hue_gap = 0
-    sat_gap = 0
-    brt_gap = 0
-    out_hue_gap = 0
-    out_sat_gap = 0
-    out_brt_gap = 0
     hue_outin = 0
     sat_outin = 0
     brt_outin = 0
@@ -583,10 +578,10 @@ def cal_comp_colour(hue_dist, sat_dist, brt_dist, out_hue_dist, out_sat_dist, ou
 
     for i in brt_dist:
         brt_outin += abs(brt_dist[i] - out_brt_dist[i]) / len(brt_dist)
-    hue_outin = int(hue_outin*100)
-    sat_outin = int(sat_outin * 100)
-    brt_outin = int(brt_outin * 100)
-    return []
+    hue_outin = round(hue_outin * 100)
+    sat_outin = round(sat_outin * 100)
+    brt_outin = round(brt_outin * 100)
+    return hue_outin, sat_outin, brt_outin
 
 
 # Extract feature Function
@@ -613,27 +608,29 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
         if shape_detail == "basic":
             feature_list.extend(["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "grouped_edge",
                                  "edgelen_avg", "edgelen_mode", "distance"])
-        elif shape_detail == "complex":
+        if shape_detail == "complex":
             feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
-        elif shape_detail == "full":
+        if shape_detail == "full":
             feature_list.extend(["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "grouped_edge",
                                  "edgelen_avg", "edgelen_mode", "distance"])
             feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
-        else:
-            raise AttributeError('Cannot recognise shape detail attribute. Expect ("basic", "complex", "full")')
+    else:
+        raise AttributeError('Cannot recognise shape detail attribute. Expect ("basic", "complex", "full")')
     if colour_detail is not None:
         if colour_detail == "average":
             feature_list.extend(["hue_avg", "sat_avg", "brt_avg"])
-        elif colour_detail == "mode":
+        if colour_detail == "mode":
             feature_list.extend(["hue_mode", "sat_mode", "brt_mode"])
-        elif colour_detail == "unique":
+        if colour_detail == "unique":
             feature_list.extend(["hue_uni", "sat_uni", "brt_uni"])
-        elif colour_detail == "full":
+        if colour_detail == "complex":
+            feature_list.extend(["hue_outin", "sat_outin", "brt_outin"])
+        if colour_detail == "full":
             feature_list.extend(["hue_avg", "hue_mode", "hue_range", "hue_uni",
                                  "sat_avg", "sat_mode", "sat_range", "sat_uni",
-                                 "brt_avg", "brt_mode", "brt_range", "brt_uni"])
-        else:
-            raise AttributeError('Cannot recognise outside attribute. Expect ("mode", "average", "full")')
+                                 "brt_avg", "brt_mode", "brt_range", "brt_uni", "hue_outin", "sat_outin", "brt_outin"])
+    else:
+        raise AttributeError('Cannot recognise outside attribute. Expect ("mode", "average", "full")')
     if reload is not None:
         with open(os.path.abspath(reload), 'rb') as f:
             Label_ = pickle.load(f)
@@ -648,7 +645,7 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
         Label_[did]["deg_avg"], Label_[did]["deg_mode"] = cal_deg(Label_[did]["degree"])
         Label_[did]["grouped_edge"] = cal_group(Label_[did]["edge"], edge_group)
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
-        Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_rev_turn"],\
+        Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_reverse_turn"],\
             Label_[did]["sc_small_turn"] = cal_shape_comp(Label_[did]["turning"], Label_[did]["degree"],
                                                          Label_[did]["edge_len"])
         Label_[did]["distance"] = cal_dist(Label_[did]["neighbour_dist"], distance_threshold)
@@ -665,9 +662,9 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
             "out_sat_uni"], Label_[did]["out_sat_dist"] = cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
         Label_[did]["out_brt_avg"], Label_[did]["out_brt_mode"], Label_[did]["out_brt_range"], Label_[did][
             "out_brt_uni"], Label_[did]["out_brt_dist"] = cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
-        Label_[did]["cc"] = cal_comp_colour(Label_[did]["hue_dist"], Label_[did]["sat_dist"], Label_[did]["brt_dist"],
-                                            Label_[did]["out_hue_dist"], Label_[did]["out_sat_dist"],
-                                            Label_[did]["out_brt_dist"])
+        Label_[did]["hue_outin"], Label_[did]["sat_outin"], Label_[did]["brt_outin"]  = cal_comp_colour(
+            Label_[did]["hue_dist"], Label_[did]["sat_dist"], Label_[did]["brt_dist"], Label_[did]["out_hue_dist"],
+            Label_[did]["out_sat_dist"],Label_[did]["out_brt_dist"])
     if save is not None:
         with open(os.path.abspath(save), 'wb') as f:
             pickle.dump(Label_, f)
@@ -744,14 +741,17 @@ def get_FeatureRange(own_range=None):
         "hue_mode": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_range": [1, 2, 3, 4, 5, 6],
         "hue_uni": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+        "hue_outin": [0,1,2,3,4,5,6,7,8,9,10],
         "sat_avg": [1, 2, 3, 4, 5],
         "sat_mode": [1, 2, 3, 4, 5],
         "sat_range": [1, 2, 3, 4],
         "sat_uni": [1, 2, 3, 4, 5],
+        "sat_outin": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "brt_avg": [1, 2, 3, 4, 5],
         "brt_mode": [1, 2, 3, 4, 5],
         "brt_range": [1, 2, 3, 4],
         "brt_uni": [1, 2, 3, 4, 5],
+        "brt_outin": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "out_hue_avg": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "out_hue_mode": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "out_hue_range": [1, 2, 3, 4, 5, 6],

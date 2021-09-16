@@ -5,7 +5,7 @@ from PIL import Image
 
 windtex_head = []
 windtex_data = []
-
+feature_range = None
 
 def read_csv_data(filepath):
     global windtex_head, windtex_data
@@ -27,15 +27,27 @@ def read_csv_data(filepath):
     return windtex_head, windtex_data
 
 
-def merging_defect():
-    pass
+def merging_defect(feature_list, feature, size, range_extend=False):
+    global feature_range
+    data = dict()
+    weight = [i["a"] for i in size]
+    for fea in feature_list:
+        f_list = [i[fea] for i in feature]
+        avg = average(f_list, weight)
+        if range_extend:
+            data[fea] = round(avg*2)
+            feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
+        else:
+            data[fea] = round(avg)
+
+    return data
 
 
 def average(values, weights=None):
     avg = 0
     if weights is not None:
         for i in range(len(values)):
-            avg += values * (weights[i] / sum(weights))
+            avg += values[i] * (weights[i] / sum(weights))
     else:
         avg = sum(values) / len(values)
 
@@ -43,14 +55,15 @@ def average(values, weights=None):
 
 
 def readData(windtex_path, image_path, label_path):
-    global windtex_head, windtex_data
+    global windtex_head, windtex_data, feature_range
     w_head, w_data = read_csv_data(windtex_path)
 
     FeatureExtraction.readImages(image_path)
     FeatureExtraction.readVIALabel(label_path)
     FeatureExtraction.loadData(crop_pad=0.25)
     f_data = FeatureExtraction.featureExtract(distance_threshold=0)
-    all_feature = list(FeatureExtraction.get_FeatureRange().keys())
+    all_feature = FeatureExtraction.get_FeatureList()
+    feature_range = FeatureExtraction.get_FeatureRange()
     m_data = dict()
     for damage in tqdm(w_data, desc="Merging Features to Damage"):
         m_data[damage["ID"]] = dict()
@@ -67,21 +80,29 @@ def readData(windtex_path, image_path, label_path):
         m_data[damage["ID"]]['position'] = damage['Position']
         m_data[damage["ID"]]['location'] = float(damage['Damage Location'])
         m_data[damage["ID"]]['description'] = damage['description']
-        m_data[damage["ID"]]['windtex'] = int(damage['Windtex Estimation'])
+        m_data[damage["ID"]]['windtex'] = float(damage['Windtex Estimation'])
+        m_data[damage["ID"]]['continuous'] = 0
         # loop
         size_list = []
-        shape_list = []
-        colour_list = []
-        for i in all_defect:
+        feature_list = []
 
+        for i in all_defect:
+            if i["boundary"][0][0] <= 10 or i["boundary"][0][1] <= 10 or i["boundary"][1][0] - i["boundary"][0][2] \
+                    <= 10 or i["boundary"][1][1] - i["boundary"][0][3] <= 10:
+                m_data[damage["ID"]]['continuous'] = 1
             size_dict = {"w": round(act_size[i["filename"]] * i["width"] * 100, 1),
                          "h": round(act_size[i["filename"]] * i["height"] * 100, 1),
                          "a": round(act_size[i["filename"]] * act_size[i["filename"]] * i["poly_size"] * 10000, 1)}
-            shape_dict = {}
-            colour_dict = {}
+            feature_dict = dict()
+            for f in all_feature:
+                feature_dict[f] = i[f]
             size_list.append(size_dict)
+            feature_list.append(feature_dict)
 
+        merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=True)
+        for i in merged_data:
+            m_data[damage["ID"]][i] = merged_data[i]
+        print(damage["ID"], m_data[damage["ID"]])
 
-
-        print()
     print()
+    return m_data
