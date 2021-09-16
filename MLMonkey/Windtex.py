@@ -28,7 +28,7 @@ def read_csv_data(filepath):
 
 
 def merging_defect(feature_list, feature, size, range_extend=False):
-    global feature_range
+
     data = dict()
     weight = [i["a"] for i in size]
     for fea in feature_list:
@@ -36,7 +36,6 @@ def merging_defect(feature_list, feature, size, range_extend=False):
         avg = average(f_list, weight)
         if range_extend:
             data[fea] = round(avg*2)
-            feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
         else:
             data[fea] = round(avg)
 
@@ -54,7 +53,7 @@ def average(values, weights=None):
     return avg
 
 
-def readData(windtex_path, image_path, label_path):
+def readData(windtex_path, image_path, label_path, range_extend=True):
     global windtex_head, windtex_data, feature_range
     w_head, w_data = read_csv_data(windtex_path)
 
@@ -99,10 +98,13 @@ def readData(windtex_path, image_path, label_path):
             size_list.append(size_dict)
             feature_list.append(feature_dict)
 
-        merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=True)
+        merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=range_extend)
         for i in merged_data:
             m_data[damage["ID"]][i] = merged_data[i]
-        print(damage["ID"], m_data[damage["ID"]])
+    if range_extend:
+        for fea in all_feature:
+            feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
+
 
     print()
     return m_data
