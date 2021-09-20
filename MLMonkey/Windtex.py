@@ -89,9 +89,9 @@ def readData(windtex_path, image_path, label_path, range_extend=True):
             if i["boundary"][0][0] <= 10 or i["boundary"][0][1] <= 10 or i["boundary"][1][0] - i["boundary"][0][2] \
                     <= 10 or i["boundary"][1][1] - i["boundary"][0][3] <= 10:
                 m_data[damage["ID"]]['continuous'] = 1
-            size_dict = {"w": round(act_size[i["filename"]] * i["width"] * 100, 1),
-                         "h": round(act_size[i["filename"]] * i["height"] * 100, 1),
-                         "a": round(act_size[i["filename"]] * act_size[i["filename"]] * i["poly_size"] * 10000, 1)}
+            size_dict = {"w": round(act_size[i["filename"]] * i["width"] * 100, 4),
+                         "h": round(act_size[i["filename"]] * i["height"] * 100, 4),
+                         "a": round(act_size[i["filename"]] * act_size[i["filename"]] * i["poly_size"] * 10000, 4)}
             feature_dict = dict()
             for f in all_feature:
                 feature_dict[f] = i[f]
