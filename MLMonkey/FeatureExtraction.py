@@ -606,12 +606,12 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
             raise AttributeError('Cannot recognise outside attribute. Expect ("mode", "average", "full", None')
     if shape_detail is not None:
         if shape_detail == "basic":
-            feature_list.extend(["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "grouped_edge",
+            feature_list.extend(["size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "edge",
                                  "edgelen_avg", "edgelen_mode", "distance"])
         if shape_detail == "complex":
             feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
         if shape_detail == "full":
-            feature_list.extend(["grouped_size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "grouped_edge",
+            feature_list.extend(["size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "edge",
                                  "edgelen_avg", "edgelen_mode", "distance"])
             feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
     else:
@@ -630,7 +630,7 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
                                  "sat_avg", "sat_mode", "sat_range", "sat_uni",
                                  "brt_avg", "brt_mode", "brt_range", "brt_uni", "hue_outin", "sat_outin", "brt_outin"])
     else:
-        raise AttributeError('Cannot recognise outside attribute. Expect ("mode", "average", "full")')
+        raise AttributeError('Cannot recognise outside attribute. Expect ("unique", "complex", "mode", "average", "full")')
     if reload is not None:
         with open(os.path.abspath(reload), 'rb') as f:
             Label_ = pickle.load(f)
@@ -639,11 +639,12 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
     size_group = group(np.array([Label_[l]["poly_size"] for l in Label_]))
     edge_group = group(np.array([Label_[l]["edge"] for l in Label_]), gap=1)
     for did in tqdm(Label_.keys(), desc="Feature Extraction"):
-        Label_[did]["grouped_size"] = cal_group(Label_[did]["poly_size"], size_group)
+        # Label_[did]["grouped_size"] = cal_group(Label_[did]["poly_size"], size_group)
+        Label_[did]["size"] = Label_[did]["poly_size"]
         Label_[did]["coverage"] = cal_coverage(Label_[did]["poly_size"], Label_[did]["bb_size"])
         Label_[did]["asp_ratio"] = cal_asp_ratio(Label_[did]["crop_poly"])
         Label_[did]["deg_avg"], Label_[did]["deg_mode"] = cal_deg(Label_[did]["degree"])
-        Label_[did]["grouped_edge"] = cal_group(Label_[did]["edge"], edge_group)
+        Label_[did]["edge"] = Label_[did]["edge"]
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
         Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_reverse_turn"],\
             Label_[did]["sc_small_turn"] = cal_shape_comp(Label_[did]["turning"], Label_[did]["degree"],
@@ -724,12 +725,12 @@ def get_FeatureList():
 
 def get_FeatureRange(own_range=None):
     feature_range = {
-        "grouped_size": [1, 2, 3, 4, 5],
+        "size": [1, 2, 3, 4, 5],
         "coverage": [1, 2, 3, 4, 5],
         "asp_ratio": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "deg_avg": [1, 2, 3, 4, 5, 6],
         "deg_mode": [1, 2, 3, 4, 5, 6],
-        "grouped_edge": [1, 2, 3, 4, 5],
+        "edge": [1, 2, 3, 4, 5],
         "edgelen_avg": [1, 2, 3, 4, 5],
         "edgelen_mode": [1, 2, 3, 4, 5],
         "distance": [1, 2, 3],

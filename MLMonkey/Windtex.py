@@ -33,7 +33,8 @@ def merging_defect(feature_list, feature, size, range_extend=False):
     weight = [i["a"] for i in size]
     for fea in feature_list:
         f_list = [i[fea] for i in feature]
-
+        if fea == "size":
+            continue
         avg = average(f_list, weight)
         if range_extend:
             data[fea] = round(avg*2)
@@ -80,6 +81,7 @@ def readData(windtex_path, image_path, label_path, range_extend=True):
         m_data[damage["ID"]]['position'] = damage['Position']
         m_data[damage["ID"]]['location'] = float(damage['Damage Location'])
         m_data[damage["ID"]]['description'] = damage['description']
+        m_data[damage["ID"]]['num_desc'] = len(damage['description'])
         m_data[damage["ID"]]['windtex'] = float(damage['Windtex Estimation'])
         m_data[damage["ID"]]['continuous'] = 0
         # loop
@@ -102,10 +104,9 @@ def readData(windtex_path, image_path, label_path, range_extend=True):
         merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=range_extend)
         for i in merged_data:
             m_data[damage["ID"]][i] = merged_data[i]
+        m_data[damage["ID"]]["size"] = sum([i["a"] for i in size_list])
     if range_extend:
         for fea in all_feature:
             feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
 
-
-    print()
     return m_data
