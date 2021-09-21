@@ -9,7 +9,10 @@ csv_data = [list(data["1"].keys())]
 for i in data:
     row = []
     for j in data[i]:
-        row.append(data[i][j])
+        if j == "description" or j == "position":
+            row.append(",".join(data[i][j]))
+        else:
+            row.append(data[i][j])
     csv_data.append(row)
 
 with open("./first.csv", "w") as f:
