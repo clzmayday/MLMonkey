@@ -33,6 +33,7 @@ def merging_defect(feature_list, feature, size, range_extend=False):
     weight = [i["a"] for i in size]
     for fea in feature_list:
         f_list = [i[fea] for i in feature]
+
         avg = average(f_list, weight)
         if range_extend:
             data[fea] = round(avg*2)
