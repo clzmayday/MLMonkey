@@ -55,6 +55,9 @@ def average(values, weights=None):
     return avg
 
 
+def quantify_desc(desc):
+    pass
+
 def readData(windtex_path, image_path, label_path, range_extend=True):
     global windtex_head, windtex_data, feature_range
     w_head, w_data = read_csv_data(windtex_path)
