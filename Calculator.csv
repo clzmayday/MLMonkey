@@ -67,14 +67,14 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 66,Newton Down,T01,NX84899,1357,Outside,10,3,Erosion / Stress,48,1,1.5,erosion foil damaged,0.21,LE,N
 67,Newton Down,T01,NX84899,1357,Outside,11,3,Erosion / Stress,48.5,1,0.5,"gelcoat damage, laminate visible",0.055,LE,N
 68,Newton Down,T01,NX84899,1358,Outside,5,3,Erosion / Stress,48.5,1,0.5,"gelcoat damage, laminate visible",0.72,LE,N
-69,Newton Down,T02,NX84900,1354,,2,3,Erosion / Stress,40,1,0.25,Edge seal damaged,0.068,LE,N
+69,Newton Down,T02,NX84900,1354,,2,3,Erosion / Stress,40,1,0.25,edge seal damaged,0.068,LE,N
 70,Newton Down,T02,NX84900,1354,,3,3,Erosion / Stress,48.5,1,0.25,"gelcoat damage, laminate visible",0.07,LE,N
-71,Newton Down,T02,NX84900,1352,,3,3,Erosion / Stress,40,1,0.25,Edge seal damaged,0.08,LE,N
+71,Newton Down,T02,NX84900,1352,,3,3,Erosion / Stress,40,1,0.25,edge seal damaged,0.08,LE,N
 72,Newton Down,T02,NX84900,1352,,4,3,Erosion / Stress,42,1,0.25,erosion foil damaged,0.05,LE,N
-73,Newton Down,T02,NX84900,1352,,5,3,Erosion / Stress,48.5,1,1,Laminate damage,0.045,LE,N
-74,Newton Down,T02,NX84900,1355,,2,3,Erosion / Stress,40,1,0.25,Edge seal damaged,0.267,LE,N
-75,Newton Down,T02,NX84900,1355,,3,3,Erosion / Stress,46,1,0.25,Edge seal damaged,0.057,LE,N
-76,Newton Down,T02,NX84900,1355,,4,3,Erosion / Stress,48.5,1,0.5,Laminate damage,0.092,LE,N
+73,Newton Down,T02,NX84900,1352,,5,3,Erosion / Stress,48.5,1,1,laminate damage,0.045,LE,N
+74,Newton Down,T02,NX84900,1355,,2,3,Erosion / Stress,40,1,0.25,edge seal damaged,0.267,LE,N
+75,Newton Down,T02,NX84900,1355,,3,3,Erosion / Stress,46,1,0.25,edge seal damaged,0.057,LE,N
+76,Newton Down,T02,NX84900,1355,,4,3,Erosion / Stress,48.5,1,0.5,laminate damage,0.092,LE,N
 77,PYW,T01,NX82154,327,Outside,2,3,Erosion / Stress,38,5,3,erosion foil damaged,0.577+0.33+0.33+0.722+0.55,LE,N
 78,PYW,T01,NX82154,327,Outside,3,3,Erosion / Stress,41.8,1,0.5,"erosion class 2-3, protection damage",0.083,LE,N
 79,PYW,T01,NX82154,327,Outside,4,3,Erosion / Stress,44,1,0.5,erosion class 2-3,0.058,LE,N
@@ -90,15 +90,15 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 89,PYW,T01,NX82154,431,Outside,15,3,Erosion / Stress,44,1,0.5,erosion class 2-3,0.193,LE,N
 90,PYW,T02,NX82162,307,Outside,3,3,Erosion / Stress,19,1,0.3,"gelcoat damage, laminate visible",0.055,SS,N
 91,PYW,T02,NX82162,307,Outside,4,3,Erosion / Stress,42,5,3,erosion foil damaged,0.248+0.2+0.24,"LE,PS,SS",Y+multi
-92,PYW,T02,NX82162,307,Outside,6,4,Lightning Damage,43,2,2,"gelcoat damage, laminate visible, lighting strike",0.12+0.12+0.106,LE,N
-93,PYW,T02,NX82162,409,Outside,5,3,Erosion / Stress,35,1,0.3,Laminate damage,0.035+0.07+0.056,LE,N
-94,PYW,T02,NX82162,409,Outside,6,3,Erosion / Stress,40,5,3,Laminate damage,0.43+0.256+0.085+0.564+0.035+0.177+0.215,"LE,PS,SS",N
+92,PYW,T02,NX82162,307,Outside,6,4,Lightning Damage,43,2,2,"gelcoat damage, laminate visible, lightning strike",0.12+0.12+0.106,LE,N
+93,PYW,T02,NX82162,409,Outside,5,3,Erosion / Stress,35,1,0.3,laminate damage,0.035+0.07+0.056,LE,N
+94,PYW,T02,NX82162,409,Outside,6,3,Erosion / Stress,40,5,3,laminate damage,0.43+0.256+0.085+0.564+0.035+0.177+0.215,"LE,PS,SS",N
 95,PYW,T02,NX82162,410,Outside,6,3,Erosion / Stress,39,5,3,erosion foil damaged,0.188+0.25,LE,N
 96,PYW,T02,NX82162,410,Outside,8,3,Erosion / Stress,40,2,0.3,"gelcoat damage, laminate visible",0.153,LE,N
 97,PYW,T03,NX82155,423,Outside,4,3,Erosion / Stress,35,4,0.3,"gelcoat damage, laminate visible",0.1+0.068+0.068+0.05+0.031,LE,N
 98,PYW,T03,NX82155,425,Outside,3,3,Erosion / Stress,39,4,3,erosion foil damaged,0.289+1.08+0.462,"LE,PS,SS",N
 99,PYW,T03,NX82155,425,Outside,5,3,Erosion / Stress,44,1,0.5,"erosion class 3, protection damage",0.239,LE,N
-100,PYW,T03,NX82155,426,Outside,2,3,Production Failure,39,5,2,Dry laminate,0.075+0.227+0.063+0.072+0.16,SS,N
+100,PYW,T03,NX82155,426,Outside,2,3,Production Failure,39,5,2,dry laminate,0.075+0.227+0.063+0.072+0.16,SS,N
 101,PYW,T03,NX82155,426,Outside,4,3,Erosion / Stress,43,4,2,"gelcoat damage, laminate visible, protection damage",0.173+0.192+0.31,LE,N
 102,PYW,T04,NX82157,254,Outside,7,3,Erosion / Stress,44,1,2,erosion foil damaged,0.385+0.365,LE,N
 103,PYW,T04,NX82157,252,Outside,5,3,Erosion / Stress,37.5,1,0.2,"gelcoat damage, laminate visible",0.084+0.075+0.064+0.266,"LE,PS",N
@@ -141,7 +141,7 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 140,PYW,T07,NX82161,23,Outside,9,3,Erosion / Stress,43,4,1.5,"erosion class 3, protection damage, laminate visible",0.3+0.082+0.12,LE,N
 141,PYW,T08,NX82166,13,Outside,4,3,Erosion / Stress,39,1,0.6,hole in blade,0.075,PS,N
 142,PYW,T08,NX82166,13,Outside,7,3,Erosion / Stress,43,1,1,"gelcoat damage, laminate visible",0.434+0.15,LE,N
-143,PYW,T08,NX82166,14,Outside,3,3,Erosion / Stress,28,1,0.5,Topcoat damage,0.103,"PS,TE",N
+143,PYW,T08,NX82166,14,Outside,3,3,Erosion / Stress,28,1,0.5,topcoat damage,0.103,"PS,TE",N
 144,PYW,T08,NX82166,14,Outside,6,3,Erosion / Stress,42,3,1.5,"gelcoat damage, laminate visible, erosion foil damaged",0.293+0.23,LE,N
 145,PYW,T08,NX82166,14,Outside,7,3,Erosion / Stress,44,1,1,erosion class 2,0.22+0.135,LE,N
 146,PYW,T08,NX82166,15,Outside,3,3,Erosion / Stress,39,1,0.6,hole in blade,0.065,PS,N
@@ -150,7 +150,7 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 149,PYW,T09,NX82163,369,Outside,4,3,Erosion / Stress,38,6,2,erosion foil damaged,0.304+0.389+0.14+0.28,LE,N
 150,PYW,T09,NX82163,369,Outside,5,3,Erosion / Stress,41.2,1,1,"erosion class 1-2, protection damage",0.16+0.041,LE,N
 151,PYW,T09,NX82163,369,Outside,6,3,Erosion / Stress,44,1,0.2,"erosion class 2-3, protection damage",0.244,LE,N
-152,PYW,T09,NX82163,369,Outside,7,3,Production Failure,44,1,1,Dry laminate,0.085,PS,N
+152,PYW,T09,NX82163,369,Outside,7,3,Production Failure,44,1,1,dry laminate,0.085,PS,N
 153,PYW,T09,NX82163,369,Outside,8,3,Erosion / Stress,44,1,0.1,drain blocked,0.198,SS,N
 154,PYW,T09,NX82163,411,Outside,7,3,Erosion / Stress,38,6,2,erosion foil damaged,0.247+0.103+0.08+0.35,LE,N
 155,PYW,T09,NX82163,401,Outside,6,3,Erosion / Stress,36.7,1,0.2,"gelcoat damage, laminate visible",0.21,LE,N
@@ -163,7 +163,7 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 162,PYW,T10,NX82449,10,Outside,9,3,Erosion / Stress,40,5,2,erosion class 3,0.269+0.193+0.178,LE,N
 163,PYW,T10,NX82449,11,Outside,4,3,Erosion / Stress,35,5,0.4,erosion class 2,0.214+0.268+0.061+0.172+0.268+0.303,LE,N
 164,PYW,T10,NX82449,11,Outside,6,3,Erosion / Stress,42,5,2,"erosion class 2-3, protection damage, erosion foil damaged",0.268+0.249+0.22+0.2,LE,N
-165,PYW,T10,NX82449,11,Outside,7,5,Lightning Damage,44,4,4,Tip-split due to lightning,0.245+0.303,"LE,PS,SS",N
+165,PYW,T10,NX82449,11,Outside,7,5,Lightning Damage,44,4,4,tip-split due to lightning,0.245+0.303,"LE,PS,SS",N
 166,PYW,T11,NX82164,344,Outside,4,3,Erosion / Stress,38,2,3,"erosion foil damaged, wrinkles",0.255+0.192+0.312,LE,N
 167,PYW,T11,NX82164,388,Outside,3,3,Erosion / Stress,41,2,1.5,erosion foil damaged,0.253+0.148,LE,N
 168,PYW,T11,NX82164,388,Outside,5,3,Erosion / Stress,44,2,1.5,"erosion class 2-3, protection damage",0.09,LE,Y+less img
@@ -191,12 +191,12 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 190,PYW,T14,NX82450,37,Outside,2,3,Erosion / Stress,34,3,0.4,erosion class 1-2,0.155+0.15+0.145,LE,N
 191,PYW,T14,NX82450,37,Outside,3,3,Erosion / Stress,34,3,0.4,"gelcoat damage, laminate visible, erosion class 2",0.069+0.0145+0.093,SS,N
 192,PYW,T14,NX82450,37,Outside,4,3,Erosion / Stress,39,4,2,erosion foil damaged,0.195+0.12+0.18+0.2,LE,N
-193,PYW,T14,NX82450,37,Outside,6,3,Erosion / Stress,44,1,0.1,No drain holes in designated spots,0.239,SS,N
-194,PYW,T14,NX82450,41,Outside,3,3,Erosion / Stress,30,2,1,Dry laminate,0.076+0.12,SS,N
+193,PYW,T14,NX82450,37,Outside,6,3,Erosion / Stress,44,1,0.1,drain blocked,0.239,SS,N
+194,PYW,T14,NX82450,41,Outside,3,3,Erosion / Stress,30,2,1,dry laminate,0.076+0.12,SS,N
 195,PYW,T14,NX82450,41,Outside,4,3,Erosion / Stress,35,3,0.5,erosion class 1-2,0.15+0.105+0.259,LE,N
-196,PYW,T14,NX82450,41,Outside,5,3,Erosion / Stress,35,1,0.5,Laminate damage,0.1,PS,N
+196,PYW,T14,NX82450,41,Outside,5,3,Erosion / Stress,35,1,0.5,laminate damage,0.1,PS,N
 197,PYW,T14,NX82450,41,Outside,7,3,Erosion / Stress,42,2,2,"erosion class 1-2, protection damage",0.263+0.177+0.16,LE,N
-198,PYW,T15,NX81260,4,Outside,4,3,Production Failure,11,2,1,Dry laminate,0.236+0.12,LE,N
+198,PYW,T15,NX81260,4,Outside,4,3,Production Failure,11,2,1,dry laminate,0.236+0.12,LE,N
 199,PYW,T15,NX81260,4,Outside,5,3,Erosion / Stress,25,5,1,erosion class 2,0.063+0.351+0.088+0.215,LE,N
 200,PYW,T15,NX81260,4,Outside,6,3,Erosion / Stress,41,3,2,"gelcoat damage, laminate visible",0.328+0.166+0.125+0.177,LE,N
 201,PYW,T15,NX81260,7,Outside,4,3,Erosion / Stress,30,5,0.5,erosion class 2,0.057+0.046+0.045+0.065,LE,N
@@ -213,32 +213,32 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 212,PYW,T16,NX82448,26,Outside,4,3,Erosion / Stress,30,5,1,erosion class 2,0.037+0.199+0.1+0.109+0.7,LE,N
 213,PYW,T16,NX82448,26,Outside,7,3,Erosion / Stress,41,5,2.5,"erosion class 2-3, protection damage",0.262+0.188+0.15,LE,N
 214,PYW,T16,NX82448,27,Outside,3,3,Erosion / Stress,30,5,0.3,erosion class 2,0.36+0.288,LE,N
-215,PYW,T16,NX82448,27,Outside,4,3,Erosion / Stress,40,1,1,Gelcoat damage,0.075,PS,N
+215,PYW,T16,NX82448,27,Outside,4,3,Erosion / Stress,40,1,1,gelcoat damage,0.075,PS,N
 216,PYW,T16,NX82448,27,Outside,5,3,Erosion / Stress,41,5,2.5,"erosion class 2-3, protection damage",0.178+0.259,LE,N
 217,PYW,T17,NX82446,5,Outside,3,3,Erosion / Stress,30,5,0.5,erosion class 2,0.183+0.043+0.092,LE,N
-218,PYW,T17,NX82446,5,Outside,4,3,Erosion / Stress,40,1,1,Laminate damage,0.045,SS,N
+218,PYW,T17,NX82446,5,Outside,4,3,Erosion / Stress,40,1,1,laminate damage,0.045,SS,N
 219,PYW,T17,NX82446,5,Outside,6,3,Erosion / Stress,42,3,2,"erosion class 1-2, protection damage",0.313+0.222+0.123,LE,N
-220,PYW,T17,NX82446,19,Outside,1,3,Erosion / Stress,4,1,0.3,Gelcoat damage,0.1,SS,N
+220,PYW,T17,NX82446,19,Outside,1,3,Erosion / Stress,4,1,0.3,gelcoat damage,0.1,SS,N
 221,PYW,T17,NX82446,19,Outside,2,3,Erosion / Stress,9,2,0.5,vortex module damaged/missing,0.47,SS,N
 222,PYW,T17,NX82446,19,Outside,3,3,Erosion / Stress,35,5,0.5,erosion class 2,0.276+0.249+0.26,LE,N
-223,PYW,T17,NX82446,19,Outside,4,3,Erosion / Stress,40,4,0.5,Laminate damage,0.068+0.059+0.09,"PS,SS",N
+223,PYW,T17,NX82446,19,Outside,4,3,Erosion / Stress,40,4,0.5,laminate damage,0.068+0.059+0.09,"PS,SS",N
 224,PYW,T17,NX82446,19,Outside,5,3,Erosion / Stress,42,3,2,"erosion class 2-3, protection damage",0.324+0.15+0.196+0.155,LE,N
-225,PYW,T17,NX82446,20,Outside,1,3,Erosion / Stress,5,1,0.5,Gelcoat damage,0.26,SS,N
+225,PYW,T17,NX82446,20,Outside,1,3,Erosion / Stress,5,1,0.5,gelcoat damage,0.26,SS,N
 226,PYW,T17,NX82446,20,Outside,5,3,Erosion / Stress,35,5,0.5,erosion class 2,0.48,LE,N
 227,PYW,T17,NX82446,20,Outside,7,3,Erosion / Stress,42,3,2,"erosion class 2-3, protection damage",0.254+0.12+0.07+0.72+0.307+0.211,LE,N
 228,PYW,T18,NX82445,31,Outside,1,3,Erosion / Stress,9,2,0.3,vortex module damaged/missing,0.322,SS,N
-229,PYW,T18,NX82445,31,Outside,3,3,Erosion / Stress,26,2,0.3,Dry laminate,0.047+0.043,"LE,SS",N
+229,PYW,T18,NX82445,31,Outside,3,3,Erosion / Stress,26,2,0.3,dry laminate,0.047+0.043,"LE,SS",N
 230,PYW,T18,NX82445,31,Outside,4,3,Erosion / Stress,30,5,0.5,erosion class 2,0.061+0.207+0.209+0.105,LE,N
 231,PYW,T18,NX82445,31,Outside,6,3,Erosion / Stress,42,2,2.5,"erosion class 2-3, protection damage, erosion foil damaged",0.256+0.283+0.165,LE,N
 232,PYW,T18,NX82445,38,Outside,2,3,Erosion / Stress,9,2,0.3,vortex module damaged/missing,0.192,SS,N
-233,PYW,T18,NX82445,38,Outside,5,3,Erosion / Stress,25,5,0.4,Gelcoat damage,0.04+0.102,SS,N
+233,PYW,T18,NX82445,38,Outside,5,3,Erosion / Stress,25,5,0.4,gelcoat damage,0.04+0.102,SS,N
 234,PYW,T18,NX82445,38,Outside,6,3,Erosion / Stress,30,5,2.5,erosion class 1-3,0.192+0.056+0.054+0.281+0.07,LE,N
 235,PYW,T18,NX82445,38,Outside,8,3,Erosion / Stress,42,2,2,"erosion class 2-3, protection damage, erosion foil damaged",0.241+0.278,LE,N
 236,PYW,T18,NX82445,40,Outside,3,3,Erosion / Stress,24,5,0.5,"gelcoat damage, laminate visible",0.042+0.043+0.66+0.1,"LE,SS",N
 237,PYW,T18,NX82445,40,Outside,4,3,Erosion / Stress,32,5,0.5,erosion class 2,0.32+0.19+0.215+0.237,LE,N
 238,PYW,T18,NX82445,40,Outside,6,3,Erosion / Stress,42,2,2,"erosion class 2-3, protection damage, laminate damage",0.256+0.274+0.276,LE,N
 239,PYW,T19,NX82159,33,Outside,2,3,Erosion / Stress,9,1,0.3,vortex module damaged/missing,0.192,SS,N
-240,PYW,T19,NX82159,33,Outside,3,3,Erosion / Stress,13,1,1,Dry laminate,0.046,PS,N
+240,PYW,T19,NX82159,33,Outside,3,3,Erosion / Stress,13,1,1,dry laminate,0.046,PS,N
 241,PYW,T19,NX82159,33,Outside,4,3,Erosion / Stress,30,5,0.3,"gelcoat damage, laminate visible, erosion class 1-3",0.07+0.063+0.181+0.042+0.065+0.065,"LE,PS,SS",N
 242,PYW,T19,NX82159,33,Outside,6,3,Erosion / Stress,42,5,2.5,"erosion class 2, protection damage",0.43+0.4+0.146,LE,N
 243,PYW,T19,NX82159,34,Outside,2,3,Erosion / Stress,32,5,0.3,erosion class 2,0.163+0.188+0.05+0.06+0.5,LE,N
@@ -252,9 +252,9 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 251,PYW,T20,NX82447,28,Outside,8,4,Erosion / Stress,44,3,1.5,"erosion class 2-3, protection damage",0.301,LE,N
 252,PYW,T20,NX82447,29,Outside,1,3,Erosion / Stress,9,1,0.5,vortex module damaged/missing,0.21,SS,N
 253,PYW,T20,NX82447,29,Outside,3,3,Erosion / Stress,28,6,1,erosion class 2,0.16+0.045+0.071,LE,Y+long
-254,PYW,T20,NX82447,29,Outside,4,3,Erosion / Stress,30,1,0.3,Laminate damage,0.072,"PS,TE",N
+254,PYW,T20,NX82447,29,Outside,4,3,Erosion / Stress,30,1,0.3,laminate damage,0.072,"PS,TE",N
 255,PYW,T20,NX82447,29,Outside,6,3,Erosion / Stress,42,5,2,"erosion class 2-3, protection damage",0.331+0.23+0.384+0.199,LE,N
-256,PYW,T20,NX82447,30,Outside,2,3,Erosion / Stress,5,1,0.3,Gelcoat damage,0.213,SS,N
+256,PYW,T20,NX82447,30,Outside,2,3,Erosion / Stress,5,1,0.3,gelcoat damage,0.213,SS,N
 257,PYW,T20,NX82447,30,Outside,6,3,Erosion / Stress,36,1,0.3,"gelcoat damage, laminate visible",0.046,"PS,TE",N
 258,PYW,T20,NX82447,30,Outside,7,3,Erosion / Stress,38,5,2.5,erosion foil damaged,0.266+0.257+0.245,LE,N
 259,PYW,T20,NX82447,30,Outside,8,3,Erosion / Stress,43,3,1.5,"erosion class 2-3, protection damage",0.222+0.9,LE,N
@@ -266,7 +266,7 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 265,PYW,T21,NX82156,21,Outside,7,3,Erosion / Stress,40,3,1.5,"erosion class 2-3, protection damage",0.037+0.074+0.193,LE,N
 266,PYW,T21,NX82156,22,Outside,4,3,Erosion / Stress,35,3,0.4,"gelcoat damage, laminate visible",0.11+0.046+0.054+0.042+0.085,LE,N
 267,PYW,T21,NX82156,22,Outside,5,3,Erosion / Stress,42,3,2,"erosion class 2-3, protection damage, erosion foil damaged",0.218+0.144+0.11+0.161,LE,N
-268,PYW,T22,NX84626,560,Outside,6,4,Poor Repair,42.8,2,1,Bonding deficiency,0.35+0.3,"SS,TE",N
+268,PYW,T22,NX84626,560,Outside,6,4,Poor Repair,42.8,2,1,bonding deficiency,0.35+0.3,"SS,TE",N
 269,PYW,T22,NX84626,560,Outside,7,3,Erosion / Stress,43.4,2,2,protection damage,0.3,LE,N
 270,PYW,T22,NX84626,560,Outside,8,3,Erosion / Stress,44,1,0,protection damage,0.35,LE,N
 271,PYW,T23,NX84625,563,Outside,6,3,Erosion / Stress,37.1,1,0.4,erosion early,0.2+0.15+0.15,LE,N
@@ -302,7 +302,7 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 301,Tedder Hill,T01,NX82464,9829,Outside,5,3,Erosion / Stress,37.6,1,2,protection damage,0.3+0.2+0.2,LE,N
 302,Tedder Hill,T01,NX82464,9829,Outside,2,3,Erosion / Stress,12.1,2,0.5,vortex module damaged/missing,0.8+1,SS,N
 303,Tedder Hill,T01,NX82464,9829,Outside,1,3,Erosion / Stress,6.3,2,0.3,vortex module damaged/missing,0.3+0.3+1.2,SS,N
-304,Tedder Hill,T01,NX82464,1359,Outside,3,3,Erosion / Stress,37.8,2,0.7,Gurney Flaps,0.6+0.6,PS,N
+304,Tedder Hill,T01,NX82464,1359,Outside,3,3,Erosion / Stress,37.8,2,0.7,gurney flaps,0.6+0.6,PS,N
 305,Tedder Hill,T01,NX82464,1359,Outside,2,3,Erosion / Stress,8.8,2,0.5,vortex module damaged/missing,0.3+0.3,SS,N
 306,Tedder Hill,T01,NX82464,1359,Outside,1,3,Erosion / Stress,7.2,3,0.5,vortex module damaged/missing,0.3+0.75+0.5+0.3+0.3+0.3,SS,N
 307,Tedder Hill,T02,NX82465,3575,Outside,3,3,Erosion / Stress,43.2,2,1.5,erosion early,0.2+0.2,LE,N
@@ -336,12 +336,12 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 335,Lissett,T04,NX80998,1881,Outside,1,3,Erosion / Stress,10.6,1,0.3,crack,0.4,TE,N
 336,Lissett,T04,NX80998,1884,Outside,3,3,Erosion / Stress,43.2,4,2,protection damage,0.35+0.25+0.2,LE,N
 337,Lissett,T04,NX80998,1884,Outside,1,3,Erosion / Stress,13.2,4,0.3,coating damage,0.4+0.4+0.4+0.4,"TE,SS",N
-338,Lissett,T05,NX80996,1662,Outside,1,3,Erosion / Stress,0,1,0.1,Rain Deflector,0.4,LE,N
+338,Lissett,T05,NX80996,1662,Outside,1,3,Erosion / Stress,0,1,0.1,rain deflector,0.4,LE,N
 339,Lissett,T05,NX80996,1662,Outside,7,3,Erosion / Stress,42.8,5,2,protection damage,0.2+0.2+0.466+0.42,LE,N
-340,Lissett,T05,NX80996,1685,Outside,1,3,Erosion / Stress,0,1,0.1,Rain Deflector,0.75+0.3,LE,N
+340,Lissett,T05,NX80996,1685,Outside,1,3,Erosion / Stress,0,1,0.1,rain deflector,0.75+0.3,LE,N
 341,Lissett,T05,NX80996,1685,Outside,5,3,Erosion / Stress,42.8,5,1.5,erosion early,0.2+0.2,LE,N
 342,Lissett,T05,NX80996,1685,Outside,7,3,Erosion / Stress,40.2,5,2,protection damage,0.2+0.2+0.4,LE,N
-343,Lissett,T05,NX80996,1712,Outside,1,3,Erosion / Stress,0,1,0.1,Rain Deflector,0.4,LE,N
+343,Lissett,T05,NX80996,1712,Outside,1,3,Erosion / Stress,0,1,0.1,rain deflector,0.4,LE,N
 344,Lissett,T05,NX80996,1712,Outside,6,3,Erosion / Stress,41.8,5,2,protection damage,0.2+0.2+0.25+0.337+0.388,LE,N
 345,Lissett,T05,NX80996,1712,Outside,8,4,Erosion / Stress,44.4,5,2,crack early,0.2,LE,N
 346,Lissett,T06,NX80997,1756,Outside,7,3,Erosion / Stress,43,5,2,protection damage,0.2+0.3+0.45+0.5,LE,N
@@ -349,153 +349,153 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 348,Lissett,T06,NX80997,1816,Outside,6,3,Erosion / Stress,41.6,5,3,protection damage,0.2+0.25+0.25+0.275+0.2,LE,N
 349,Lissett,T06,NX80997,1817,Outside,7,3,Erosion / Stress,42.2,5,2,protection damage,0.2+0.25,LE,N
 350,Lissett,T06,NX80997,1817,Outside,9,3,Erosion / Stress,44.7,1,0.3,coating damage,0.2,SS,N
-351,Lissett,T07,NX80999,1848,Outside,7,3,Erosion / Stress,39.5,1,0.1,Bonding deficiency,0.2,TE,N
+351,Lissett,T07,NX80999,1848,Outside,7,3,Erosion / Stress,39.5,1,0.1,bonding deficiency,0.2,TE,N
 352,Lissett,T07,NX80999,1848,Outside,8,3,Erosion / Stress,42.7,5,1.5,protection damage,0.2+0.2,LE,N
 353,Lissett,T07,NX80999,1874,Outside,5,3,Erosion / Stress,42.1,1,0.1,protection damage,0.2,LE,N
 354,Lissett,T07,NX80999,1874,Outside,6,3,Erosion / Stress,44.5,1,0.1,drain blocked,0.25,SS,N
 355,Lissett,T07,NX80999,1874,Outside,7,3,Erosion / Stress,44.8,5,2,erosion early,0.2+0.2,LE,N
-356,Lissett,T07,NX80999,1879,Outside,1,3,Erosion / Stress,0,1,0.1,Rain Deflector,0.3,SS,N
-357,Lissett,T07,NX80999,1879,Outside,2,3,Erosion / Stress,0,1,0.1,Rain Deflector,0.35,SS,N
+356,Lissett,T07,NX80999,1879,Outside,1,3,Erosion / Stress,0,1,0.1,rain deflector,0.3,SS,N
+357,Lissett,T07,NX80999,1879,Outside,2,3,Erosion / Stress,0,1,0.1,rain deflector,0.35,SS,N
 358,Lissett,T07,NX80999,1879,Outside,5,3,Erosion / Stress,44.7,5,2,protection damage,0.2+0.2+0.328+0.272,LE,N
-359,Lissett,T08,NX81001,1836,Outside,1,3,Erosion / Stress,0,1,0.1,Rain Deflector,0.4,SS,N
+359,Lissett,T08,NX81001,1836,Outside,1,3,Erosion / Stress,0,1,0.1,rain deflector,0.4,SS,N
 360,Lissett,T08,NX81001,1836,Outside,7,3,Erosion / Stress,41.7,5,2,protection damage,0.2+0.4+0.15,LE,N
-361,Lissett,T08,NX81001,1843,Outside,1,3,Erosion / Stress,0,2,0.2,Rain Deflector,0.75+0.75,SS,N
-362,Lissett,T08,NX81001,1843,Outside,2,3,Erosion / Stress,0,1,0.2,Rain Deflector,0.8,LE,N
+361,Lissett,T08,NX81001,1843,Outside,1,3,Erosion / Stress,0,2,0.2,rain deflector,0.75+0.75,SS,N
+362,Lissett,T08,NX81001,1843,Outside,2,3,Erosion / Stress,0,1,0.2,rain deflector,0.8,LE,N
 363,Lissett,T08,NX81001,1843,Outside,7,3,Erosion / Stress,32.7,2,0.3,erosion early,0.2+0.2+0.2+0.2+0.2,LE,N
 364,Lissett,T08,NX81001,1843,Outside,8,3,Erosion / Stress,39.9,1,2,protection damage,0.2+0.2+0.2,LE,N
-365,Lissett,T08,NX81001,1869,Outside,1,3,Erosion / Stress,0,3,0.3,Rain Deflector,0.8+0.6+0.75,"LE,SS",N
+365,Lissett,T08,NX81001,1869,Outside,1,3,Erosion / Stress,0,3,0.3,rain deflector,0.8+0.6+0.75,"LE,SS",N
 366,Lissett,T08,NX81001,1869,Outside,5,3,Erosion / Stress,40.2,5,2,protection damage,0.2+0.2+0.2+0.2+0.176+0.235,LE,N
 367,Lissett,T09,NX81002,1841,Outside,7,3,Erosion / Stress,43.5,5,2,protection damage,0.2+0.2+0.8,LE,N
-368,Lissett,T09,NX81002,1842,Outside,3,4,Erosion / Stress,25.6,3,2,Dry laminate,0.75,PS,N
-369,Lissett,T09,NX81002,1842,Outside,5,4,Erosion / Stress,39.4,1,2,Bonding deficiency,0.4+0.2+0.195,TE,N
+368,Lissett,T09,NX81002,1842,Outside,3,4,Erosion / Stress,25.6,3,2,dry laminate,0.75,PS,N
+369,Lissett,T09,NX81002,1842,Outside,5,4,Erosion / Stress,39.4,1,2,bonding deficiency,0.4,TE,N
 370,Lissett,T09,NX81002,1842,Outside,6,3,Erosion / Stress,39.5,5,2,protection damage,0.2+0.2+0.5,LE,N
 371,Lissett,T09,NX81002,1844,Outside,2,3,Erosion / Stress,11.6,1,0.3,coating damage,0.3+0.2,TE,N
 372,Lissett,T09,NX81002,1844,Outside,5,3,Erosion / Stress,33.4,1,1,erosion early,0.2+0.2,LE,N
 373,Lissett,T09,NX81002,1844,Outside,6,3,Erosion / Stress,38.4,3,1,protection damage,0.2+0.2+0.625,LE,N
-374,Lissett,T10,NX81003,1733,Outside,1,3,Erosion / Stress,0,1,0.3,Rain Deflector,0.75+0.75,"PS,SS",N
+374,Lissett,T10,NX81003,1733,Outside,1,3,Erosion / Stress,0,1,0.3,rain deflector,0.75+0.75,"PS,SS",N
 375,Lissett,T10,NX81003,1733,Outside,4,3,Erosion / Stress,13.7,1,0.3,crack,0.4,TE,N
 376,Lissett,T10,NX81003,1733,Outside,12,3,Erosion / Stress,43.1,3,2,protection damage,0.2+0.2+0.3,LE,N
 377,Lissett,T10,NX81003,1809,Outside,11,3,Erosion / Stress,44.8,5,2,protection damage,0.15+0.2+0.34,LE,N
-378,Lissett,T10,NX81003,1811,Outside,1,3,Erosion / Stress,0,1,0.2,Rain Deflector,0.3,SS,N
+378,Lissett,T10,NX81003,1811,Outside,1,3,Erosion / Stress,0,1,0.2,rain deflector,0.3,SS,N
 379,Lissett,T10,NX81003,1811,Outside,5,3,Erosion / Stress,39.9,2,2,protection damage,0.2+0.2+0.2+0.35,LE,N
 380,Lissett,T10,NX81003,1811,Outside,6,3,Erosion / Stress,43.3,1,2,erosion early,0.2,LE,N
-381,Black Banks,T01,11829,,A,E,3,Erosion,17,1,1,Erosion,4.2,LE,N
-382,Black Banks,T02,11831,,A,B,4,Erosion,23,3,2.5,Laminate damage,3.3,LE,N
-383,Black Banks,T02,11831,,B,E,3,Erosion,25,3,2.5,Erosion,3.9,LE,N
-384,Black Banks,T02,11831,,C,I,3,Erosion,25,3,2.5,Erosion,4.2,LE,N
-385,Black Banks,T03,11830,,A,B,3,Lamination,25,1,2.5,Laminate damage,0.185,PS,N
-386,Black Banks,T03,11830,,A,D,3,Erosion,18,3,2,Erosion,0.38,LE,N
-387,Black Banks,T03,11830,,B,J,3,Erosion,25,3,2,Erosion,3.85,LE,N
-388,Black Banks,T03,11830,,B,L,3,Erosion,23,3,2,Erosion,3.85,LE,N
-389,Black Banks,T04,11828,,B,L,3,Erosion,25,3,3,Erosion,4.2,LE,N
+381,Black Banks,T01,11829,,A,E,3,Erosion,17,1,1,erosion,4.2,LE,N
+382,Black Banks,T02,11831,,A,B,4,Erosion,23,3,2.5,laminate damage,3.3,LE,N
+383,Black Banks,T02,11831,,B,E,3,Erosion,25,3,2.5,erosion,3.9,LE,N
+384,Black Banks,T02,11831,,C,I,3,Erosion,25,3,2.5,erosion,4.2,LE,N
+385,Black Banks,T03,11830,,A,B,3,Lamination,25,1,2.5,laminate damage,0.185,PS,N
+386,Black Banks,T03,11830,,A,D,3,Erosion,18,3,2,erosion,0.38,LE,N
+387,Black Banks,T03,11830,,B,J,3,Erosion,25,3,2,erosion,3.85,LE,N
+388,Black Banks,T03,11830,,B,L,3,Erosion,23,3,2,erosion,3.85,LE,N
+389,Black Banks,T04,11828,,B,L,3,Erosion,25,3,3,erosion,4.2,LE,N
 390,Mount Eagle,T04,19290,479998,A,17,3,Erosion,20,3,1.5,protection damage,4,LE,N
-391,Mount Eagle,T07,30837,7487,,26,3,Erosion,25,2,1.5,Erosion,3,LE,N
-392,Tullynahaw,T01,34620,56923,,6,3,Erosion,39,2,1.5,Erosion,2.65,LE,N
-393,Tullynahaw,T03,34622,57315,B,"14,15",3,Cracks,10,1,0.5,Cracks,0.425,PS,N
-394,Tullynahaw,T03,34622,57315,B,"6,7",3,Erosion,36,2,2,Erosion,3.65,LE,N
-395,Tullynahaw,T04,34623,56046,A,"5,6",4,Cracks,20,2,4,Cracks,2,LE,N
-396,Tullynahaw,T04,34623,56962,C,6,3,Erosion,39,2,1,Erosion,3.6,LE,N
-397,Tullynahaw,T04,34623,56962,C,7,4,Erosion,39,2,3,Erosion,2.95+0.8,LE,N
-398,Tullynahaw,T05,34624,56748,A,6,3,Erosion,30,2,1,Erosion,3.3,LE,N
-399,Tullynahaw,T08,34627,56944,A,"6,7",3,Erosion,30,2,1,Erosion,2.11+1.8,LE,N
+391,Mount Eagle,T07,30837,7487,,26,3,Erosion,25,2,1.5,erosion,3,LE,N
+392,Tullynahaw,T01,34620,56923,,6,3,Erosion,39,2,1.5,erosion,2.65,LE,N
+393,Tullynahaw,T03,34622,57315,B,"14,15",3,Cracks,10,1,0.5,cracks,0.425,PS,N
+394,Tullynahaw,T03,34622,57315,B,"6,7",3,Erosion,36,2,2,erosion,3.65,LE,N
+395,Tullynahaw,T04,34623,56046,A,"5,6",4,Cracks,20,2,4,cracks,2,LE,N
+396,Tullynahaw,T04,34623,56962,C,6,3,Erosion,39,2,1,erosion,3.6,LE,N
+397,Tullynahaw,T04,34623,56962,C,7,4,Erosion,39,2,3,erosion,2.95+0.8,LE,N
+398,Tullynahaw,T05,34624,56748,A,6,3,Erosion,30,2,1,erosion,3.3,LE,N
+399,Tullynahaw,T08,34627,56944,A,"6,7",3,Erosion,30,2,1,erosion,2.11+1.8,LE,N
 400,Tullynahaw,T09,34628,57008,A,,4,Cracks,39,2,3,crack,1.85,LE,N
-401,Tullynahaw,T09,34628,56996,B,7,3,Erosion,39,3,3,Erosion,3,LE,N
-402,Tullynahaw,T09,34628,57023,C,7,3,Erosion,39,3,3,Erosion,4,LE,N
-403,Derry Brian,T01,18076,,A,A,3,Erosion,25,1,1,Erosion,4.5,LE,N
-404,Derry Brian,T01,18076,,A,B,3,Erosion,20,1,0.5,Erosion,4.6,LE,N
-405,Derry Brian,T02,18077,,C,C,3,Erosion,25,1,1,Erosion,4.4,LE,N
-406,Derry Brian,T06,18081,,B,B,3,Erosion,25,1,1,Erosion,4.6,LE,N
-407,Derry Brian,T08,18084,,B,C,3,Erosion,25,2,1,Erosion,5,LE,N
-408,Derry Brian,T08,18084,,C,E,3,Erosion,25,2,1,Erosion,4.3,LE,N
-409,Derry Brian,T10,18055,,C,C,3,Lightning Receptor,25,1,0.5,Lightning Receptor,2.3,SS,N
-410,Derry Brian,T10,18055,,C,D,3,Erosion,25,1,1,Erosion,4.2,LE,N
-411,Derry Brian,T12,18089,,B,D,3,Erosion,25,2,1,Erosion,4.7,LE,N
-412,Derry Brian,T17,18101,,C,F,3,Erosion,25,4,2,Erosion,4.5,LE,N
-413,Derry Brian,T21,18074,,A,A,3,Erosion,25,3,1.5,Erosion,4,LE,N
-414,Derry Brian,T21,18074,,C,D,3,Erosion,25,2,1,Erosion,4.5,LE,N
-415,Derry Brian,T24,18054,,A,A,3,Erosion,25,1,1,Erosion,4.6,LE,N
-416,Derry Brian,T24,18054,,B,B,3,Erosion,25,3,1.5,Erosion,4.6,LE,N
-417,Derry Brian,T24,18054,,C,G,3,Erosion,25,1,1,Erosion,4.3,LE,N
-418,Derry Brian,T30,18095,,C,D,3,Erosion,25,2,1,Erosion,4.8,LE,N
-419,Derry Brian,T35,18040,,A,B,3,Cracks,16,1,1,Cracks,5,LE,N
-420,Derry Brian,T38,18039,,B,D,5,IMPACT DAMAGE,25,1,4,IMPACT DAMAGE,2.4,TE,N
-421,Derry Brian,T46,18069,,B,F,3,Erosion,25,3,1.5,Erosion,4.8,LE,N
-422,Derry Brian,T46,18069,,B,J,3,IMPACT DAMAGE,0,1,1,IMPACT DAMAGE,4,LE,N
-423,Derry Brian,T48,18073,,A,C,3,Cracks,22,1,1,Cracks,2.4,PS,N
-424,Derry Brian,T55,18063,,A,D,3,Erosion,25,3,1.5,Erosion,4.8,LE,N
-425,Derry Brian,T62,18041,,C,K,3,Erosion,25,1,1,Erosion,4.7,LE,N
-426,Derry Brian,T65,18102,,C,G,3,Erosion,25,3,1.5,Erosion,5,LE,N
-427,Derry Brian,T69,18096,,A,A,3,Erosion,25,1,1,Erosion,4.4,LE,N
-428,Derry Brian,T69,18096,,B,C,3,Erosion,25,3,1.5,Erosion,5.2,LE,N
-429,Carnsore Point,T02,15066,,A,A,3,Erosion,25,1,1,Erosion,4.7,LE,N
-430,Carnsore Point,T03,15070,,A,B,3,Erosion,25,1,1,Erosion,4.4,LE,N
-431,Carnsore Point,T03,15070,,C,S,4,Erosion,25,1,3,Erosion,4.8,LE,N
-432,Carnsore Point,T05,15068,,B,H,3,IMPACT DAMAGE,25,1,1,IMPACT DAMAGE,2.7,LE,N
-433,Carnsore Point,T06,15065,,A,A,4,Erosion,25,3,3,Erosion,4.5,LE,N
-434,Carnsore Point,T11,15067,,A,A,3,Erosion,25,4,2,Erosion,4.5,LE,N
-435,Carnsore Point,T11,15067,,B,F,4,Erosion,25,3,3,Erosion,4.7,LE,N
-436,Carnsore Point,T14,15059,,B,H,3,Erosion,25,2,1,Erosion,4.6,LE,N
-437,Carnsore Point,T14,15059,,C,O,3,Erosion,25,1,1,Erosion,4.75,LE,N
-438,Fullabrook,T03,41309,,TBC,10,3,Erosion,44,2,1,Erosion,1.6,LE,N
-439,Fullabrook,T04,41310,22288, ,8,4,Erosion,22,3,3,Erosion,1.6,LE,N
-440,Fullabrook,T04,41310,22288,,15,4,Erosion,44,3,3,Erosion,1.6,LE,N
-441,Fullabrook,T06,41312,22278,,14,3,Erosion,43,2,1,Erosion,1.9,LE,N
-442,Fullabrook,T07,41313,22286,,13,3,Erosion,43,2,1,Erosion,1.73,LE,N
-443,Fullabrook,T11,41317,22325,,13,3,Erosion,43,2,1,Erosion,1.3,LE,N
-444,Fullabrook,T12,41318,22361,,14,3,Erosion,44,2,1,Erosion,1.35,LE,N
-445,Fullabrook,T18,41324,22355,,13,3,Erosion,43,2,1,Erosion,1.5,LE,N
-446,Fullabrook,T20,41326,22344,,13,3,Erosion,43,2,1,Erosion,1.38,LE,N
-447,Garvagh Glebe,T01,34609,,A,A,3,Erosion,39,3,1.5,Erosion,6.7,LE,N
-448,Garvagh Glebe,T01,34609,,B,C,3,Erosion,39,3,1.5,Erosion,6.4,LE,N
-449,Garvagh Glebe,T01,34609,,C,D,3,Erosion,39,3,1.5,Erosion,6,LE,N
-450,Garvagh Glebe,T02,34618,,A,C,3,Erosion,39,3,1.5,Erosion,5.5,LE,N
-451,Garvagh Glebe,T02,34618,,B,E,3,Erosion,39,3,1.5,Erosion,6,LE,N
-452,Garvagh Glebe,T02,34618,,C,G,3,Erosion,39,3,1.5,Erosion,6,LE,N
-453,Garvagh Glebe,T04,34619,,A,B,3,Erosion,39,3,1.5,Erosion,6.5,LE,N
-454,Garvagh Glebe,T04,34619,,B,H,3,Erosion,39,3,1.5,Erosion,6,LE,N
-455,Garvagh Glebe,T05,34614,,A,A,3,Erosion,39,3,1.5,Erosion,6.8,LE,N
-456,Garvagh Glebe,T05,34614,,A,E,3,Erosion,36,3,1.5,Erosion,6.8,LE,N
-457,Garvagh Glebe,T05,34614,,C,I,3,Erosion,39,3,1.5,Erosion,6.7,LE,N
-458,Garvagh Glebe,T06,34610,,B,D,3,Erosion,39,3,1.5,Erosion,6.7,LE,N
-459,Garvagh Glebe,T07,34615,,A,A,3,Erosion,39,3,1.5,Erosion,6.2,LE,N
-460,Garvagh Glebe,T07,34615,,B,C,3,Erosion,39,3,1.5,Erosion,5.9,LE,N
-461,Garvagh Glebe,T07,34615,,B,E,3,Erosion,26,3,1.5,Erosion,5.9,LE,N
-462,Garvagh Glebe,T07,34615,,C,H,3,Erosion,39,3,1.5,Erosion,5.5,LE,N
-463,Garvagh Glebe,T08,34607,,A,A,3,Erosion,39,2,1,Erosion,6.8,LE,N
-464,Garvagh Glebe,T08,34607,,B,C,3,Erosion,39,3,1.5,Erosion,5.4,LE,N
-465,Garvagh Glebe,T08,34607,,C,E,3,Erosion,39,3,1.5,Erosion,6.2,LE,N
-466,Garvagh Glebe,T09,34608,,A,B,3,Erosion,39,3,1.5,Erosion,6.2,LE,N
-467,Garvagh Glebe,T09,34608,,B,E,3,Erosion,39,3,1.5,Erosion,4.8,LE,N
-468,Garvagh Glebe,T09,34608,,C,G,3,Erosion,39,3,1.5,Erosion,6.7,LE,N
-469,Garvagh Glebe,T10,34611,,A,A,3,Erosion,39,3,1.5,Erosion,5.8,LE,N
-470,Garvagh Glebe,T10,34611,,B,C,3,Erosion,39,3,1.5,Erosion,6.7,LE,N
-471,Garvagh Glebe,T10,34611,,C,E,3,Erosion,39,3,1.5,Erosion,5.4,LE,N
-472,Garvagh Glebe,T10,34611,,C,F,3,Erosion,36,3,1.5,Erosion,5.4,LE,N
-473,Garvagh Glebe,T11,34616,,A,A,3,Erosion,39,2,1,Erosion,6.7,LE,N
-474,Garvagh Glebe,T11,34616,,B,D,3,Erosion,39,2,1,Erosion,6.6,LE,N
-475,Garvagh Glebe,T11,34616,,C,F,3,Erosion,39,2,1,Erosion,6.4,LE,N
-476,Garvagh Glebe,T12,34612,,A,A,3,Erosion,39,3,1.5,Erosion,4.8,LE,N
-477,Garvagh Glebe,T12,34612,,B,E,3,Erosion,39,3,1.5,Erosion,6.2,LE,N
-478,Garvagh Glebe,T12,34612,,C,H,3,Erosion,39,3,1.5,Erosion,6.2,LE,N
-479,Garvagh Glebe,T13,34617,,A,A,3,Erosion,39,3,1.5,Erosion,6.2,LE,N
-480,Garvagh Glebe,T13,34617,,B,C,3,Erosion,39,3,1.5,Erosion,7,LE,N
-481,Raheenleagh,T01,G001,,B,1,3,Lightning Receptor,52,0,0.5,Lightning Receptor,0.266,SS,N
-482,Raheenleagh,T02,G002,,C,1,3,Erosion,51,1,0.5,Erosion,0.516,LE,N
-483,Raheenleagh,T02,G002,,C,2,3,Erosion,52,1,0.5,Erosion,0.782,LE,N
-484,Raheenleagh,T03,G003,,A,1,3,LIGHTNINIG,53,1,0.5,LIGHTNINIG,0.47,PS,N
-485,Raheenleagh,T03,G003,,A,2,3,LIGHTNINIG,51,1,0.5,LIGHTNINIG,0.409,SS,N
-486,Raheenleagh,T03,G003,,A,3,3,LIGHTNINIG,51,1,0.5,LIGHTNINIG,0.36,SS,N
-487,Raheenleagh,T03,G003,,C,1,4,LIGHTNINIG,53,3,3,LIGHTNINIG,0.385,SS,N
-488,Raheenleagh,T03,G003,,C,3,3,LIGHTNINIG,52,1,0.5,LIGHTNINIG,0.644,SS,N
-489,Raheenleagh,T04,G004,,A,1,3,Erosion,53,1,1,Erosion,0.35,LE,N
-490,Raheenleagh,T04,G004,,C,1,3,Erosion,47,1,1,Erosion,1.269,LE,N
-491,Raheenleagh,T05,G005,,C,2,3,Erosion,54,3,1.5,Erosion,2.35,LE,N
-492,Raheenleagh,T06,G006,,A,1,3,Erosion,54,1,0.5,Erosion,0.3,LE,N
-493,Raheenleagh,T06,G006,,B,2,3,LIGHTNINIG,49,1,0.5,LIGHTNINIG,0.54,SS,N
-494,Raheenleagh,T06,G006,,C,1,3,Erosion,19,1,0.5,Erosion,0.87,"LE,PS",N
-495,Raheenleagh,T06,G006,,C,2,3,Impact Damage,31,1,0.5,Impact Damage,0.275,SS,N
-496,Raheenleagh,T07,G007,,C,1,3,Erosion,54,1,0.5,Erosion,0.42,LE,N
-497,Raheenleagh,T07,G007,,C,2,3,Erosion,54,1,0.5,Erosion,0.55,LE,N
-498,Raheenleagh,T11,G011,,C,2,3,Impact Damage,54,1,0.5,Impact Damage,0.866,SS,N
-499,Raheenleagh,T11,G011,,C,3,3,Impact Damage,54,1,0.5,Impact Damage,0.732,SS,N
-500,Raheenleagh,T11,G011,,C,4,3,Impact Damage,52,1,0.5,Impact Damage,0.588,SS,N
+401,Tullynahaw,T09,34628,56996,B,7,3,Erosion,39,3,3,erosion,3,LE,N
+402,Tullynahaw,T09,34628,57023,C,7,3,Erosion,39,3,3,erosion,4,LE,N
+403,Derry Brian,T01,18076,,A,A,3,Erosion,25,1,1,erosion,4.5,LE,N
+404,Derry Brian,T01,18076,,A,B,3,Erosion,20,1,0.5,erosion,4.6,LE,N
+405,Derry Brian,T02,18077,,C,C,3,Erosion,25,1,1,erosion,4.4,LE,N
+406,Derry Brian,T06,18081,,B,B,3,Erosion,25,1,1,erosion,4.6,LE,N
+407,Derry Brian,T08,18084,,B,C,3,Erosion,25,2,1,erosion,5,LE,N
+408,Derry Brian,T08,18084,,C,E,3,Erosion,25,2,1,erosion,4.3,LE,N
+409,Derry Brian,T10,18055,,C,C,3,Lightning Receptor,25,1,0.5,lightning receptor,2.3,SS,N
+410,Derry Brian,T10,18055,,C,D,3,Erosion,25,1,1,erosion,4.2,LE,N
+411,Derry Brian,T12,18089,,B,D,3,Erosion,25,2,1,erosion,4.7,LE,N
+412,Derry Brian,T17,18101,,C,F,3,Erosion,25,4,2,erosion,4.5,LE,N
+413,Derry Brian,T21,18074,,A,A,3,Erosion,25,3,1.5,erosion,4,LE,N
+414,Derry Brian,T21,18074,,C,D,3,Erosion,25,2,1,erosion,4.5,LE,N
+415,Derry Brian,T24,18054,,A,A,3,Erosion,25,1,1,erosion,4.6,LE,N
+416,Derry Brian,T24,18054,,B,B,3,Erosion,25,3,1.5,erosion,4.6,LE,N
+417,Derry Brian,T24,18054,,C,G,3,Erosion,25,1,1,erosion,4.3,LE,N
+418,Derry Brian,T30,18095,,C,D,3,Erosion,25,2,1,erosion,4.8,LE,N
+419,Derry Brian,T35,18040,,A,B,3,Cracks,16,1,1,cracks,5,LE,N
+420,Derry Brian,T38,18039,,B,D,5,IMPACT DAMAGE,25,1,4,impact damage,2.4,TE,N
+421,Derry Brian,T46,18069,,B,F,3,Erosion,25,3,1.5,erosion,4.8,LE,N
+422,Derry Brian,T46,18069,,B,J,3,IMPACT DAMAGE,0,1,1,impact damage,4,LE,N
+423,Derry Brian,T48,18073,,A,C,3,Cracks,22,1,1,cracks,2.4,PS,N
+424,Derry Brian,T55,18063,,A,D,3,Erosion,25,3,1.5,erosion,4.8,LE,N
+425,Derry Brian,T62,18041,,C,K,3,Erosion,25,1,1,erosion,4.7,LE,N
+426,Derry Brian,T65,18102,,C,G,3,Erosion,25,3,1.5,erosion,5,LE,N
+427,Derry Brian,T69,18096,,A,A,3,Erosion,25,1,1,erosion,4.4,LE,N
+428,Derry Brian,T69,18096,,B,C,3,Erosion,25,3,1.5,erosion,5.2,LE,N
+429,Carnsore Point,T02,15066,,A,A,3,Erosion,25,1,1,erosion,4.7,LE,N
+430,Carnsore Point,T03,15070,,A,B,3,Erosion,25,1,1,erosion,4.4,LE,N
+431,Carnsore Point,T03,15070,,C,S,4,Erosion,25,1,3,erosion,4.8,LE,N
+432,Carnsore Point,T05,15068,,B,H,3,IMPACT DAMAGE,25,1,1,impact damage,2.7,LE,N
+433,Carnsore Point,T06,15065,,A,A,4,Erosion,25,3,3,erosion,4.5,LE,N
+434,Carnsore Point,T11,15067,,A,A,3,Erosion,25,4,2,erosion,4.5,LE,N
+435,Carnsore Point,T11,15067,,B,F,4,Erosion,25,3,3,erosion,4.7,LE,N
+436,Carnsore Point,T14,15059,,B,H,3,Erosion,25,2,1,erosion,4.6,LE,N
+437,Carnsore Point,T14,15059,,C,O,3,Erosion,25,1,1,erosion,4.75,LE,N
+438,Fullabrook,T03,41309,,TBC,10,3,Erosion,44,2,1,erosion,1.6,LE,N
+439,Fullabrook,T04,41310,22288, ,8,4,Erosion,22,3,3,erosion,1.6,LE,N
+440,Fullabrook,T04,41310,22288,,15,4,Erosion,44,3,3,erosion,1.6,LE,N
+441,Fullabrook,T06,41312,22278,,14,3,Erosion,43,2,1,erosion,1.9,LE,N
+442,Fullabrook,T07,41313,22286,,13,3,Erosion,43,2,1,erosion,1.73,LE,N
+443,Fullabrook,T11,41317,22325,,13,3,Erosion,43,2,1,erosion,1.3,LE,N
+444,Fullabrook,T12,41318,22361,,14,3,Erosion,44,2,1,erosion,1.35,LE,N
+445,Fullabrook,T18,41324,22355,,13,3,Erosion,43,2,1,erosion,1.5,LE,N
+446,Fullabrook,T20,41326,22344,,13,3,Erosion,43,2,1,erosion,1.38,LE,N
+447,Garvagh Glebe,T01,34609,,A,A,3,Erosion,39,3,1.5,erosion,6.7,LE,N
+448,Garvagh Glebe,T01,34609,,B,C,3,Erosion,39,3,1.5,erosion,6.4,LE,N
+449,Garvagh Glebe,T01,34609,,C,D,3,Erosion,39,3,1.5,erosion,6,LE,N
+450,Garvagh Glebe,T02,34618,,A,C,3,Erosion,39,3,1.5,erosion,5.5,LE,N
+451,Garvagh Glebe,T02,34618,,B,E,3,Erosion,39,3,1.5,erosion,6,LE,N
+452,Garvagh Glebe,T02,34618,,C,G,3,Erosion,39,3,1.5,erosion,6,LE,N
+453,Garvagh Glebe,T04,34619,,A,B,3,Erosion,39,3,1.5,erosion,6.5,LE,N
+454,Garvagh Glebe,T04,34619,,B,H,3,Erosion,39,3,1.5,erosion,6,LE,N
+455,Garvagh Glebe,T05,34614,,A,A,3,Erosion,39,3,1.5,erosion,6.8,LE,N
+456,Garvagh Glebe,T05,34614,,A,E,3,Erosion,36,3,1.5,erosion,6.8,LE,N
+457,Garvagh Glebe,T05,34614,,C,I,3,Erosion,39,3,1.5,erosion,6.7,LE,N
+458,Garvagh Glebe,T06,34610,,B,D,3,Erosion,39,3,1.5,erosion,6.7,LE,N
+459,Garvagh Glebe,T07,34615,,A,A,3,Erosion,39,3,1.5,erosion,6.2,LE,N
+460,Garvagh Glebe,T07,34615,,B,C,3,Erosion,39,3,1.5,erosion,5.9,LE,N
+461,Garvagh Glebe,T07,34615,,B,E,3,Erosion,26,3,1.5,erosion,5.9,LE,N
+462,Garvagh Glebe,T07,34615,,C,H,3,Erosion,39,3,1.5,erosion,5.5,LE,N
+463,Garvagh Glebe,T08,34607,,A,A,3,Erosion,39,2,1,erosion,6.8,LE,N
+464,Garvagh Glebe,T08,34607,,B,C,3,Erosion,39,3,1.5,erosion,5.4,LE,N
+465,Garvagh Glebe,T08,34607,,C,E,3,Erosion,39,3,1.5,erosion,6.2,LE,N
+466,Garvagh Glebe,T09,34608,,A,B,3,Erosion,39,3,1.5,erosion,6.2,LE,N
+467,Garvagh Glebe,T09,34608,,B,E,3,Erosion,39,3,1.5,erosion,4.8,LE,N
+468,Garvagh Glebe,T09,34608,,C,G,3,Erosion,39,3,1.5,erosion,6.7,LE,N
+469,Garvagh Glebe,T10,34611,,A,A,3,Erosion,39,3,1.5,erosion,5.8,LE,N
+470,Garvagh Glebe,T10,34611,,B,C,3,Erosion,39,3,1.5,erosion,6.7,LE,N
+471,Garvagh Glebe,T10,34611,,C,E,3,Erosion,39,3,1.5,erosion,5.4,LE,N
+472,Garvagh Glebe,T10,34611,,C,F,3,Erosion,36,3,1.5,erosion,5.4,LE,N
+473,Garvagh Glebe,T11,34616,,A,A,3,Erosion,39,2,1,erosion,6.7,LE,N
+474,Garvagh Glebe,T11,34616,,B,D,3,Erosion,39,2,1,erosion,6.6,LE,N
+475,Garvagh Glebe,T11,34616,,C,F,3,Erosion,39,2,1,erosion,6.4,LE,N
+476,Garvagh Glebe,T12,34612,,A,A,3,Erosion,39,3,1.5,erosion,4.8,LE,N
+477,Garvagh Glebe,T12,34612,,B,E,3,Erosion,39,3,1.5,erosion,6.2,LE,N
+478,Garvagh Glebe,T12,34612,,C,H,3,Erosion,39,3,1.5,erosion,6.2,LE,N
+479,Garvagh Glebe,T13,34617,,A,A,3,Erosion,39,3,1.5,erosion,6.2,LE,N
+480,Garvagh Glebe,T13,34617,,B,C,3,Erosion,39,3,1.5,erosion,7,LE,N
+481,Raheenleagh,T01,G001,,B,1,3,Lightning Receptor,52,0,0.5,lightning receptor,0.266,SS,N
+482,Raheenleagh,T02,G002,,C,1,3,Erosion,51,1,0.5,erosion,0.516,LE,N
+483,Raheenleagh,T02,G002,,C,2,3,Erosion,52,1,0.5,erosion,0.782,LE,N
+484,Raheenleagh,T03,G003,,A,1,3,LIGHTNINIG,53,1,0.5,lightninig,0.47,PS,N
+485,Raheenleagh,T03,G003,,A,2,3,LIGHTNINIG,51,1,0.5,lightninig,0.409,SS,N
+486,Raheenleagh,T03,G003,,A,3,3,LIGHTNINIG,51,1,0.5,lightninig,0.36,SS,N
+487,Raheenleagh,T03,G003,,C,1,4,LIGHTNINIG,53,3,3,lightninig,0.385,SS,N
+488,Raheenleagh,T03,G003,,C,3,3,LIGHTNINIG,52,1,0.5,lightninig,0.644,SS,N
+489,Raheenleagh,T04,G004,,A,1,3,Erosion,53,1,1,erosion,0.35,LE,N
+490,Raheenleagh,T04,G004,,C,1,3,Erosion,47,1,1,erosion,1.269,LE,N
+491,Raheenleagh,T05,G005,,C,2,3,Erosion,54,3,1.5,erosion,2.35,LE,N
+492,Raheenleagh,T06,G006,,A,1,3,Erosion,54,1,0.5,erosion,0.3,LE,N
+493,Raheenleagh,T06,G006,,B,2,3,LIGHTNINIG,49,1,0.5,lightninig,0.54,SS,N
+494,Raheenleagh,T06,G006,,C,1,3,Erosion,19,1,0.5,erosion,0.87,"LE,PS",N
+495,Raheenleagh,T06,G006,,C,2,3,Impact Damage,31,1,0.5,impact damage,0.275,SS,N
+496,Raheenleagh,T07,G007,,C,1,3,Erosion,54,1,0.5,erosion,0.42,LE,N
+497,Raheenleagh,T07,G007,,C,2,3,Erosion,54,1,0.5,erosion,0.55,LE,N
+498,Raheenleagh,T11,G011,,C,2,3,Impact Damage,54,1,0.5,impact damage,0.866,SS,N
+499,Raheenleagh,T11,G011,,C,3,3,Impact Damage,54,1,0.5,impact damage,0.732,SS,N
+500,Raheenleagh,T11,G011,,C,4,3,Impact Damage,52,1,0.5,impact damage,0.588,SS,N

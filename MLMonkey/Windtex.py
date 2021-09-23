@@ -32,6 +32,8 @@ def merging_defect(feature_list, feature, size, range_extend=False):
     data = dict()
     weight = [i["a"] for i in size]
     for fea in feature_list:
+        if fea == "distance":
+            continue
         f_list = [i[fea] for i in feature]
         if fea == "size":
             continue
@@ -56,7 +58,44 @@ def average(values, weights=None):
 
 
 def quantify_desc(desc):
-    pass
+    desc_dict = {"erosion":0,
+                 "coat_protection":0,
+                 "laminate_vis_dry_dam":0,
+                 "crack/bonding":0,
+                 "lightning/impact":0,
+                 "surface/deflector":0,
+                 "hole":0,
+                 "other[1_2]":0}
+    for i in desc:
+        if "foil" in i or "protection" in i:
+            desc_dict["coat_protection"] = 2
+        elif "erosion" in i:
+            if "class" in i:
+                desc_dict["erosion"] = int(i[-1])
+            else:
+                desc_dict["erosion"] = 1
+        elif "coat" in i:
+            if desc_dict["coat_protection"] != 0:
+                continue
+            desc_dict["coat_protection"] = 1
+        elif "laminate" in i:
+            if "visible" in i:
+                desc_dict["laminate_vis_dry_dam"] = 1
+            elif "dry" in i:
+                desc_dict["laminate_vis_dry_dam"] = 2
+            elif "damage" in i:
+                desc_dict["laminate_vis_dry_dam"] = 3
+        elif "drain" in i or "rain" in i:
+            desc_dict["surface/deflector"] = 1
+        elif "hole" in i:
+            desc_dict["hole"] = 1
+        elif "lightning" in i or "impact" in i:
+            desc_dict["lightning/impact"] = 1
+        elif "crack" in i or "bond" in i:
+            desc_dict["crack/bonding"] = 1
+
+    return desc_dict
+
 
 def readData(windtex_path, image_path, label_path, range_extend=True):
     global windtex_head, windtex_data, feature_range
@@ -81,11 +120,12 @@ def readData(windtex_path, image_path, label_path, range_extend=True):
 
         # fixed data
         m_data[damage["ID"]]['damage_qty'] = int(damage['Damage Qty Per Meter'])
-        m_data[damage["ID"]]['position'] = damage['Position']
+        # m_data[damage["ID"]]['position'] = damage['Position']
         m_data[damage["ID"]]['location'] = float(damage['Damage Location'])
-        m_data[damage["ID"]]['description'] = damage['description']
+        d_dict = quantify_desc(damage['description'])
+        for d in d_dict:
+            m_data[damage["ID"]][d] = d_dict[d]
         m_data[damage["ID"]]['num_desc'] = len(damage['description'])
-        m_data[damage["ID"]]['windtex'] = float(damage['Windtex Estimation'])
         m_data[damage["ID"]]['continuous'] = 0
         # loop
         size_list = []
@@ -108,6 +148,7 @@ def readData(windtex_path, image_path, label_path, range_extend=True):
         for i in merged_data:
             m_data[damage["ID"]][i] = merged_data[i]
         m_data[damage["ID"]]["size"] = sum([i["a"] for i in size_list])
+        m_data[damage["ID"]]['windtex'] = float(damage['Windtex Estimation'])
     if range_extend:
         for fea in all_feature:
             feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
