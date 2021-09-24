@@ -7,6 +7,7 @@ windtex_head = []
 windtex_data = []
 feature_range = None
 
+
 def read_csv_data(filepath):
     global windtex_head, windtex_data
     with open(filepath, "r") as csvFile:
@@ -61,11 +62,10 @@ def quantify_desc(desc):
     desc_dict = {"erosion":0,
                  "coat_protection":0,
                  "laminate_vis_dry_dam":0,
-                 "crack/bonding":0,
-                 "lightning/impact":0,
-                 "surface/deflector":0,
-                 "hole":0,
-                 "other[1_2]":0}
+                 "hole/crack/bonding":0,
+                 "lightning_recep_dam/impact":0,
+                 "assist":0,
+                 "other":0}
     for i in desc:
         if "foil" in i or "protection" in i:
             desc_dict["coat_protection"] = 2
@@ -85,14 +85,24 @@ def quantify_desc(desc):
                 desc_dict["laminate_vis_dry_dam"] = 2
             elif "damage" in i:
                 desc_dict["laminate_vis_dry_dam"] = 3
-        elif "drain" in i or "rain" in i:
-            desc_dict["surface/deflector"] = 1
-        elif "hole" in i:
-            desc_dict["hole"] = 1
+        elif "drain" in i or "rain" in i or "vortex" in i:
+            desc_dict["assist"] = 1
         elif "lightning" in i or "impact" in i:
-            desc_dict["lightning/impact"] = 1
-        elif "crack" in i or "bond" in i:
-            desc_dict["crack/bonding"] = 1
+            if "receptor" in i:
+                desc_dict["lightning_recep_dam/impact"] = 1
+            elif "lightning" in i:
+                desc_dict["lightning_recep_dam/impact"] = 2
+            elif "impact" in i:
+                desc_dict["lightning_recep_dam/impact"] = 3
+        elif "hole" in i or "crack" in i or "bond" in i:
+            if "hole" in i:
+                desc_dict["hole/crack/bonding"] = 1
+            elif "crack" in i:
+                desc_dict["hole/crack/bonding"] = 2
+            elif "bond" in i:
+                desc_dict["hole/crack/bonding"] = 3
+        else:
+            desc_dict["other"] = 1
 
     return desc_dict
 
