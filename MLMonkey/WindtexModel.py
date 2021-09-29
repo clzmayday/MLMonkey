@@ -10,6 +10,7 @@ import copy
 
 Feature_Data = []
 Label_Data = []
+Feature_List = []
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -46,6 +47,13 @@ def load_label_data(data):
     Label_Data = data
 
 
+# Load Feature list
+# Input: Test data
+def load_feature_list(data):
+    global Feature_List
+    Feature_List = data
+
+
 # Check all data is correctly loaded
 def check_data():
     global Feature_Data, Label_Data
@@ -55,7 +63,26 @@ def check_data():
         logging.error("Label_Data is missing or not correctly loaded")
 
 
-def born(data):
-    feature = data["1"].keys()
+def born(data, label="windtex"):
+    global Feature_Data, Label_Data, Feature_List
+    feature = list(data["1"].keys())
+    Feature_List = feature
+    f_data = []
+    l_data = []
+    for i in tqdm(data, desc="Borning Monkey"):
+        f_data.append([data[i][r] for r in data[i] if r != label])
+        l_data.append(data[i][label])
+    Feature_Data = f_data
+    Label_Data = l_data
+    check_data()
 
-    print()
+
+def grow():
+    global Feature_Data, Label_Data, Feature_List
+    print(Feature_Data)
+    print(Feature_List)
+    print(Label_Data)
+
+
+def work():
+    pass

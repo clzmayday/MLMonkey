@@ -5,5 +5,7 @@ from MLMonkey import FeatureExtraction, Windtex, WindtexModel
 
 data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
 
+WindtexModel.born(data)
+WindtexModel.grow()
 
 print()

@@ -157,7 +157,7 @@ def prepare(windtex_path, image_path, label_path, range_extend=True):
         merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=range_extend)
         for i in merged_data:
             m_data[damage["ID"]][i] = merged_data[i]
-        m_data[damage["ID"]]["size"] = sum([i["a"] for i in size_list])
+        m_data[damage["ID"]]["size"] = round(sum([i["a"] for i in size_list]), 1)
         m_data[damage["ID"]]['windtex'] = float(damage['Windtex Estimation'])
     if range_extend:
         for fea in all_feature:
