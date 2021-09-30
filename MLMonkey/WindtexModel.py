@@ -11,6 +11,7 @@ import copy
 Feature_Data = []
 Label_Data = []
 Feature_List = []
+Food = None
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -63,7 +64,23 @@ def check_data():
         logging.error("Label_Data is missing or not correctly loaded")
 
 
-def born(data, label="windtex"):
+def norm_label(data, gap=0.5, align="centre"):
+    n_data = []
+    if align == "centre":
+        for i in data:
+            n_data.append(round(i / gap))
+    elif align == "upper":
+        for i in data:
+            n_data.append(int(1 + i / gap))
+
+    elif align == "lower":
+        for i in data:
+            n_data.append(int(i / gap))
+
+    return np.array(n_data).astype(int)
+
+
+def born(data, label="windtex", label_norm=True):
     global Feature_Data, Label_Data, Feature_List
     feature = list(data["1"].keys())
     Feature_List = feature
@@ -72,17 +89,32 @@ def born(data, label="windtex"):
     for i in tqdm(data, desc="Borning Monkey"):
         f_data.append([data[i][r] for r in data[i] if r != label])
         l_data.append(data[i][label])
+    f_data = np.array(f_data).astype(int)
+    l_data = np.array(l_data).astype(float)
     Feature_Data = f_data
-    Label_Data = l_data
+    if label_norm:
+        Label_Data = norm_label(l_data)
+    else:
+        Label_Data = l_data
     check_data()
 
+    return Feature_Data, Label_Data, Feature_List
 
-def grow():
+
+def grow(model=None, self_validate=False, LOO=False):
     global Feature_Data, Label_Data, Feature_List
-    print(Feature_Data)
-    print(Feature_List)
-    print(Label_Data)
+    food = None
+    if model is not None:
+        food = model
+
+    trained_model = food.fit(Feature_Data, Label_Data)
+
+    if self_validate:
+        pass
+    if LOO:
+        pass
+    return trained_model
 
 
-def work():
-    pass
+def work(model):
+    return None

@@ -6,6 +6,8 @@ from MLMonkey import FeatureExtraction, Windtex, WindtexModel
 data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
 
 WindtexModel.born(data)
-WindtexModel.grow()
+from sklearn.tree import DecisionTreeRegressor
+WindtexModel.grow(model=DecisionTreeRegressor())
+WindtexModel.work()
 
 print()
