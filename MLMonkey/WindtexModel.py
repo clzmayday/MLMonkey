@@ -116,5 +116,5 @@ def grow(model=None, self_validate=False, LOO=False):
     return trained_model
 
 
-def work(model):
+def work(model, feature):
     return None
