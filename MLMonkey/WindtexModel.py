@@ -104,28 +104,30 @@ def born(data, label="windtex", label_norm=True):
     return Feature_Data, Label_Data, Feature_List
 
 
-def evaluate(true, predict):
-    result = {"MAE":0, "RMSE":0}
+def evaluate(true, predict, tolerance):
+    result = {"MAE":0, "RMSE":0, "MSE":0, "ACC":0}
     for i in range(len(true)):
         gap = abs(true[i] - predict[i])
+        if gap <= tolerance:
+            result["ACC"] += 1 / len(true)
         result["MAE"] += gap / len(true)
-        result["RMSE"] += gap ** 2 / len(true)
-    result["RMSE"] = math.sqrt(result["RMSE"])
+        result["MSE"] += gap ** 2 / len(true)
+    result["RMSE"] = math.sqrt(result["MSE"])
 
     return result
 
 
-def grow(model=None, self_validate=False, LOO=False, recursive_validation=30):
+def grow(model=None, self_validate=True, LOO=True, recursive_validation=30, acc_tolerance=1):
     global Feature_Data, Label_Data, Feature_List, Trained_Model
     food = None
     if model is not None:
         food = base.clone(model)
 
     trained_model = food.fit(Feature_Data, Label_Data)
-
+    valid_result = {"self":{}, "LOO":{},"RV":{}}
     if self_validate:
         predict = trained_model.predict(Feature_Data)
-        valid_result = evaluate(Label_Data, predict)
+        valid_result["self"] = evaluate(Label_Data, predict, acc_tolerance)
     if LOO:
         true = []
         predict = []
@@ -135,10 +137,9 @@ def grow(model=None, self_validate=False, LOO=False, recursive_validation=30):
             v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
             true.append(Label_Data[test][0])
             predict.append(v_trained.predict(Feature_Data[test])[0])
-        valid_result = evaluate(true, predict)
+        valid_result["LOO"] = evaluate(true, predict, acc_tolerance)
 
     if recursive_validation > 0:
-
         true = []
         predict = []
         for i in range(recursive_validation):
@@ -151,9 +152,9 @@ def grow(model=None, self_validate=False, LOO=False, recursive_validation=30):
             v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
             true.extend(Label_Data[test])
             predict.extend(v_trained.predict(Feature_Data[test]))
-        valid_result = evaluate(true, predict)
+        valid_result["RV"] = evaluate(true, predict, acc_tolerance)
 
-    return trained_model
+    return trained_model, valid_result
 
 
 def work(model, feature):

@@ -36,9 +36,12 @@ def merging_defect(feature_list, feature, size, range_extend=False):
         if fea == "distance":
             continue
         f_list = [i[fea] for i in feature]
+        avg = 0
         if fea == "size":
+            data[fea] = round(sum(weight), 1)
             continue
-        avg = average(f_list, weight)
+        else:
+            avg = average(f_list, weight)
         if range_extend:
             data[fea] = round(avg*2)
         else:
@@ -106,6 +109,13 @@ def quantify_desc(desc):
 
     return desc_dict
 
+def group_norm(data, name, group):
+    full = [i[name] for i in data]
+    up = max(full)
+    low = min(full)
+
+    return data
+
 
 def prepare(windtex_path, image_path, label_path, range_extend=True):
     global windtex_head, windtex_data, feature_range
@@ -157,8 +167,13 @@ def prepare(windtex_path, image_path, label_path, range_extend=True):
         merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=range_extend)
         for i in merged_data:
             m_data[damage["ID"]][i] = merged_data[i]
-        m_data[damage["ID"]]["size"] = round(sum([i["a"] for i in size_list]), 1)
+        # m_data[damage["ID"]]["size"] = round(sum([i["a"] for i in size_list]), 1)
         m_data[damage["ID"]]['windtex'] = float(damage['Windtex Estimation'])
+
+    for f in ["size", "edge"]:
+        gm_data = group_norm(m_data, f, 10)
+        for gm in gm_data:
+            m_data[gm][f] = gm_data[gm]
     if range_extend:
         for fea in all_feature:
             feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
