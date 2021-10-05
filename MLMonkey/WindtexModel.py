@@ -4,6 +4,8 @@ import numpy as np
 from sklearn.tree import DecisionTreeClassifier as DTC
 from sklearn.metrics import confusion_matrix as CM
 import sklearn.tree as T
+from sklearn.model_selection import LeaveOneOut
+from sklearn import base
 import math
 from tqdm import tqdm
 import copy
@@ -12,6 +14,7 @@ Feature_Data = []
 Label_Data = []
 Feature_List = []
 Food = None
+Trained_Model = None
 
 logging.getLogger().setLevel(logging.INFO)
 
@@ -101,20 +104,57 @@ def born(data, label="windtex", label_norm=True):
     return Feature_Data, Label_Data, Feature_List
 
 
-def grow(model=None, self_validate=False, LOO=False):
-    global Feature_Data, Label_Data, Feature_List
+def evaluate(true, predict):
+    result = {"MAE":0, "RMSE":0}
+    for i in range(len(true)):
+        gap = abs(true[i] - predict[i])
+        result["MAE"] += gap / len(true)
+        result["RMSE"] += gap ** 2 / len(true)
+    result["RMSE"] = math.sqrt(result["RMSE"])
+
+    return result
+
+
+def grow(model=None, self_validate=False, LOO=False, recursive_validation=30):
+    global Feature_Data, Label_Data, Feature_List, Trained_Model
     food = None
     if model is not None:
-        food = model
+        food = base.clone(model)
 
     trained_model = food.fit(Feature_Data, Label_Data)
 
     if self_validate:
-        pass
+        predict = trained_model.predict(Feature_Data)
+        valid_result = evaluate(Label_Data, predict)
     if LOO:
-        pass
+        true = []
+        predict = []
+        loo = LeaveOneOut()
+        for train, test in loo.split(Feature_Data):
+            valid_model = base.clone(model)
+            v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
+            true.append(Label_Data[test][0])
+            predict.append(v_trained.predict(Feature_Data[test])[0])
+        valid_result = evaluate(true, predict)
+
+    if recursive_validation > 0:
+
+        true = []
+        predict = []
+        for i in range(recursive_validation):
+
+            index = [i for i in range(len(Feature_Data))]
+            np.random.shuffle(index)
+            train = np.array(index[:int(len(index) * 0.9)])
+            test = np.array(index[int(len(index) * 0.9):])
+            valid_model = base.clone(model)
+            v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
+            true.extend(Label_Data[test])
+            predict.extend(v_trained.predict(Feature_Data[test]))
+        valid_result = evaluate(true, predict)
+
     return trained_model
 
 
 def work(model, feature):
-    return None
+    return model.predict([feature])[0]
