@@ -110,11 +110,15 @@ def quantify_desc(desc):
     return desc_dict
 
 def group_norm(data, name, group):
-    full = [i[name] for i in data]
+    full = [data[i][name] for i in data]
     up = max(full)
     low = min(full)
+    gap = round((up-low) / group)
+    norm = {}
+    for i in data:
+        norm[i] = int((data[i][name] - low) / gap) + 1
 
-    return data
+    return norm
 
 
 def prepare(windtex_path, image_path, label_path, range_extend=True):

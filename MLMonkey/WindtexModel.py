@@ -67,7 +67,7 @@ def check_data():
         logging.error("Label_Data is missing or not correctly loaded")
 
 
-def norm_label(data, gap=0.5, align="centre"):
+def norm_label(data, gap=0.5, align="upper"):
     n_data = []
     if align == "centre":
         for i in data:
