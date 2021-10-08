@@ -428,6 +428,7 @@ def cal_shape_comp(turning, deg, edge):
     reverse_turn = 0
     small_turn = 0
     edge_ratio = 0
+    sc_score = 0
     for i in range(1, len(t)):
 
         turn_v = abs(t[i] - t[i - 1]) / 180
@@ -440,16 +441,19 @@ def cal_shape_comp(turning, deg, edge):
             follow_turn += 1 - turn_v
         if abs(t[i]) >= 90:
             small_turn += 1
-        edge_ratio += 1 / (max(edge_per[i]) / min(edge_per[i]))
+        er = 1 / (max(edge_per[i]) / min(edge_per[i]))
+        edge_ratio += er
+        sc_score += (abs(t[i]) / 180) * er
 
     follow_turn /= len(turning)
     edge_ratio /= len(turning)
+    sc_score /= len(turning)
     if follow_turn > 1:
         follow_turn = 1
     reverse_turn /= len(turning)
     small_turn /= len(turning)
 
-    return round(edge_ratio*10), round(follow_turn*10), round(reverse_turn*10), round(small_turn*10)
+    return round(edge_ratio*10), round(follow_turn*10), round(reverse_turn*10), round(small_turn*10), round(sc_score*10)
 
 
 # Calculate and group coverage of polygon in bounding box
@@ -609,11 +613,11 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
             feature_list.extend(["size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "edge",
                                  "edgelen_avg", "edgelen_mode", "distance"])
         if shape_detail == "complex":
-            feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
+            feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn", "sc_score"])
         if shape_detail == "full":
             feature_list.extend(["size", "coverage", "asp_ratio", "deg_avg", "deg_mode", "edge",
                                  "edgelen_avg", "edgelen_mode", "distance"])
-            feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn"])
+            feature_list.extend(["sc_edge_ratio", "sc_follow_turn", "sc_reverse_turn", "sc_small_turn", "sc_score"])
     else:
         raise AttributeError('Cannot recognise shape detail attribute. Expect ("basic", "complex", "full")')
     if colour_detail is not None:
@@ -647,8 +651,9 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
         Label_[did]["edge"] = Label_[did]["edge"]
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
         Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_reverse_turn"],\
-            Label_[did]["sc_small_turn"] = cal_shape_comp(Label_[did]["turning"], Label_[did]["degree"],
-                                                         Label_[did]["edge_len"])
+            Label_[did]["sc_small_turn"], Label_[did]["sc_score"] = cal_shape_comp(Label_[did]["turning"],
+                                                                                   Label_[did]["degree"],
+                                                                                   Label_[did]["edge_len"])
         Label_[did]["distance"] = cal_dist(Label_[did]["neighbour_dist"], distance_threshold)
         Label_[did]["hue_avg"], Label_[did]["hue_mode"], Label_[did]["hue_range"], Label_[did]["hue_uni"], \
         Label_[did]["hue_dist"] = cal_hue(Label_[did]["hue"], False, Label_[did]["map"])
@@ -738,6 +743,7 @@ def get_FeatureRange(own_range=None):
         "sc_follow_turn": [0,1,2,3,4,5,6,7,8,9,10],
         "sc_reverse_turn": [0,1,2,3,4,5,6,7,8,9,10],
         "sc_small_turn": [0,1,2,3,4,5,6,7,8,9,10],
+        "sc_score": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "hue_avg": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_mode": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_range": [1, 2, 3, 4, 5, 6],
