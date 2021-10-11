@@ -7,6 +7,8 @@ data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
 
 WindtexModel.born(data)
 from sklearn.tree import DecisionTreeRegressor as model
-trained, valid = WindtexModel.grow(model=model())
+from sklearn.tree import DecisionTreeClassifier as model_ex
+trained, valid = WindtexModel.grow(model=model(), correct_model=None)
+
 WindtexModel.work(trained, [])
 

@@ -450,6 +450,8 @@ def cal_shape_comp(turning, deg, edge):
     sc_score /= len(turning)
     if follow_turn > 1:
         follow_turn = 1
+    if follow_turn < 0:
+        follow_turn = 0
     reverse_turn /= len(turning)
     small_turn /= len(turning)
 
