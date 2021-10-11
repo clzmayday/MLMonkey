@@ -431,7 +431,7 @@ def cal_shape_comp(turning, deg, edge):
     sc_score = 0
     for i in range(1, len(t)):
 
-        turn_v = abs(t[i] - t[i - 1]) / 180
+        turn_v = abs(t[i] - t[i - 1]) / 360
 
         if (t[i] > 0 and t[i-1] < 0) or (t[i] < 0 and t[i-1] > 0):
             reverse_turn += 1

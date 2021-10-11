@@ -86,7 +86,7 @@ def norm_label(data, gap=0.5, align="upper"):
 def born(data, label="windtex", label_norm=True):
     global Feature_Data, Label_Data, Feature_List
     feature = list(data["1"].keys())
-    Feature_List = feature
+    Feature_List = [i for i in feature if i != label]
     f_data = []
     l_data = []
     for i in tqdm(data, desc="Borning Monkey"):
@@ -154,7 +154,7 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
         gap = [0 for i in range(len(Label_Data))]
     gap = np.array(gap).astype(int)
     if correct_model is not None:
-        food_ex.fit(Feature_Data, gap)
+        trained_model_ex = food_ex.fit(Feature_Data, gap)
     if self_validate:
         predict = trained_model.predict(Feature_Data)
         if correct_model is not None:
@@ -199,8 +199,8 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
                 predict.append(v_predicted[i] + v_predicted_ex[i])
         valid_result["RV"] = evaluate(true, predict)
 
-    return trained_model, valid_result
+    return trained_model, trained_model_ex, valid_result
 
 
-def work(model, feature):
-    return model.predict([feature])[0]
+def work(model, model_ex, feature):
+    return model.predict([feature])[0] + model_ex.predict([feature])[0]

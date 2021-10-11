@@ -6,9 +6,9 @@ from MLMonkey import FeatureExtraction, Windtex, WindtexModel
 data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
 
 WindtexModel.born(data)
-from sklearn.tree import DecisionTreeRegressor as model
-from sklearn.tree import DecisionTreeClassifier as model_ex
-trained, valid = WindtexModel.grow(model=model(), correct_model=None)
+from sklearn.naive_bayes import MultinomialNB as model
+from sklearn.naive_bayes import MultinomialNB as model_ex
+trained, trained_ex, valid = WindtexModel.grow(model=model(), correct_model=None)
 
-WindtexModel.work(trained, [])
+WindtexModel.work(trained, trained_ex, [])
 
