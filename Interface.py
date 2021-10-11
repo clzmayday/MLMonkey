@@ -36,7 +36,6 @@ def turn_page(p):
 def begin():
     def load_dot():
         if time.time() - current_time > 1.5:
-            print("test")
             app.bind("<Key>", after_loading)
             app.bind("<Button>", after_loading)
             app.bind("<Escape>", close_)
@@ -74,9 +73,14 @@ def start():
     label2.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
     label3 = tk.Label(text="Step 1: Preparing the model", font=("newspaper", 20, "bold"), fg="RED")
     label3.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+    model_choice = tk.IntVar()
+    check1 = tk.Radiobutton(text="Decision Tree", value=1, var=model_choice)
+    check1.place(relx=0.3, rely=0.25, anchor=tk.CENTER)
+    check2 = tk.Radiobutton(text="KNN", value=2, var=model_choice)
+    check2.place(relx=0.4, rely=0.25, anchor=tk.CENTER)
     button1 = tk.Button(text="Build Model", activeforeground="RED", width=20, anchor="center",
                         font=("newspaper", 15, "bold"), command=lambda: turn_page(3))
-    button1.place(relx=0.5, rely=0.25, anchor=tk.CENTER)
+    button1.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 
 
 def menu():
