@@ -105,12 +105,13 @@ def born(data, label="windtex", label_norm=True):
 
 
 def evaluate(true, predict):
-    result = {"MAE": 0, "RMSE": 0, "MSE": 0, "ACC": 0, "ACC-1": 0, "ACC-2": 0, "ACC-3": 0}
+    result = {"MAE": 0, "RMSE": 0, "MSE": 0, "ACC-0": 0, "ACC-1": 0, "ACC-2": 0, "ACC-3": 0,
+              "true":np.array(true), "predict":np.array(predict)}
     for i in range(len(true)):
         gap = abs(true[i] - predict[i])
 
         if gap <= 0:
-            result["ACC"] += 1 / len(true)
+            result["ACC-0"] += 1 / len(true)
         if gap <= 1:
             result["ACC-1"] += 1 / len(true)
         if gap <= 2:
@@ -127,77 +128,69 @@ def evaluate(true, predict):
 
 def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive_validation=30, ):
     global Feature_Data, Label_Data, Feature_List, Trained_Model
-    food = None
-    food_ex = None
-    if model is not None:
-        food = base.clone(model)
-    if correct_model is not None:
-        food_ex = base.clone(correct_model)
-
-    trained_model = food.fit(Feature_Data, Label_Data)
-    gap = []
-    valid_result = {"self": {}, "LOO": {}, "RV": {}}
+    trained_model = None
     trained_model_ex = None
-    if correct_model is not None:
-        true = []
-        predict = []
-        loo = LeaveOneOut()
-        for train, test in loo.split(Feature_Data):
-            valid_model = base.clone(model)
-            v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
-            true.append(Label_Data[test][0])
-            predict.append(v_trained.predict(Feature_Data[test])[0])
-        for i in range(len(true)):
-            gap.append(true[i] - predict[i])
-
-    else:
-        gap = [0 for i in range(len(Label_Data))]
-    gap = np.array(gap).astype(int)
-    if correct_model is not None:
-        trained_model_ex = food_ex.fit(Feature_Data, gap)
-    if self_validate:
-        predict = trained_model.predict(Feature_Data)
+    valid_result = {"self": {}, "LOO": {}, "RV": {}}
+    for _ in tqdm(range(1), desc="Growing Monkey"):
+        food = None
+        food_ex = None
+        if model is not None:
+            food = base.clone(model)
         if correct_model is not None:
-            correct = trained_model_ex.predict(Feature_Data)
-            for i in range(len(predict)):
-                predict[i] += correct[i]
-        valid_result["self"] = evaluate(Label_Data, predict)
-    if LOO:
-        true = []
-        predict = []
-        loo = LeaveOneOut()
-        for train, test in loo.split(Feature_Data):
-            valid_model = base.clone(model)
-            v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
-            true.append(Label_Data[test][0])
-            v_predicted = v_trained.predict(Feature_Data[test])[0]
-            if correct_model is not None:
-                valid_model_ex = base.clone(correct_model)
-                v_trained_ex = valid_model_ex.fit(Feature_Data[train], gap[train])
-                v_predicted += v_trained_ex.predict(Feature_Data[test])[0]
-            predict.append(v_predicted)
-        valid_result["LOO"] = evaluate(true, predict)
-    if recursive_validation > 0:
-        true = []
-        predict = []
-        for i in range(recursive_validation):
+            food_ex = base.clone(correct_model)
 
-            index = [i for i in range(len(Feature_Data))]
-            np.random.shuffle(index)
-            train = np.array(index[:int(len(index) * 0.9)])
-            test = np.array(index[int(len(index) * 0.9):])
-            valid_model = base.clone(model)
-            v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
-            true.extend(Label_Data[test])
-            v_predicted = v_trained.predict(Feature_Data[test])
-            v_predicted_ex = [0 for i in range(len(v_predicted))]
-            if correct_model is not None:
-                valid_model_ex = base.clone(correct_model)
-                v_trained_ex = valid_model_ex.fit(Feature_Data[train], gap[train])
-                v_predicted_ex = v_trained_ex.predict(Feature_Data[test])
-            for i in range(len(v_predicted)):
-                predict.append(v_predicted[i] + v_predicted_ex[i])
-        valid_result["RV"] = evaluate(true, predict)
+        trained_model = food.fit(Feature_Data, Label_Data)
+        trained_model_ex = None
+        gap = []
+        if correct_model is not None:
+            true = []
+            predict = []
+            loo = LeaveOneOut()
+            for train, test in loo.split(Feature_Data):
+                valid_model = base.clone(model)
+                v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
+                true.append(Label_Data[test][0])
+                predict.append(v_trained.predict(Feature_Data[test])[0])
+            for i in range(len(true)):
+                gap.append(true[i] - predict[i])
+
+        else:
+            gap = [0 for i in range(len(Label_Data))]
+        gap = np.array(gap).astype(int)
+        if correct_model is not None:
+            trained_model_ex = food_ex.fit(Feature_Data, gap)
+
+        if self_validate:
+            predict = trained_model.predict(Feature_Data)
+
+            valid_result["self"] = evaluate(Label_Data, predict)
+        if LOO:
+            true = []
+            predict = []
+            loo = LeaveOneOut()
+            for train, test in loo.split(Feature_Data):
+                valid_model = base.clone(model)
+                v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
+                true.append(Label_Data[test][0])
+                v_predicted = v_trained.predict(Feature_Data[test])[0]
+                predict.append(v_predicted)
+            valid_result["LOO"] = evaluate(true, predict)
+        if recursive_validation > 0:
+            true = []
+            predict = []
+            for i in range(recursive_validation):
+
+                index = [i for i in range(len(Feature_Data))]
+                np.random.shuffle(index)
+                train = np.array(index[:int(len(index) * 0.9)])
+                test = np.array(index[int(len(index) * 0.9):])
+                valid_model = base.clone(model)
+                v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
+                true.extend(Label_Data[test])
+                v_predicted = v_trained.predict(Feature_Data[test])
+                predict.extend(v_predicted)
+
+            valid_result["RV"] = evaluate(true, predict)
 
     return trained_model, trained_model_ex, valid_result
 
