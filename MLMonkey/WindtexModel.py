@@ -126,7 +126,7 @@ def evaluate(true, predict):
     return result
 
 
-def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive_validation=30, ):
+def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive_validation=30, round_prediction=True):
     global Feature_Data, Label_Data, Feature_List, Trained_Model
     trained_model = None
     trained_model_ex = None
@@ -162,7 +162,8 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
 
         if self_validate:
             predict = trained_model.predict(Feature_Data)
-
+            if round_prediction:
+                predict = np.round(predict)
             valid_result["self"] = evaluate(Label_Data, predict)
         if LOO:
             true = []
@@ -174,6 +175,8 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
                 true.append(Label_Data[test][0])
                 v_predicted = v_trained.predict(Feature_Data[test])[0]
                 predict.append(v_predicted)
+            if round_prediction:
+                predict = np.round(predict)
             valid_result["LOO"] = evaluate(true, predict)
         if recursive_validation > 0:
             true = []
@@ -189,7 +192,8 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
                 true.extend(Label_Data[test])
                 v_predicted = v_trained.predict(Feature_Data[test])
                 predict.extend(v_predicted)
-
+            if round_prediction:
+                predict = np.round(predict)
             valid_result["RV"] = evaluate(true, predict)
 
     return trained_model, trained_model_ex, valid_result

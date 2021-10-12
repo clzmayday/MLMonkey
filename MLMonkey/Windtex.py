@@ -6,6 +6,7 @@ from PIL import Image
 windtex_head = []
 windtex_data = []
 feature_range = None
+group_norm_para = {}
 
 
 def read_csv_data(filepath):
@@ -109,7 +110,9 @@ def quantify_desc(desc):
 
     return desc_dict
 
+
 def group_norm(data, name, group):
+    global group_norm_para
     full = [data[i][name] for i in data]
     up = max(full)
     low = min(full)
@@ -117,7 +120,7 @@ def group_norm(data, name, group):
     norm = {}
     for i in data:
         norm[i] = int((data[i][name] - low) / gap) + 1
-
+    group_norm_para[name] = {"low":low, "up":up, "gap":gap, "group":group}
     return norm
 
 
@@ -145,7 +148,7 @@ def prepare(windtex_path, image_path, label_path, range_extend=True):
         # fixed data
         m_data[damage["ID"]]['damage_qty'] = int(damage['Damage Qty Per Meter'])
         # m_data[damage["ID"]]['position'] = damage['Position']
-        m_data[damage["ID"]]['location'] = float(damage['Damage Location'])
+        # m_data[damage["ID"]]['location'] = float(damage['Damage Location'])
         d_dict = quantify_desc(damage['description'])
         for d in d_dict:
             m_data[damage["ID"]][d] = d_dict[d]

@@ -23,8 +23,8 @@ WindtexModel.born(data)
 #     csv_w.writerows(csv_data)
 #     file.close()
 
-from sklearn.tree import DecisionTreeClassifier as model
-trained, trained_ex, valid = WindtexModel.grow(model=model())
+from sklearn.svm import SVR as model
+trained, trained_ex, valid = WindtexModel.grow(model=model(kernel="poly", degree=5))
 
 print()
 # WindtexModel.work(trained, trained_ex, [])
