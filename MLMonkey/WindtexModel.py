@@ -159,13 +159,13 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
         gap = np.array(gap).astype(int)
         if correct_model is not None:
             trained_model_ex = food_ex.fit(Feature_Data, gap)
-
-        if self_validate:
+    for j in tqdm(["self", "LOO", "RV"], desc="Examining Monkey"):
+        if self_validate and j == "self":
             predict = trained_model.predict(Feature_Data)
             if round_prediction:
                 predict = np.round(predict)
             valid_result["self"] = evaluate(Label_Data, predict)
-        if LOO:
+        if LOO and j == "LOO":
             true = []
             predict = []
             loo = LeaveOneOut()
@@ -178,7 +178,7 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
             if round_prediction:
                 predict = np.round(predict)
             valid_result["LOO"] = evaluate(true, predict)
-        if recursive_validation > 0:
+        if recursive_validation > 0 and j == "RV":
             true = []
             predict = []
             for i in range(recursive_validation):
