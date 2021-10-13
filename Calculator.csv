@@ -16,10 +16,10 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 15,Mynydd Bwllfa,T02,NX83202,198,Outside,2,3,Erosion / Stress,35,4,0.5,erosion class 2-3,0.197+0.177+0.203,LE,N
 16,Mynydd Bwllfa,T02,NX83202,198,Outside,4,3,Erosion / Stress,44,1,1,"erosion class 2-3, protection damage",0.265,LE,N
 17,Mynydd Bwllfa,T02,NX83202,200,Outside,6,3,Erosion / Stress,44,1,1,"erosion class 2, protection damage",0.255+0.114,LE,N
-18,Mynydd Bwllfa,T02,NX83202,200,Outside,7,3,Erosion / Stress,44,1,0,erosion foil damaged,0.385,"LE,PS,SS",Y
+18,Mynydd Bwllfa,T02,NX83202,200,Outside,7,3,Erosion / Stress,44,1,1,erosion foil damaged,0.385,"LE,PS,SS",Y
 19,Mynydd Bwllfa,T02,NX83202,201,Outside,2,3,Erosion / Stress,34,3,0.5,erosion class 2,0.22+0.145,LE,N
 20,Mynydd Bwllfa,T02,NX83202,201,Outside,4,3,Erosion / Stress,44,2,2,"erosion class 1-2, protection damage",0.15+0.314+0.192,LE,N
-21,Mynydd Bwllfa,T02,NX83202,201,Outside,5,3,Erosion / Stress,44,1,0,erosion foil damaged,0.3,LE,Y
+21,Mynydd Bwllfa,T02,NX83202,201,Outside,5,3,Erosion / Stress,44,1,1,erosion foil damaged,0.3,LE,Y
 22,Mynydd Bwllfa,T03,NX83203,208,Outside,2,3,Erosion / Stress,36,1,0.5,"gelcoat damage, laminate visible",0.075+0.068+0.175+0.14,LE,N
 23,Mynydd Bwllfa,T03,NX83203,208,Outside,5,3,Erosion / Stress,44,1,1.5,"erosion class 1-2, protection damage",0.213+0.168,LE,N
 24,Mynydd Bwllfa,T03,NX83203,208,Outside,6,3,Erosion / Stress,44,1,1.5,erosion foil damaged,0.282+0.265,"LE,PS,SS",N
@@ -268,7 +268,7 @@ ID,Site,Turbine,Turbine Ser No,Blade ID,Outside,Damage Number,Damage Category,Ro
 267,PYW,T21,NX82156,22,Outside,5,3,Erosion / Stress,42,3,2,"erosion class 2-3, protection damage, erosion foil damaged",0.218+0.144+0.11+0.161,LE,N
 268,PYW,T22,NX84626,560,Outside,6,4,Poor Repair,42.8,2,1,bonding deficiency,0.35+0.3,"SS,TE",N
 269,PYW,T22,NX84626,560,Outside,7,3,Erosion / Stress,43.4,2,2,protection damage,0.3,LE,N
-270,PYW,T22,NX84626,560,Outside,8,3,Erosion / Stress,44,1,0,protection damage,0.35,LE,N
+270,PYW,T22,NX84626,560,Outside,8,3,Erosion / Stress,44,1,2,protection damage,0.35,LE,N
 271,PYW,T23,NX84625,563,Outside,6,3,Erosion / Stress,37.1,1,0.4,erosion early,0.2+0.15+0.15,LE,N
 272,PYW,T23,NX84625,563,Outside,7,3,Erosion / Stress,38.9,1,1.5,protection damage,0.2+0.35,LE,N
 273,PYW,T23,NX84625,558,Outside,7,3,Erosion / Stress,38.2,1,1.5,protection damage,0.2+0.25,LE,N

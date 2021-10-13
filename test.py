@@ -1,10 +1,20 @@
-import csv, os
+import csv, os, pickle
+
+import sklearn.cluster
+
 from MLMonkey import FeatureExtraction, Windtex, WindtexModel
+from matplotlib import pyplot as plt
 
 # Read CSV files containing the all defect information
 
-data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
-
+# data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
+# with open("./data.pkl", "wb") as pk_file:
+#     pickle.dump(data, pk_file)
+#     pk_file.close()
+data = None
+with open("./data.pkl", "rb") as pk_file:
+    data = pickle.load(pk_file)
+    pk_file.close()
 WindtexModel.born(data)
 # f = WindtexModel.Feature_Data
 # fl = WindtexModel.Feature_List
@@ -23,9 +33,17 @@ WindtexModel.born(data)
 #     csv_w.writerows(csv_data)
 #     file.close()
 
-from sklearn.svm import SVR as model
-trained, trained_ex, valid = WindtexModel.grow(model=model(kernel="poly", degree=5))
+from sklearn.linear_model import LogisticRegression as model
+trained, trained_ex, valid = WindtexModel.grow(model=model(max_iter=3000, solver="liblinear"))
+for i in ["self", "LOO", "RV"]:
+    all_result = [[valid[i]["true"][j], valid[i]["predict"][j]] for j in range(len(valid[i]["predict"]))]
+    all_result = list(sorted(all_result, key=lambda x: x[0]))
 
+    plt.plot([j for j in range(len(all_result))], [j[1] for j in all_result], "r.")
+    plt.plot([j for j in range(len(all_result))], [j[0] for j in all_result], "b.")
+    plt.savefig("../Result/"+model.__name__+"_"+i+".jpg")
+    plt.close()
+    print()
 print()
 # WindtexModel.work(trained, trained_ex, [])
 
