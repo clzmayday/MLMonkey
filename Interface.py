@@ -122,16 +122,22 @@ def start():
     check3.place(relx=0.6, rely=0.25, anchor=tk.CENTER)
     check4 = tk.Radiobutton(text="Linear Regression", value=4, var=model_choice)
     check4.place(relx=0.8, rely=0.25, anchor=tk.CENTER)
-    check5 = tk.Radiobutton(text="Gaussian Process Regression", value=5, var=model_choice)
+    check5 = tk.Radiobutton(text="Support Vector Regression", value=5, var=model_choice)
     check5.place(relx=0.2, rely=0.3, anchor=tk.CENTER)
-    check6 = tk.Radiobutton(text="Bayesian Regression", value=6, var=model_choice)
+    check6 = tk.Radiobutton(text="Bayesian ARD Regression", value=6, var=model_choice)
     check6.place(relx=0.4, rely=0.3, anchor=tk.CENTER)
-    check6 = tk.Radiobutton(text="Windtex Estimation Regression", value=-1, var=model_choice)
-    check6.place(relx=0.8, rely=0.3, anchor=tk.CENTER)
+    check7 = tk.Radiobutton(text="Bayesian Regression", value=6, var=model_choice)
+    check7.place(relx=0.4, rely=0.3, anchor=tk.CENTER)
+    check0 = tk.Radiobutton(text="Windtex Estimation Regression", value=-1, var=model_choice)
+    check0.place(relx=0.8, rely=0.3, anchor=tk.CENTER)
+
+    label4 = tk.Label(text="Step 2: Configure the model", font=("newspaper", 20, "bold"), fg="RED")
+    label4.place(relx=0.5, rely=0.35, anchor=tk.CENTER)
+
     button1 = tk.Button(text="Build Model", activeforeground="RED", width=20, anchor="center",
                         font=("newspaper", 15, "bold"), command=lambda: build_model(model_choice.get()))
-    button1.place(relx=0.5, rely=0.35, anchor=tk.CENTER)
-
+    button1.place(relx=0.5, rely=0.9, anchor=tk.CENTER)
+    app.update()
 
 def menu():
     global status_message
