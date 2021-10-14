@@ -166,10 +166,12 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
                 predict = np.round(predict)
             valid_result["self"] = evaluate(Label_Data, predict)
         if LOO and j == "LOO":
+
             true = []
             predict = []
             loo = LeaveOneOut()
-            for train, test in loo.split(Feature_Data):
+            for train, test in tqdm(loo.split(Feature_Data), total=len(Feature_Data), desc="Leave One Out Validation",
+                                    position=0, leave=True):
                 valid_model = base.clone(model)
                 v_trained = valid_model.fit(Feature_Data[train], Label_Data[train])
                 true.append(Label_Data[test][0])
@@ -181,7 +183,8 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
         if recursive_validation > 0 and j == "RV":
             true = []
             predict = []
-            for i in range(recursive_validation):
+
+            for i in tqdm(range(recursive_validation), desc="Random Validation", position=0, leave=True):
 
                 index = [i for i in range(len(Feature_Data))]
                 np.random.shuffle(index)

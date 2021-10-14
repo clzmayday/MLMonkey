@@ -1,5 +1,5 @@
 import csv, os, pickle
-
+import numpy as np
 import sklearn.cluster
 
 from MLMonkey import FeatureExtraction, Windtex, WindtexModel
@@ -33,8 +33,8 @@ WindtexModel.born(data)
 #     csv_w.writerows(csv_data)
 #     file.close()
 
-from sklearn.linear_model import LogisticRegression as model
-trained, trained_ex, valid = WindtexModel.grow(model=model(max_iter=5000, solver="liblinear"))
+from sklearn.svm import SVR as model
+trained, trained_ex, valid = WindtexModel.grow(model=model(kernel="poly", degree=5, epsilon=0.1))
 for i in ["self", "LOO", "RV"]:
     all_result = [[valid[i]["true"][j], valid[i]["predict"][j]] for j in range(len(valid[i]["predict"]))]
     all_result = list(sorted(all_result, key=lambda x: x[0]))
