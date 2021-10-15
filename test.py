@@ -33,8 +33,13 @@ WindtexModel.born(data)
 #     csv_w.writerows(csv_data)
 #     file.close()
 
-from sklearn.ensemble import AdaBoostRegressor as model
-trained, trained_ex, valid = WindtexModel.grow(model=model(learning_rate=0.00001, n_estimators=400))
+from sklearn.ensemble import VotingRegressor as model
+from sklearn.tree import DecisionTreeRegressor as em
+l = [("dt", em("mse")),
+     ("ard", sklearn.linear_model.ARDRegression(n_iter=1000)),
+     ("svr", sklearn.svm.SVR(kernel="poly", degree=4, coef0=4)),
+     ]
+trained, trained_ex, valid = WindtexModel.grow(model=model(estimators=l))
 for i in ["self", "LOO", "RV"]:
     all_result = [[valid[i]["true"][j], valid[i]["predict"][j]] for j in range(len(valid[i]["predict"]))]
     all_result = list(sorted(all_result, key=lambda x: x[0]))
