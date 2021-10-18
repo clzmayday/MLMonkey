@@ -121,8 +121,6 @@ def build_model():
         turn_page(3)
 
 
-
-
 def update_status(button):
     global status_message, page, model_choice
     if button == "b1":
@@ -192,46 +190,55 @@ def start():
     label2 = tk.Label(text="Please click the button or press the key to continue", font=("newspaper", 20, "bold"))
     label2.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
     label3 = tk.Label(text="Step 1: Preparing the model", font=("newspaper", 25, "bold"), fg="RED")
-    label3.place(relx=0.5, rely=0.2, anchor=tk.CENTER)
+    label3.place(relx=0.3, rely=0.2, anchor=tk.CENTER)
+    label4 = tk.Label(text="Step 2: ML Monkey Options", font=("newspaper", 25, "bold"), fg="RED")
+    label4.place(relx=0.8, rely=0.2, anchor=tk.CENTER)
 
     check1 = tk.Radiobutton(text="1. Ada Boost Regression - Decision Tree Regression", value=1, font=("newspaper", 20, "bold"), var=model_choice)
-    check1.place(relx=0.5, rely=0.25, anchor=tk.CENTER)
+    check1.place(relx=0.3, rely=0.25, anchor=tk.CENTER)
     check1.bind("<Enter>", lambda x: update_status("adaboost"))
     check1.bind("<Leave>", lambda x: update_status(""))
     check2 = tk.Radiobutton(text="2. Decision Tree Regression", value=2, var=model_choice, font=("newspaper", 20, "bold"))
-    check2.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+    check2.place(relx=0.3, rely=0.3, anchor=tk.CENTER)
     check2.bind("<Enter>", lambda x: update_status("dt"))
     check2.bind("<Leave>", lambda x: update_status(""))
     check3 = tk.Radiobutton(text="3. Support Vector Regression", value=3, var=model_choice, font=("newspaper", 20, "bold"))
-    check3.place(relx=0.5, rely=0.35, anchor=tk.CENTER)
+    check3.place(relx=0.3, rely=0.35, anchor=tk.CENTER)
     check3.bind("<Enter>", lambda x: update_status("svr"))
     check3.bind("<Leave>", lambda x: update_status(""))
     check4 = tk.Radiobutton(text="4. Huber Regression", value=4, var=model_choice, font=("newspaper", 20, "bold"))
-    check4.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+    check4.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
     check4.bind("<Enter>", lambda x: update_status("huber"))
     check4.bind("<Leave>", lambda x: update_status(""))
     check5 = tk.Radiobutton(text="5. Logistic Regression", value=5, var=model_choice, font=("newspaper", 20, "bold"))
-    check5.place(relx=0.5, rely=0.45, anchor=tk.CENTER)
+    check5.place(relx=0.3, rely=0.45, anchor=tk.CENTER)
     check5.bind("<Enter>", lambda x: update_status("log"))
     check5.bind("<Leave>", lambda x: update_status(""))
     check6 = tk.Radiobutton(text="6. Linear Regression", value=6, var=model_choice, font=("newspaper", 20, "bold"))
-    check6.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+    check6.place(relx=0.3, rely=0.5, anchor=tk.CENTER)
     check6.bind("<Enter>", lambda x: update_status("linear"))
     check6.bind("<Leave>", lambda x: update_status(""))
     check7 = tk.Radiobutton(text="7. Kernel Ridge", value=7, var=model_choice, font=("newspaper", 20, "bold"))
-    check7.place(relx=0.5, rely=0.55, anchor=tk.CENTER)
+    check7.place(relx=0.3, rely=0.55, anchor=tk.CENTER)
     check7.bind("<Enter>", lambda x: update_status("kridge"))
     check7.bind("<Leave>", lambda x: update_status(""))
     check0 = tk.Radiobutton(text="Custom Model (required fit() and predict() function)", value=-1, var=model_choice,
                             font=("newspaper", 20, "bold"))
-    check0.place(relx=0.5, rely=0.6, anchor=tk.CENTER)
+    check0.place(relx=0.3, rely=0.6, anchor=tk.CENTER)
     check0.bind("<Enter>", lambda x: update_status("custom"))
     check0.bind("<Leave>", lambda x: update_status(""))
     button0 = tk.Button(text="Custom Model Upload", width=25, anchor="center", command=upload_model,
                         font=("newspaper", 20, "bold"))
-    button0.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
+    button0.place(relx=0.3, rely=0.65, anchor=tk.CENTER)
     button0.bind("<Enter>", lambda x: update_status("custom"))
     button0.bind("<Leave>", lambda x: update_status(""))
+
+    self_train = tk.IntVar()
+    option1 = tk.Checkbutton(text="Self Training", variable=self_train, font=("newspaper", 20, "bold"))
+    option1.place(relx=0.8, rely=0.25, anchor=tk.CENTER)
+    label5 = tk.Label(text="If you tick the Self Training, \nPlease upload the required files below:"
+                           "\n(See Information and Instruction) ", justify="left", font=("newspaper", 12, "bold"), fg="BLACK")
+    label5.place(relx=0.8, rely=0.3, anchor=tk.CENTER)
 
     button1 = tk.Button(text="Build Model", activeforeground="RED", width=25, anchor="center",
                         font=("newspaper", 20, "bold"), command=lambda: turn_page(4))
