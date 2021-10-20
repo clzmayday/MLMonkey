@@ -202,5 +202,6 @@ def grow(model=None, correct_model=None, self_validate=True, LOO=True, recursive
     return trained_model, trained_model_ex, valid_result
 
 
-def work(model, model_ex, feature):
-    return model.predict([feature])[0] + model_ex.predict([feature])[0]
+def work(model, feature):
+
+    return model.predict([feature])[0]
