@@ -349,7 +349,8 @@ def start():
 
     label1 = tk.Label(text="Machine Learning Monkey Windtex Estimation Regressor", font=("newspaper", 30, "bold"))
     label1.place(relx=0.5, rely=0.05, anchor=tk.CENTER)
-    label2 = tk.Label(text='Directly click the "Build Model" to execute the optimal settings\nor follow the step below', font=("newspaper", 20, "bold"))
+    label2 = tk.Label(text='Directly click the "Build Model" to execute the optimal settings\nor follow the step below',
+                      font=("newspaper", 20, "bold"))
     label2.place(relx=0.5, rely=0.12, anchor=tk.CENTER)
     label3 = tk.Label(text="Step 1: Preparing the model", font=("newspaper", 25, "bold"), fg="RED")
     label3.place(relx=0.3, rely=0.2, anchor=tk.CENTER)
@@ -460,36 +461,74 @@ def menu():
 
 
 def execute_test():
-    global status_message, page, model_choice, model, self_train, trained_model, test_folder
+    global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path
     test_folder = str(time.strftime("%Y%m%d%H%M%S"))
-    if os.path.exists("./test"):
+    if not os.path.exists("./.test"):
         os.mkdir('./.test')
 
     os.mkdir("./.test/" + test_folder)
     os.mkdir("./.test/" + test_folder + "/image")
 
+    m_dir = os.path.abspath("./.test/" + test_folder)
+    m_img_path = ""
+
     def upload_img():
+        global m_img_path
         from tkinter import filedialog
         from shutil import copy
         image_paths = filedialog.askopenfilenames(filetypes=[("Image Files", ".jpg .JPG .jpeg .JPEG .png .PNG")])
         id_count = 0
+
         for i in image_paths:
-            copy(i, "./.test/" + test_folder + "/image/"+str(id_count)+".jpg")
+            copy(i, m_dir + "/image/" + str(id_count) + ".jpg")
+            m_img_path += m_dir + "/image/" + str(id_count) + ".jpg\\n"
             id_count += 1
+        m_img_path += "'\n"
         label3["fg"] = "GREEN"
+
 
     def label_img():
         if label3["fg"] != "GREEN":
             messagebox.showerror("No Images Uploaded", "No Images are uploaded!\nPlease upload images first")
             pass
         reply = messagebox.askokcancel("Turning to VIA tool", "VIA Tools will be opened after you clicking OK button\n"
-                                                      "Please annotate the defect areas by using polygons\n"
-                                                      "Please press save icon after the annotation")
+                                                              "Please annotate the defect areas by using polygons\n"
+                                                              "and, after annotation, press save icon/label to save "
+                                                              "the annotations as a JSON file at your local machine\n"
+                                                              "Then, please upload your JSON file here after the "
+                                                              "annotation.")
 
         if reply:
+            via_doc = []
+            with open("./via.html", "r") as via:
+                via_doc = via.readlines()
+                via.close()
+
+            for i in range(len(via_doc)):
+                if via_doc[i].startswith("var m_img_path"):
+                    via_doc[i] = "var m_img_path = '" + m_img_path
+                elif via_doc[i].startswith("var m_dir"):
+                    via_doc[i] = "var m_dir = '" + m_dir+"/'\n"
+            via_doc = "".join(via_doc)
+            with open("./via.html", "w") as via:
+                via.write(via_doc)
+                via.close()
             import webbrowser
             webbrowser.open("./via.html")
+            label4["fg"] = "RED"
 
+    def upload_anno():
+
+        from tkinter import filedialog
+        from shutil import copy
+        anno_paths = filedialog.askopenfilename(filetypes=[("VIA Annotation JSON File", ".JSON .json")])
+        copy(anno_paths, m_dir + "/label.json")
+        label4["fg"] = "GREEN"
+
+    v31 = tk.IntVar()
+    v31.set(3)
+    v33 = tk.StringVar()
+    v33.set("0")
     label1 = tk.Label(text="Machine Learning Monkey Windtex Estimation Regressor", font=("newspaper", 30, "bold"))
     label1.place(relx=0.5, rely=0.05, anchor=tk.CENTER)
     label2 = tk.Label(text='Please follow the steps below to execute prediction',
@@ -498,14 +537,53 @@ def execute_test():
 
     label3 = tk.Label(text="Step 1: Upload Test Images", font=("newspaper", 15, "bold"), fg="RED")
     label3.place(relx=0.3, rely=0.2, anchor=tk.CENTER)
-    button3 = tk.Button(text="Upload Images", width=25, anchor="center", command=upload_img,
+    button3 = tk.Button(text="Upload Images", width=15, anchor="center", command=upload_img,
                         font=("newspaper", 15, "bold"))
     button3.place(relx=0.6, rely=0.2, anchor=tk.CENTER)
     label4 = tk.Label(text="Step 2: Label Test Images", font=("newspaper", 15, "bold"), fg="RED")
     label4.place(relx=0.3, rely=0.25, anchor=tk.CENTER)
-    button4 = tk.Button(text="Label Images", width=25, anchor="center", command=label_img,
+    button4 = tk.Button(text="Label Images", width=15, anchor="center", command=label_img,
                         font=("newspaper", 15, "bold"))
     button4.place(relx=0.6, rely=0.25, anchor=tk.CENTER)
+    button40 = tk.Button(text="Upload Annotation", width=20, anchor="center", command=upload_anno,
+                        font=("newspaper", 15, "bold"))
+    button40.place(relx=0.8, rely=0.25, anchor=tk.CENTER)
+    label5 = tk.Label(text="Step 3: Defect Details (If no avaliable data, please keep the default value)",
+                      font=("newspaper", 15, "bold"), fg="RED")
+    label5.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+    label51 = tk.Label(text="Step 3.1: Defect Damage Qty per Meter (Default: 3)",
+                       font=("newspaper", 15, "bold"), fg="RED")
+    label51.place(relx=0.3, rely=0.35, anchor=tk.CENTER)
+    s31_1 = tk.Radiobutton(text="1", value=1, var=v31, font=("newspaper", 15, "bold"))
+    s31_1.place(relx=0.6, rely=0.35, anchor=tk.CENTER)
+    s31_2 = tk.Radiobutton(text="2", value=2, var=v31, font=("newspaper", 15, "bold"))
+    s31_2.place(relx=0.65, rely=0.35, anchor=tk.CENTER)
+    s31_3 = tk.Radiobutton(text="3", value=3, var=v31, font=("newspaper", 15, "bold"))
+    s31_3.place(relx=0.7, rely=0.35, anchor=tk.CENTER)
+    s31_4 = tk.Radiobutton(text="4", value=4, var=v31, font=("newspaper", 15, "bold"))
+    s31_4.place(relx=0.75, rely=0.35, anchor=tk.CENTER)
+    s31_5 = tk.Radiobutton(text="5", value=5, var=v31, font=("newspaper", 15, "bold"))
+    s31_5.place(relx=0.8, rely=0.35, anchor=tk.CENTER)
+    label52 = tk.Label(text="Step 3.2: Defect Descriptions \n- Multiple Choice -\n(Default: Other)",
+                       font=("newspaper", 15, "bold"), fg="RED")
+    label52.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
+
+    s32_list = ["Erosion Class 1","Erosion Class 2","Erosion Class 3","LE Protection Damage","Erosion Foil Damage",
+                "Lamination Visible","Lamination Dry","Lamination Damage","Gelcoat/Coating Damage","Crack",
+                "Hole","Bonding Deficiency","Lightning Receptor","Lightning Damage","Impact Damage",
+                "Vortex Module Damage/Missing", "Rain Deflector", "Drain Block", "Other"]
+
+    s32 = tk.Listbox(selectmode="multiple", height=20, font=("newspaper", 15, "bold"), selectbackground="BLUE")
+    for si in s32_list:
+        s32.insert("end", si)
+    s32.place(relx=0.3, rely=0.45, anchor="n")
+
+    label53 = tk.Label(text="Step 3.3: Defect's Location to the Hub (Meters)\n(Default: 0)",
+                       font=("newspaper", 15, "bold"), fg="RED")
+    label53.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
+    s33 = tk.Entry(textvariable=v33)
+    s33.place(relx=0.7, rely=0.45, anchor=tk.CENTER)
+    app.update()
 
 
 def show():
@@ -540,6 +618,16 @@ self_file = {"image": None, "data": None, "label": None}
 model = None
 trained_model = None
 test_folder = ""
+m_dir = ""
+default_feature_list = ['damage_qty', 'erosion', 'coat_protection', 'laminate_vis_dry_dam', 'hole/crack/bonding',
+                        'lightning_recep_dam/impact', 'assist', 'other', 'num_desc', 'continuous',
+                        'out_hue_mode', 'out_sat_mode', 'out_brt_mode', 'size', 'coverage', 'asp_ratio', 'deg_avg',
+                        'deg_mode', 'edge', 'edgelen_avg', 'edgelen_mode', 'sc_edge_ratio', 'sc_follow_turn',
+                        'sc_reverse_turn', 'sc_small_turn', 'sc_score', 'hue_avg', 'hue_mode', 'hue_range', 'hue_uni',
+                        'sat_avg', 'sat_mode', 'sat_range', 'sat_uni', 'brt_avg', 'brt_mode', 'brt_range', 'brt_uni',
+                        'hue_outin', 'sat_outin', 'brt_outin']
+
+m_img_path = ""
 model_list = {-1: "Custom Model",
               1: "Ada Boost Regression",
               2: "Decision Tree Regression",

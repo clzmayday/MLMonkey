@@ -16,9 +16,10 @@ with open("./data.pkl", "rb") as pk_file:
     data = pickle.load(pk_file)
     pk_file.close()
 WindtexModel.born(data)
-# f = WindtexModel.Feature_Data
-# fl = WindtexModel.Feature_List
-# l = WindtexModel.Label_Data
+f = WindtexModel.Feature_Data
+fl = WindtexModel.Feature_List
+l = WindtexModel.Label_Data
+print()
 # csv_data = []
 # csv_data.append(fl+["windtex"])
 # for i in range(len(f)):

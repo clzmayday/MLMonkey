@@ -424,39 +424,8 @@ ul.region_shape .selected { fill:#ffffff; stroke:#ff0000; }
       <!-- menu bar -->
       <div class="menubar">
         <ul>
-          <li onclick="show_home_panel()" style="cursor:pointer;">Home</li>
-          <li>Project
-            <ul>
-              <li onclick="project_open_select_project_file()" title="Load a VIA project (from a JSON file)">Load</li>
-              <li onclick="project_save_with_confirm()" title="Save this VIA project (as a JSON file)">Save</li>
-              <li onclick="settings_panel_toggle()" title="Show/edit project settings">Settings</li>
-              <li class="submenu_divider"></li>
-              <li onclick="sel_local_images()" title="Add images locally stored in this computer">Add local files</li>
-              <li onclick="project_file_add_url_with_input()" title="Add images from a web URL (e.g. http://www.robots.ox.ac.uk/~vgg/software/via/images/swan.jpg)">Add files from URL</li>
-              <li onclick="project_file_add_abs_path_with_input()" title="Add images using absolute path of file (e.g. /home/abhishek/image1.jpg)">Add file using absolute path</li>
-              <li onclick="sel_local_data_file('files_url')" title="Add images from a list of web url or absolute path stored in a text file (one url or path per line)">Add url or path from text file</li>
-              <li onclick="project_file_remove_with_confirm()" title="Remove selected file (i.e. file currently being shown)">Remove file</li>
-              <li class="submenu_divider"></li>
-              <li onclick="sel_local_data_file('attributes')" title="Import region and file attributes from a JSON file">Import region/file attributes</li>
-              <li onclick="project_save_attributes()" title="Export region and file attributes to a JSON file">Export region/file attributes</li>
-            </ul>
-          </li>
+          <li onclick="show_home_panel()" style="cursor:pointer;">VIA Annotation Tools</li>
 
-          <li>Annotation
-            <ul>
-              <li onclick="download_all_region_data('csv')" title="Export annotations to a CSV file">Export Annotations (as csv)</li>
-              <li onclick="download_all_region_data('json')" title="Export annotaitons to a JSON file">Export Annotations (as json)</li>
-              <li onclick="download_all_region_data('coco', 'json')" title="Export annotaitons to COCO (http://cocodataset.org) format">Export Annotations (COCO format)</li>
-              <li onclick="" class="submenu_divider"></li>
-              <li onclick="sel_local_data_file('annotations')" title="Import annotations from a CSV file">Import Annotations (from csv)</li>
-              <li onclick="sel_local_data_file('annotations')" title="Import annotations from a JSON file">Import Annotations (from json)</li>
-              <li onclick="sel_local_data_file('annotations_coco')" title="Import annotations from a COCO (http://cocodataset.org) formatted JSON file">Import Annotations (COCO format)</li>
-
-              <li class="submenu_divider"></li>
-              <li onclick="show_annotation_data()" title="Show a preview of annotations (opens in a new browser windows)">Preview Annotations</li>
-              <li onclick="download_as_image()" title="Download an image containing the annotations">Download as Image</li>
-            </ul>
-          </li>
 
           <li>View
             <ul>
@@ -473,32 +442,21 @@ ul.region_shape .selected { fill:#ffffff; stroke:#ff0000; }
               <li onclick="toggle_region_info_visibility()" title="Show or hide the image coordinates">Show/hide region info.</li>
             </ul>
           </li>
-
-          <li>Help
-            <ul>
-              <li onclick="set_display_area_content(VIA_DISPLAY_AREA_CONTENT_NAME.PAGE_GETTING_STARTED)" title="Show a guide to get started with this application">Getting Started</li>
-              <li title="Visit the project page for this application"><a href="http://www.robots.ox.ac.uk/~vgg/software/via/" target="_blank">VGG Project Page</a></li>
-              <li onclick="" title="Report an issue to the developers of this application (requires an account at gitlab.com)"><a href="https://gitlab.com/vgg/via/issues" target="_blank">Report issues</a></li>
-              <li class="submenu_divider"></li>
-              <li><a target="_blank" href="https://gitlab.com/vgg/via/blob/master/Contributors.md" title="List of people who have contributed towards the development of VIA">Contributors</a></li>
-              <li onclick="set_display_area_content(VIA_DISPLAY_AREA_CONTENT_NAME.PAGE_LICENSE)" title="View license of this application">License</li>
-              <li onclick="set_display_area_content(VIA_DISPLAY_AREA_CONTENT_NAME.PAGE_ABOUT)" title="Show more details about this application">About VIA</li>
-            </ul>
-          </li>
+          <li onclick="save_export_data()">Save Annotation</li>
         </ul>
+
       </div> <!-- end of menubar -->
 
       <!-- Shortcut toolbar -->
       <div class="toolbar">
-        <svg onclick="project_open_select_project_file()" viewbox="0 0 24 24"><use xlink:href="#icon_open"></use><title>Open Project</title></svg>
-        <svg onclick="project_save_with_confirm()" viewbox="0 0 24 24"><use xlink:href="#icon_save"></use><title>Save Project</title></svg>
-        <svg onclick="settings_panel_toggle()" viewbox="0 0 24 24"><use xlink:href="#icon_settings"></use><title>Update Project Settings</title></svg>
+
+        <svg onclick="save_export_data()" viewbox="0 0 24 24"><use xlink:href="#icon_save"></use><title>Save Project</title></svg>
+
+
         <!--
         <svg onclick="" viewbox="0 0 24 24"><use xlink:href="#icon_checkbox"></use><title>Locate Files</title></svg>
         -->
 
-        <svg onclick="sel_local_data_file('annotations')" style="margin-left:1rem;" viewbox="0 0 24 24"><use xlink:href="#icon_fileupload"></use><title>Import Annotations from CSV</title></svg>
-        <svg onclick="download_all_region_data('csv')" viewbox="0 0 24 24"><use xlink:href="#icon_filedownload"></use><title>Download Annotations as CSV</title></svg>
 
         <svg onclick="image_grid_toggle()" id="toolbar_image_grid_toggle" style="margin-left:1rem;" viewbox="0 0 24 24"><use xlink:href="#icon_gridon"></use><title>Switch to Image Grid View</title></svg>
         <svg onclick="annotation_editor_toggle_all_regions_editor()" viewbox="0 0 24 24"><use xlink:href="#icon_insertcomment"></use><title>Toggle Annotation Editor</title></svg>
@@ -571,38 +529,9 @@ ul.region_shape .selected { fill:#ffffff; stroke:#ff0000; }
             </div>
           </div>
           <div id="img_fn_list"></div>
-          <p>
-            <div class="button_panel">
-              <span class="button" onclick="sel_local_images()" title="Add new file from local disk">Add Files</span>
-              <span class="button" onclick="project_file_add_url_with_input()" title="Add new file using URL">Add URL</span>
-              <span class="button" onclick="project_file_remove_with_confirm()" title="Remove selected file (i.e. file currently being shown) from project">Remove</span>
-            </div>
-          </p>
         </div>
 
-        <!-- Attributes -->
-        <button class="leftsidebar_accordion" id="attributes_editor_panel_title">Attributes</button>
-        <div class="leftsidebar_accordion_panel" id="attributes_editor_panel">
-          <div class="button_panel" style="padding:1rem 0;">
-            <span class="text_button" onclick="show_region_attributes_update_panel()" id="button_show_region_attributes" title="Show region attributes">Region Attributes</span>
-            <span class="text_button" onclick="show_file_attributes_update_panel()" id="button_show_file_attributes" title="Show file attributes">File Attributes</span>
-          </div>
-          <div id="attributes_update_panel">
-            <div class="button_panel">
-              <input style="width:70%" type="text" placeholder="attribute name" id="user_input_attribute_id" value="">
-              <span id="button_add_new_attribute" class="button" onclick="add_new_attribute_from_user_input()" title="Add new attribute">&plus;</span>
-              <span id="button_del_attribute" class="button" onclick="delete_existing_attribute_with_confirm()" title="Delete existing attribute">&minus;</span>
-            </div>
-            <div class="button_panel" style="margin:0.1rem 0;" >
-              <select style="width:100%" id="attributes_name_list" onchange="update_current_attribute_id(this)" title="List of existing attributes"></select>
-            </div>
-            <div id="attribute_properties"></div>
-            <div id="attribute_options"></div>
-            <p style="text-align:center">
-              <span class="text_button" title="Show a spreadsheet like editor for all manual annotations" onclick="annotation_editor_toggle_all_regions_editor()">Toggle Annotation Editor</span>
-            </p>
-          </div>
-        </div>
+
 
         <button class="leftsidebar_accordion">Keyboard Shortcuts</button>
         <div class="leftsidebar_accordion_panel">
@@ -1170,7 +1099,7 @@ var _via_is_debug_mode               = false;
 var _via_is_message_visible          = true;
 
 // region
-var _via_current_shape             = VIA_REGION_SHAPE.RECT;
+var _via_current_shape             = VIA_REGION_SHAPE.POLYGON;
 var _via_current_polygon_region_id = -1;
 var _via_user_sel_region_id        = -1;
 var _via_click_x0 = 0; var _via_click_y0 = 0;
@@ -1315,6 +1244,10 @@ var VIA_FLOAT_PRECISION = 3; // number of decimal places to include in float val
 var VIA_COCO_EXPORT_RSHAPE = ['rect', 'circle', 'ellipse', 'polygon', 'point'];
 var VIA_COCO_EXPORT_ATTRIBUTE_TYPE = [VIA_ATTRIBUTE_TYPE.DROPDOWN,
                                       VIA_ATTRIBUTE_TYPE.RADIO];
+// Own elements
+var m_img_path = '/home/edgetrier/Work/Windtex/experiment/.test/20211022212605/image/0.jpg\n/home/edgetrier/Work/Windtex/experiment/.test/20211022212605/image/1.jpg\n/home/edgetrier/Work/Windtex/experiment/.test/20211022212605/image/2.jpg\n/home/edgetrier/Work/Windtex/experiment/.test/20211022212605/image/3.jpg\n'
+var m_dir = '/home/edgetrier/Work/Windtex/experiment/.test/20211022212605/'
+
 //
 // Data structure to store metadata about file and regions
 //
@@ -1361,7 +1294,7 @@ function _via_init() {
 
   show_single_image_view();
   init_leftsidebar_accordion();
-  attribute_update_panel_set_active_button();
+
   annotation_editor_set_active_button();
   init_message_panel();
 
@@ -1373,7 +1306,20 @@ function _via_init() {
       await _via_load_submodules();
     }, 100);
   }
+  load_images_init();
 
+
+}
+
+function load_images_init(){
+
+  var input = {};
+  input.absolute_path = {};
+  input.absolute_path.value = '';
+  input.absolute_path_list = {};
+  input.absolute_path_list.value = m_img_path;
+  project_file_add_abs_path_input_done(input)
+  console.log(m_dir);
 }
 
 function _via_init_reg_canvas_context() {
@@ -1532,6 +1478,20 @@ function sel_local_images() {
     invisible_file_input.onchange = project_file_add_local;
     invisible_file_input.click();
   }
+}
+
+function save_export_data(){
+  var file_extension = 'json';
+  pack_via_metadata('json').then( function(data) {
+    var blob_attr = {type: 'text/'+file_extension+';charset=utf-8'};
+    var all_region_data_blob = new Blob(data, blob_attr);
+    var filename = 'label.json';
+
+
+    save_data_to_local_file(all_region_data_blob, filename);
+  }.bind(this), function(err) {
+    show_message('Failed to download data: [' + err + ']');
+  }.bind(this));
 }
 
 // invoked by menu-item buttons in HTML UI
@@ -2497,7 +2457,7 @@ function save_data_to_local_file(data, filename) {
   var a      = document.createElement('a');
   a.href     = URL.createObjectURL(data);
   a.download = filename;
-
+  console.log(a)
   // simulate a mouse click event
   var event = new MouseEvent('click', {
     view: window,
@@ -7119,6 +7079,7 @@ function user_input_parse_and_invoke_handler() {
       }
     }
   }
+
   if ( typeof(_via_user_input_data.confirm) !== 'undefined' ) {
     if ( _via_user_input_data.confirm.value ) {
       _via_user_input_ok_handler(_via_user_input_data);
@@ -8443,10 +8404,11 @@ function project_add_new_file(filename, size, file_id) {
   return img_id;
 }
 
+
 function project_file_add_local(event) {
   var user_selected_images = event.target.files;
   var original_image_count = _via_img_count;
-
+  console.log(event.target.files)
   var new_img_index_list = [];
   var discarded_file_count = 0;
   for ( var i = 0; i < user_selected_images.length; ++i ) {
