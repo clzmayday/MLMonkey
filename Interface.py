@@ -462,29 +462,37 @@ def menu():
 
 def execute_test():
     global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path
-    test_folder = str(time.strftime("%Y%m%d%H%M%S"))
-    if not os.path.exists("./.test"):
-        os.mkdir('./.test')
+    real_file = {}
+    ef = tk.StringVar()
+    def refresh():
+        global m_dir, m_img_path, test_folder
+        test_folder = str(time.strftime("%Y%m%d%H%M%S"))
+        if not os.path.exists("./.test"):
+            os.mkdir('./.test')
 
-    os.mkdir("./.test/" + test_folder)
-    os.mkdir("./.test/" + test_folder + "/image")
+        os.mkdir("./.test/" + test_folder)
+        os.mkdir("./.test/" + test_folder + "/image")
 
-    m_dir = os.path.abspath("./.test/" + test_folder)
-    m_img_path = ""
+        m_dir = os.path.abspath("./.test/" + test_folder)
+        m_img_path = ""
+
+
 
     def upload_img():
-        global m_img_path
+        global m_img_path, m_dir, test_folder
         from tkinter import filedialog
         from shutil import copy
         image_paths = filedialog.askopenfilenames(filetypes=[("Image Files", ".jpg .JPG .jpeg .JPEG .png .PNG")])
-        id_count = 0
-
+        id_count = 1
+        refresh()
         for i in image_paths:
+            real_file[id_count] = i
             copy(i, m_dir + "/image/" + str(id_count) + ".jpg")
             m_img_path += m_dir + "/image/" + str(id_count) + ".jpg\\n"
             id_count += 1
         m_img_path += "'\n"
         label3["fg"] = "GREEN"
+        show_actual()
 
 
     def label_img():
@@ -524,6 +532,33 @@ def execute_test():
         anno_paths = filedialog.askopenfilename(filetypes=[("VIA Annotation JSON File", ".JSON .json")])
         copy(anno_paths, m_dir + "/label.json")
         label4["fg"] = "GREEN"
+
+    def show_img(event):
+        i = int(event.widget["text"].split(".")[0])
+        path = real_file[i]
+        import webbrowser
+        webbrowser.open(path)
+
+    def show_actual():
+        label_list = {}
+        for i in real_file:
+            label_list[i] = {}
+            label_list[i]["path"] = real_file[i]
+            label_l = tk.Label(text=str(i) + ". " + real_file[i].split("/")[-1], font=("newspaper", 15, "bold"), cursor="hand2")
+            label_l.bind("<Button-1>", lambda x: show_img(x))
+            label_list[i]["label"] = label_l
+            var_l = tk.StringVar()
+            var_l.set("Value")
+            label_list[i]["var"] = var_l
+            entry_l = tk.Entry(textvariable=label_list[i]["var"])
+            label_list[i]["entry"] = entry_l
+
+        #Show
+        for i in label_list:
+            y = 0.55 + 0.05 * i
+            label_list[i]["label"].place(relx=0.6, rely=y, anchor="n")
+            label_list[i]["entry"].place(relx=0.75, rely=y, anchor="n")
+
 
     v31 = tk.IntVar()
     v31.set(3)
@@ -583,6 +618,11 @@ def execute_test():
     label53.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
     s33 = tk.Entry(textvariable=v33)
     s33.place(relx=0.7, rely=0.45, anchor=tk.CENTER)
+
+    label54 = tk.Label(text="Step 3.5: Image Real Height in Meters\n Please replace the filepath to a float value",
+                       font=("newspaper", 15, "bold"), fg="RED")
+    label54.place(relx=0.7, rely=0.5, anchor=tk.CENTER)
+
     app.update()
 
 
