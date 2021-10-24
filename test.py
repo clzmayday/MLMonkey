@@ -7,7 +7,7 @@ from matplotlib import pyplot as plt
 
 # Read CSV files containing the all defect information
 
-# data = Windtex.prepare("./Calculator.csv", "./data", "./label_2.json")
+data = Windtex.prepare("./OriginalData/Calculator.csv", "./OriginalData/data", "./OriginalData/label_2.json")
 # with open("./data.pkl", "wb") as pk_file:
 #     pickle.dump(data, pk_file)
 #     pk_file.close()

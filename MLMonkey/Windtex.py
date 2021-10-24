@@ -186,3 +186,49 @@ def prepare(windtex_path, image_path, label_path, range_extend=True):
             feature_range[fea] = [i for i in range(min(feature_range[fea]), 1 + max(feature_range[fea]) * 2)]
 
     return m_data
+
+def test(wintex_meta, test_dir, default_feature_list):
+    image_path = test_dir + "/image/"
+    label_path = test_dir + "/label.json"
+    FeatureExtraction.readImages(image_path)
+    FeatureExtraction.readVIALabel(label_path, init=True, test_gen=True)
+    FeatureExtraction.loadData(crop_pad=0.25)
+    all_feature = FeatureExtraction.get_FeatureList()
+    f_data = FeatureExtraction.featureExtract(distance_threshold=0)
+    m_data = dict()
+    all_defect = list(f_data.values())
+    file = list(set([i["filename"] for i in all_defect]))
+    act_size = dict()
+    file = sorted(file)
+    for i in range(len(file)):
+        im_s = Image.open(os.path.abspath(image_path) + "/" + file[i]).height
+        act_size[file[i]] = float(wintex_meta["act_height"][i][-1]) / im_s
+    m_data['damage_qty'] = wintex_meta["damage_qty"]
+    d_dict = quantify_desc(wintex_meta['desc'])
+    for d in d_dict:
+        m_data[d] = d_dict[d]
+    m_data['num_desc'] = len(wintex_meta['desc'])
+    m_data['continuous'] = 0
+    size_list = []
+    feature_list = []
+    for i in all_defect:
+        if i["boundary"][0][0] <= 10 or i["boundary"][0][1] <= 10 or i["boundary"][1][0] - i["boundary"][0][2] \
+                <= 10 or i["boundary"][1][1] - i["boundary"][0][3] <= 10:
+            m_data['continuous'] = 1
+        size_dict = {"w": round(act_size[i["filename"]] * i["width"] * 100, 4),
+                     "h": round(act_size[i["filename"]] * i["height"] * 100, 4),
+                     "a": round(act_size[i["filename"]] * act_size[i["filename"]] * i["poly_size"] * 10000, 4)}
+        feature_dict = dict()
+        for f in all_feature:
+            feature_dict[f] = i[f]
+        size_list.append(size_dict)
+        feature_list.append(feature_dict)
+    merged_data = merging_defect(all_feature, feature_list, size_list, range_extend=True)
+    for i in merged_data:
+        m_data[i] = merged_data[i]
+    group_norm_data = {'size': {'low': 0.0, 'up': 6851.0, 'gap': 685, 'group': 10},
+                       'edge': {'low': 8, 'up': 578, 'gap': 57, 'group': 10}}
+    for f in ["size", "edge"]:
+        m_data[f] = int((m_data[f] - group_norm_data[f]['low']) / group_norm_data[f]['gap']) + 1
+
+    return list(m_data.keys()), list(m_data.values())

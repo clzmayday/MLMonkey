@@ -300,6 +300,8 @@ def update_status(button):
             status_message.set("Status: ML Monkey Loading/Training")
         elif page == 5:
             status_message.set("Status: ML Monkey Predicting")
+        elif page == 6:
+            status_message.set("Status: ML Monkey Result")
 
 
 def start():
@@ -461,9 +463,11 @@ def menu():
 
 
 def execute_test():
-    global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path
+    global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path, \
+        test_meta
     real_file = {}
-    ef = tk.StringVar()
+    label_list = {}
+
     def refresh():
         global m_dir, m_img_path, test_folder
         test_folder = str(time.strftime("%Y%m%d%H%M%S"))
@@ -475,8 +479,6 @@ def execute_test():
 
         m_dir = os.path.abspath("./.test/" + test_folder)
         m_img_path = ""
-
-
 
     def upload_img():
         global m_img_path, m_dir, test_folder
@@ -491,9 +493,11 @@ def execute_test():
             m_img_path += m_dir + "/image/" + str(id_count) + ".jpg\\n"
             id_count += 1
         m_img_path += "'\n"
-        label3["fg"] = "GREEN"
+        if len(image_paths) > 0:
+            label3["fg"] = "GREEN"
+        else:
+            label3["fg"] = "RED"
         show_actual()
-
 
     def label_img():
         if label3["fg"] != "GREEN":
@@ -516,14 +520,14 @@ def execute_test():
                 if via_doc[i].startswith("var m_img_path"):
                     via_doc[i] = "var m_img_path = '" + m_img_path
                 elif via_doc[i].startswith("var m_dir"):
-                    via_doc[i] = "var m_dir = '" + m_dir+"/'\n"
+                    via_doc[i] = "var m_dir = '" + m_dir + "/'\n"
             via_doc = "".join(via_doc)
             with open("./via.html", "w") as via:
                 via.write(via_doc)
                 via.close()
             import webbrowser
             webbrowser.open("./via.html")
-            label4["fg"] = "RED"
+            label4["fg"] = "BLUE"
 
     def upload_anno():
 
@@ -540,30 +544,52 @@ def execute_test():
         webbrowser.open(path)
 
     def show_actual():
-        label_list = {}
         for i in real_file:
             label_list[i] = {}
             label_list[i]["path"] = real_file[i]
-            label_l = tk.Label(text=str(i) + ". " + real_file[i].split("/")[-1], font=("newspaper", 15, "bold"), cursor="hand2")
+            label_l = tk.Label(text=str(i) + ". " + real_file[i].split("/")[-1], font=("newspaper", 15, "bold"),
+                               cursor="hand2")
             label_l.bind("<Button-1>", lambda x: show_img(x))
             label_list[i]["label"] = label_l
-            var_l = tk.StringVar()
-            var_l.set("Value")
+            var_l = tk.DoubleVar()
+            var_l.set(-1)
             label_list[i]["var"] = var_l
             entry_l = tk.Entry(textvariable=label_list[i]["var"])
             label_list[i]["entry"] = entry_l
 
-        #Show
+        # Show
         for i in label_list:
             y = 0.55 + 0.05 * i
             label_list[i]["label"].place(relx=0.6, rely=y, anchor="n")
             label_list[i]["entry"].place(relx=0.75, rely=y, anchor="n")
 
+    def collect_input():
+        global test_meta
+        test_meta = {}
+        meta = {'damage_qty': v31.get(), 'desc': [s32.get(i).lower() for i in s32.curselection()],
+                'location': float(v33.get()),
+                'act_height': sorted([(i, label_list[i]["var"].get()) for i in label_list], key=lambda x: x[0])}
+
+        if label3["fg"] != "GREEN":
+            messagebox.showerror("No Image Upload Error", "No Image Upload\nPlease complete Step 1")
+        elif label4["fg"] != "GREEN":
+            messagebox.showerror("No Annotation Upload Error", "No Annotation Upload\nPlease complete Step 2")
+        elif len(meta["desc"]) == 0:
+            messagebox.showerror("No Description Selection Error", "No Description Selection\nPlease complete Step 3.4")
+        elif meta["location"] < 0:
+            messagebox.showerror("Defect Location on WTB Error", "Defect Location on WTB is not correct\n"
+                                                                 "Please complete Step 3.2")
+        elif len([1 for i in meta["act_height"] if i[-1] < 0]) > 0:
+            messagebox.showerror("Defect Actual Height Error", "Defect Actual Height is input incorrectly\n"
+                                                               "Please complete Step 3.3")
+        else:
+            test_meta = meta
+            turn_page(6)
 
     v31 = tk.IntVar()
     v31.set(3)
-    v33 = tk.StringVar()
-    v33.set("0")
+    v33 = tk.DoubleVar()
+    v33.set(-1)
     label1 = tk.Label(text="Machine Learning Monkey Windtex Estimation Regressor", font=("newspaper", 30, "bold"))
     label1.place(relx=0.5, rely=0.05, anchor=tk.CENTER)
     label2 = tk.Label(text='Please follow the steps below to execute prediction',
@@ -581,7 +607,7 @@ def execute_test():
                         font=("newspaper", 15, "bold"))
     button4.place(relx=0.6, rely=0.25, anchor=tk.CENTER)
     button40 = tk.Button(text="Upload Annotation", width=20, anchor="center", command=upload_anno,
-                        font=("newspaper", 15, "bold"))
+                         font=("newspaper", 15, "bold"))
     button40.place(relx=0.8, rely=0.25, anchor=tk.CENTER)
     label5 = tk.Label(text="Step 3: Defect Details (If no avaliable data, please keep the default value)",
                       font=("newspaper", 15, "bold"), fg="RED")
@@ -599,13 +625,13 @@ def execute_test():
     s31_4.place(relx=0.75, rely=0.35, anchor=tk.CENTER)
     s31_5 = tk.Radiobutton(text="5", value=5, var=v31, font=("newspaper", 15, "bold"))
     s31_5.place(relx=0.8, rely=0.35, anchor=tk.CENTER)
-    label52 = tk.Label(text="Step 3.2: Defect Descriptions \n- Multiple Choice -\n(Default: Other)",
+    label52 = tk.Label(text="Step 3.4: Defect Descriptions \n- Multiple Choice -",
                        font=("newspaper", 15, "bold"), fg="RED")
     label52.place(relx=0.3, rely=0.4, anchor=tk.CENTER)
 
-    s32_list = ["Erosion Class 1","Erosion Class 2","Erosion Class 3","LE Protection Damage","Erosion Foil Damage",
-                "Lamination Visible","Lamination Dry","Lamination Damage","Gelcoat/Coating Damage","Crack",
-                "Hole","Bonding Deficiency","Lightning Receptor","Lightning Damage","Impact Damage",
+    s32_list = ["Erosion Class 1", "Erosion Class 2", "Erosion Class 3", "LE Protection Damage", "Erosion Foil Damage",
+                "Laminate Visible", "Laminate Dry", "Laminate Damage", "Gelcoat/Coating Damage", "Crack",
+                "Hole", "Bonding Deficiency", "Lightning Receptor", "Lightning Damage", "Impact Damage",
                 "Vortex Module Damage/Missing", "Rain Deflector", "Drain Block", "Other"]
 
     s32 = tk.Listbox(selectmode="multiple", height=20, font=("newspaper", 15, "bold"), selectbackground="BLUE")
@@ -613,18 +639,52 @@ def execute_test():
         s32.insert("end", si)
     s32.place(relx=0.3, rely=0.45, anchor="n")
 
-    label53 = tk.Label(text="Step 3.3: Defect's Location to the Hub (Meters)\n(Default: 0)",
+    label53 = tk.Label(text="Step 3.2: Defect's Location to the Hub (Meters)",
                        font=("newspaper", 15, "bold"), fg="RED")
     label53.place(relx=0.7, rely=0.4, anchor=tk.CENTER)
     s33 = tk.Entry(textvariable=v33)
     s33.place(relx=0.7, rely=0.45, anchor=tk.CENTER)
 
-    label54 = tk.Label(text="Step 3.5: Image Real Height in Meters\n Please replace the filepath to a float value",
+    label54 = tk.Label(text="Step 3.3: Image Real Height in Meters\n Please input a float value",
                        font=("newspaper", 15, "bold"), fg="RED")
     label54.place(relx=0.7, rely=0.5, anchor=tk.CENTER)
+    buttonn = tk.Button(text="Get Result", activeforeground="RED", width=15, anchor="center",
+                        font=("newspaper", 15, "bold"), command=lambda: collect_input())
+    buttonn.place(relx=0.1, rely=0.8, anchor=tk.CENTER)
+    buttonb = tk.Button(text="Back to Model", activeforeground="RED", width=15, anchor="center",
+                        font=("newspaper", 15, "bold"), command=lambda: turn_page(3))
+    buttonb.place(relx=0.1, rely=0.85, anchor=tk.CENTER)
+    buttonm = tk.Button(text="Main Menu", activeforeground="RED", width=15, anchor="center",
+                        font=("newspaper", 15, "bold"), command=lambda: turn_page(1))
+    buttonm.place(relx=0.1, rely=0.9, anchor=tk.CENTER)
 
     app.update()
 
+
+def result():
+    global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path, \
+        test_meta
+    label1 = tk.Label(text="Machine Learning Monkey Windtex Estimation Regressor", font=("newspaper", 30, "bold"))
+    label1.place(relx=0.5, rely=0.05, anchor=tk.CENTER)
+    label2 = tk.Label(text='Please follow the steps below to execute prediction',
+                      font=("newspaper", 20, "bold"))
+    label2.place(relx=0.5, rely=0.1, anchor=tk.CENTER)
+    result_w = "Predicting"
+    label3 = tk.Label(text="Result\n\n" + result_w + " Week(s)", font=("newspaper", 30, "bold"), fg="RED")
+    label3.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
+
+    button1 = tk.Button(text="Another Prediction", activeforeground="RED", width=25, anchor="center",
+                        font=("newspaper", 20, "bold"), command=lambda: turn_page(5))
+    button1.place(relx=0.3, rely=0.85, anchor=tk.CENTER)
+    button2 = tk.Button(text="Main Menu", activeforeground="RED", width=25, anchor="center",
+                        font=("newspaper", 20, "bold"), command=lambda: turn_page(1))
+    button2.place(relx=0.7, rely=0.85, anchor=tk.CENTER)
+    app.update()
+    key_w, data_w = Windtex.test(test_meta, m_dir, default_feature_list)
+    result_w = WindtexModel.work(trained_model, data_w)
+    label3["text"] = "Result\n\n" + str(result_w) + " Week(s)"
+    label3["fg"] = "BLUE"
+    app.update()
 
 def show():
     global page, status_message
@@ -643,6 +703,8 @@ def show():
         build_model()
     elif page == 5:
         execute_test()
+    elif page == 6:
+        result()
 
 
 app = tk.Tk()
@@ -659,6 +721,7 @@ model = None
 trained_model = None
 test_folder = ""
 m_dir = ""
+test_meta = {}
 default_feature_list = ['damage_qty', 'erosion', 'coat_protection', 'laminate_vis_dry_dam', 'hole/crack/bonding',
                         'lightning_recep_dam/impact', 'assist', 'other', 'num_desc', 'continuous',
                         'out_hue_mode', 'out_sat_mode', 'out_brt_mode', 'size', 'coverage', 'asp_ratio', 'deg_avg',

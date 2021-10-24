@@ -26,6 +26,7 @@ Label = {}
 def readImages(path):
     global Image_List, Image_Dir
     Image_Dir = os.path.abspath(path)
+    Image_List = []
     for file in os.listdir(Image_Dir):
         i = os.path.join(Image_Dir, file)
         if os.path.isdir(i):
@@ -73,7 +74,7 @@ def convertPolytoTuple(x, y):
 # Load VIA Labels
 # Input:    JSON File Path
 # Output:   Label Dictionary
-def readVIALabel(file, init=False):
+def readVIALabel(file, init=False, test_gen=False):
     global Label
     if init:
         Label = {}
@@ -81,10 +82,16 @@ def readVIALabel(file, init=False):
         json_label = json.loads(f.read())
         f.close()
     for i in json_label.values():
-        if i['filename'] in Image_List:
-            for j in i['regions']:
-                addLabel(i['filename'], convertPolytoTuple(j['shape_attributes']['all_points_x'],
-                                                           j['shape_attributes']['all_points_y']))
+        if test_gen:
+            if i['filename'].split("/")[-1] in Image_List:
+                for j in i['regions']:
+                    addLabel(i['filename'].split("/")[-1], convertPolytoTuple(j['shape_attributes']['all_points_x'],
+                                                                              j['shape_attributes']['all_points_y']))
+        else:
+            if i['filename'] in Image_List:
+                for j in i['regions']:
+                    addLabel(i['filename'], convertPolytoTuple(j['shape_attributes']['all_points_x'],
+                                                               j['shape_attributes']['all_points_y']))
     return Label
 
 
@@ -261,7 +268,7 @@ def cal_shape(poly):
             # vertical direction
             if goin_yd >= 0:
                 # going down
-                if polygon[i+1][0] <= polygon[i][0]:
+                if polygon[i + 1][0] <= polygon[i][0]:
                     # turn right
                     turning.append(180 - angle)
                 else:
@@ -422,7 +429,7 @@ def cal_deg(deg):
 def cal_shape_comp(turning, deg, edge):
     t = np.append([turning[-1]], turning, axis=0)
     total_len = sum(edge[:, 0])
-    edge_per = edge/total_len
+    edge_per = edge / total_len
     edge_per = np.append([edge_per[-1]], edge_per, axis=0)
     follow_turn = 0
     reverse_turn = 0
@@ -433,7 +440,7 @@ def cal_shape_comp(turning, deg, edge):
 
         turn_v = abs(t[i] - t[i - 1]) / 360
 
-        if (t[i] > 0 and t[i-1] < 0) or (t[i] < 0 and t[i-1] > 0):
+        if (t[i] > 0 and t[i - 1] < 0) or (t[i] < 0 and t[i - 1] > 0):
             reverse_turn += 1
             follow_turn -= 1 - turn_v
 
@@ -455,7 +462,8 @@ def cal_shape_comp(turning, deg, edge):
     reverse_turn /= len(turning)
     small_turn /= len(turning)
 
-    return round(edge_ratio*10), round(follow_turn*10), round(reverse_turn*10), round(small_turn*10), round(sc_score*10)
+    return round(edge_ratio * 10), round(follow_turn * 10), round(reverse_turn * 10), round(small_turn * 10), round(
+        sc_score * 10)
 
 
 # Calculate and group coverage of polygon in bounding box
@@ -548,7 +556,6 @@ def cal_hue(hue, out, hmap):
 #         Saturation or brightness Range:Integer - range of min and max Saturation or brightness values
 #         Unique Saturation or brightness:Integer - unique number of Saturation or brightness
 def cal_sat_brt(sat_brt, out, hmap):
-
     if out:
         sb = sat_brt[np.logical_not(hmap)]
     else:
@@ -636,14 +643,15 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
                                  "sat_avg", "sat_mode", "sat_range", "sat_uni",
                                  "brt_avg", "brt_mode", "brt_range", "brt_uni", "hue_outin", "sat_outin", "brt_outin"])
     else:
-        raise AttributeError('Cannot recognise outside attribute. Expect ("unique", "complex", "mode", "average", "full")')
+        raise AttributeError(
+            'Cannot recognise outside attribute. Expect ("unique", "complex", "mode", "average", "full")')
     if reload is not None:
         with open(os.path.abspath(reload), 'rb') as f:
             Label_ = pickle.load(f)
             f.close()
         return Label_
-    size_group = group(np.array([Label_[l]["poly_size"] for l in Label_]))
-    edge_group = group(np.array([Label_[l]["edge"] for l in Label_]), gap=1)
+    # size_group = group(np.array([Label_[l]["poly_size"] for l in Label_]))
+    # edge_group = group(np.array([Label_[l]["edge"] for l in Label_]), gap=1)
     for did in tqdm(Label_.keys(), desc="Feature Extraction"):
         # Label_[did]["grouped_size"] = cal_group(Label_[did]["poly_size"], size_group)
         Label_[did]["size"] = Label_[did]["poly_size"]
@@ -652,10 +660,10 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
         Label_[did]["deg_avg"], Label_[did]["deg_mode"] = cal_deg(Label_[did]["degree"])
         Label_[did]["edge"] = Label_[did]["edge"]
         Label_[did]["edgelen_avg"], Label_[did]["edgelen_mode"] = cal_edge(Label_[did]["edge_len"])
-        Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_reverse_turn"],\
-            Label_[did]["sc_small_turn"], Label_[did]["sc_score"] = cal_shape_comp(Label_[did]["turning"],
-                                                                                   Label_[did]["degree"],
-                                                                                   Label_[did]["edge_len"])
+        Label_[did]["sc_edge_ratio"], Label_[did]["sc_follow_turn"], Label_[did]["sc_reverse_turn"], \
+        Label_[did]["sc_small_turn"], Label_[did]["sc_score"] = cal_shape_comp(Label_[did]["turning"],
+                                                                               Label_[did]["degree"],
+                                                                               Label_[did]["edge_len"])
         Label_[did]["distance"] = cal_dist(Label_[did]["neighbour_dist"], distance_threshold)
         Label_[did]["hue_avg"], Label_[did]["hue_mode"], Label_[did]["hue_range"], Label_[did]["hue_uni"], \
         Label_[did]["hue_dist"] = cal_hue(Label_[did]["hue"], False, Label_[did]["map"])
@@ -670,9 +678,9 @@ def featureExtract(outside="mode", distance_threshold=100, shape_detail="full", 
             "out_sat_uni"], Label_[did]["out_sat_dist"] = cal_sat_brt(Label_[did]["sat"], True, Label_[did]["map"])
         Label_[did]["out_brt_avg"], Label_[did]["out_brt_mode"], Label_[did]["out_brt_range"], Label_[did][
             "out_brt_uni"], Label_[did]["out_brt_dist"] = cal_sat_brt(Label_[did]["value"], True, Label_[did]["map"])
-        Label_[did]["hue_outin"], Label_[did]["sat_outin"], Label_[did]["brt_outin"]  = cal_comp_colour(
+        Label_[did]["hue_outin"], Label_[did]["sat_outin"], Label_[did]["brt_outin"] = cal_comp_colour(
             Label_[did]["hue_dist"], Label_[did]["sat_dist"], Label_[did]["brt_dist"], Label_[did]["out_hue_dist"],
-            Label_[did]["out_sat_dist"],Label_[did]["out_brt_dist"])
+            Label_[did]["out_sat_dist"], Label_[did]["out_brt_dist"])
     if save is not None:
         with open(os.path.abspath(save), 'wb') as f:
             pickle.dump(Label_, f)
@@ -741,16 +749,16 @@ def get_FeatureRange(own_range=None):
         "edgelen_avg": [1, 2, 3, 4, 5],
         "edgelen_mode": [1, 2, 3, 4, 5],
         "distance": [1, 2, 3],
-        "sc_edge_ratio": [0,1,2,3,4,5,6,7,8,9,10],
-        "sc_follow_turn": [0,1,2,3,4,5,6,7,8,9,10],
-        "sc_reverse_turn": [0,1,2,3,4,5,6,7,8,9,10],
-        "sc_small_turn": [0,1,2,3,4,5,6,7,8,9,10],
+        "sc_edge_ratio": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "sc_follow_turn": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "sc_reverse_turn": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        "sc_small_turn": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "sc_score": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "hue_avg": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_mode": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         "hue_range": [1, 2, 3, 4, 5, 6],
         "hue_uni": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        "hue_outin": [0,1,2,3,4,5,6,7,8,9,10],
+        "hue_outin": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "sat_avg": [1, 2, 3, 4, 5],
         "sat_mode": [1, 2, 3, 4, 5],
         "sat_range": [1, 2, 3, 4],
