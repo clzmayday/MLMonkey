@@ -682,7 +682,7 @@ def result():
     app.update()
     key_w, data_w = Windtex.test(test_meta, m_dir, default_feature_list)
     result_w = WindtexModel.work(trained_model, data_w)
-    label3["text"] = "Result\n\n" + str(result_w) + " Week(s)"
+    label3["text"] = "Result\n\n" + str(round(result_w/2, 1)) + " Week(s)"
     label3["fg"] = "BLUE"
     app.update()
 
