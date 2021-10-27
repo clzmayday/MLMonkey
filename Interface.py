@@ -461,9 +461,11 @@ def menu():
     button0.bind("<Enter>", lambda x: update_status("quit"))
     button0.bind("<Leave>", lambda x: update_status(""))
 
+
 def show_file(path):
     import webbrowser
     webbrowser.open(os.path.abspath(path))
+
 
 def execute_test():
     global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path, \
