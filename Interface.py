@@ -194,7 +194,7 @@ def build_model():
         status_message.set("Model Trained!\n"
                            "Validating Model... Please wait...")
         app.update()
-        valid_result = "\t\t\tMSE\tRMSE\tACC-0\tACC-0.5\tACC-1\tACC-1.5\n"
+        valid_result = "\t\t\tMAE\tRMSE\tACC-0\tACC-0.5\tACC-1\tACC-1.5\n"
         for i in valid:
             if i == "self":
                 valid_result += "Self Validation:\t"
@@ -220,7 +220,7 @@ def build_model():
         label4["fg"] = "GREEN"
         label5["fg"] = "GREEN"
         label6["fg"] = "GREEN"
-        valid_result = "\t\t\tMSE\tACC-0\tACC-0.5\tACC-1\tACC-1.5\n"
+        valid_result = "\t\t\tMAE\tACC-0\tACC-0.5\tACC-1\tACC-1.5\n"
         for i in valid:
             if i == "self":
                 valid_result += "Self Validation:\t"
@@ -446,7 +446,7 @@ def menu():
     label2 = tk.Label(text="Please click the button or press the key to continue", font=("newspaper", 20, "bold"))
     label2.place(relx=0.5, rely=0.35, anchor=tk.CENTER)
     button1 = tk.Button(text="1. Instruction and Information", activeforeground="RED", width=35, anchor="w",
-                        font=("newspaper", 25, "bold"), command=close)
+                        font=("newspaper", 25, "bold"), command=lambda: show_file("./User Manual.pdf"))
     button1.place(relx=0.5, rely=0.45, anchor=tk.CENTER)
     button1.bind("<Enter>", lambda x: update_status("b1"))
     button1.bind("<Leave>", lambda x: update_status(""))
@@ -461,6 +461,9 @@ def menu():
     button0.bind("<Enter>", lambda x: update_status("quit"))
     button0.bind("<Leave>", lambda x: update_status(""))
 
+def show_file(path):
+    import webbrowser
+    webbrowser.open(os.path.abspath(path))
 
 def execute_test():
     global status_message, page, model_choice, model, self_train, trained_model, test_folder, m_dir, m_img_path, \
