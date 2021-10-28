@@ -715,7 +715,7 @@ def show():
 app = tk.Tk()
 app.title("Machine Learning Monkey - Windtex Estimation Regressor")
 app.geometry('1200x800')
-version = "0.1"
+version = "1.0-alpha"
 page = 0
 status_message = tk.StringVar(app, "Status: Ready")
 model_choice = tk.IntVar()
